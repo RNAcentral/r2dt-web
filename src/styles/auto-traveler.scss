@@ -1,0 +1,38 @@
+/* General */
+
+// used by ebi-visual.css
+body {
+  font-family: Verdana,sans-serif;
+  font-size: 16px;
+}
+
+.btn-icon {
+  vertical-align: 1px;
+}
+
+.custom-link {
+  text-decoration: none !important;
+  cursor: pointer;
+}
+
+.custom-link:hover {
+  text-decoration: underline !important
+}
+
+
+/* Search form */
+
+// div with sequence examples
+#examples ul{
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+#examples ul li {
+  display: inline;
+  padding-right: 10px;
+}
+
+
+/* Search results */
