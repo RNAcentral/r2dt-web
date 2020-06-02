@@ -5,7 +5,7 @@ import * as actionCreators from 'actions/actions';
 import {store} from "app.jsx";
 
 import { FaSearch } from 'react-icons/fa';
-import { FiTrash2 } from 'react-icons/fi';
+import { FiTrash2, FiDownload } from 'react-icons/fi';
 
 
 class SearchForm extends React.Component {
@@ -64,9 +64,20 @@ class SearchForm extends React.Component {
               <textarea style={{fontSize: fixCss}} className="form-control" id="sequence" name="sequence" rows="7" value={this.props.sequence} onChange={(e) => this.props.onSequenceTextareaChange(e)} placeholder="Enter RNA/DNA sequence (with an optional description in FASTA format) or job id" />
             </div>
             <div className="col-sm-3">
-              <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" disabled={!this.props.sequence ? "disabled" : ""}>
-                <span className="btn-icon"><FaSearch /></span> Run
-              </button><br />
+              {
+                this.props.status === "RUNNING" ?
+                  <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="button" disabled>
+                    <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                    &nbsp;Running...
+                  </button> : this.props.status === "FINISHED" ?
+                  <a className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} href={`http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>
+                    <span className="btn-icon"><FiDownload /></span> Download
+                  </a> :
+                  <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" disabled={!this.props.sequence ? "disabled" : ""}>
+                    <span className="btn-icon"><FaSearch /></span> Run
+                  </button>
+              }
+              <br />
               <button className="btn btn-secondary mb-2" style={{background: clearButtonColor, borderColor: clearButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" onClick={ this.props.onClearSequence } disabled={!this.props.sequence ? "disabled" : ""}>
                 <span className="btn-icon"><FiTrash2 /></span> Clear
               </button><br />
