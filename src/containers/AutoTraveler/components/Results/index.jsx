@@ -37,17 +37,9 @@ class Results extends React.Component {
           )
         }
         {
-          this.props.jobId && (this.props.status === "RUNNING" || this.props.status === "FINISHED") && [
+          this.props.jobId && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
-              { this.props.status === "RUNNING" ? <div>
-                <button className="btn btn-primary" type="button" disabled>
-                  <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-                  &nbsp;Loading...
-                </button>
-              </div> : '' }
-              { this.props.status === "FINISHED" ? <div>
-                <a className="btn btn-primary" href={`http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>Download</a>
-              </div> : '' }
+              <img src={`http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}/>
             </div>
           ]
         }
