@@ -27,10 +27,17 @@ class SearchForm extends React.Component {
     event.preventDefault();
     const state = store.getState();
 
+    // TODO: validate the sequence
+    // if(!/^(>.+?[\n\r])*?[acgtunwsmkrybdhvxACGTUNWSMKRYDBHVX\s]+$/.test(sequence)){
+    //   store.dispatch(actionCreators.invalidSequence('invalidCharacter'));
+    // }
+
     if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
-    } else if (state.sequence) {
-      store.dispatch(actionCreators.onSubmit(state.sequence));
+    } else if (state.sequence && /^[>]/.test(state.sequence)) {
+      store.dispatch(actionCreators.onSubmit(state.sequence))
+    } else if (state.sequence){
+      store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence))
     }
 
     state.sequence = "";
