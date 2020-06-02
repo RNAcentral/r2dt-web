@@ -27,7 +27,7 @@ class SearchForm extends React.Component {
     event.preventDefault();
     const state = store.getState();
 
-    if (state.sequence && (state.sequence.length < 10 || state.sequence.length > 7000)) {
+    if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
     } else if (state.sequence) {
       store.dispatch(actionCreators.onSubmit(state.sequence));
@@ -86,7 +86,7 @@ class SearchForm extends React.Component {
               <div className="row">
                 <div className="col-sm-9">
                   <div className="alert alert-warning">
-                    {this.props.sequence.length < 10 ? "The sequence cannot be shorter than 10 nucleotides" : "The sequence cannot be longer than 7000 nucleotides"}
+                    {this.props.sequence.length < 40 ? "The sequence cannot be shorter than 40 nucleotides" : "The sequence cannot be longer than 8000 nucleotides"}
                   </div>
                 </div>
               </div>
