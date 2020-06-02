@@ -23,6 +23,9 @@ const rootReducer = function (state = initialState, action) {
           return newState;
       }
 
+    case actions.UPDATE_STATUS:
+      return Object.assign({}, state, {status: "RUNNING"});
+
     case actions.EXAMPLE_SEQUENCE:
       return Object.assign({}, state, {
         jobId: null,

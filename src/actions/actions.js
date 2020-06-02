@@ -7,6 +7,7 @@ import {store} from 'app.jsx';
 //
 export function onSubmit(sequence) {
   return function(dispatch) {
+    dispatch({type: types.UPDATE_STATUS});
     fetch(routes.submitJob(), {
       method: 'POST',
       headers: {
@@ -79,31 +80,3 @@ export function fetchStatus(jobId) {
     });
   }
 }
-
-//
-// results
-//
-// export function fetchResults(jobId) {
-//   return function(dispatch) {
-//     fetch(routes.jobResult(jobId, 'autotraveler'), {
-//       method: 'GET',
-//       headers: { 'Accept': 'application/tar+gzip', 'Content-Type': 'application/tar+gzip;charset=UTF-8' }
-//     })
-//     .then(function(response) {
-//       if (response.ok) {
-//         return response.blob()
-//       } else {
-//         throw response;
-//       }
-//     })
-//     .then(data => {
-//       let link = document.createElement('a');
-//       link.href = window.URL.createObjectURL(data);
-//       document.body.appendChild(link);
-//       link.click();
-//     })
-//     .catch(error => {
-//       dispatch({type: types.FETCH_RESULTS, status: 'error'})
-//     });
-//   }
-// }
