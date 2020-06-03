@@ -121,7 +121,6 @@ const mapStateToProps = (state) => ({
   status: state.status,
   submissionError: state.submissionError,
   sequence: state.sequence,
-  jobResult: state.jobResult,
 });
 
 const mapDispatchToProps = (dispatch) => ({

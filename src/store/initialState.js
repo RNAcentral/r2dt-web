@@ -3,7 +3,6 @@ let initialState = {
   status: "notSubmitted",  // options: error, RUNNING and FINISHED
   submissionError: null,
   sequence: "",
-  jobResult: "",
 };
 
 export default initialState;
