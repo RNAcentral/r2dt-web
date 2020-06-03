@@ -1,4 +1,4 @@
-let server = 'http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler';
+let server = 'https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler';
 
 module.exports = {
   submitJob: () => `${server}/run`,
