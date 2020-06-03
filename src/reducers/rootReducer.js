@@ -38,6 +38,7 @@ const rootReducer = function (state = initialState, action) {
         jobId: null,
         status: "notSubmitted",
         sequence: "",
+        submissionError: null,
       });
 
     case actions.TEXTAREA_CHANGE:
