@@ -52,7 +52,10 @@ export function invalidSequence() {
 // status
 //
 export function fetchStatus(jobId) {
+  let state = store.getState();
+
   return function(dispatch) {
+    if (!state.jobId) {dispatch({type: types.SET_JOB_ID, jobId: jobId})}
     fetch(routes.jobStatus(jobId), {
       method: 'GET',
       headers: { 'Accept': 'text/plain' }
@@ -70,6 +73,8 @@ export function fetchStatus(jobId) {
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
       } else if (data === 'FINISHED') {
         dispatch({type: types.FETCH_RESULTS})
+      } else if (data === 'NOT_FOUND') {
+        dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       }
     })
     .catch(error => {

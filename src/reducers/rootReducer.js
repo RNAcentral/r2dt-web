@@ -55,11 +55,16 @@ const rootReducer = function (state = initialState, action) {
     // status
     //
     case actions.FETCH_STATUS:
-      if (action === 'error') {
+      if (action.status === 'error') {
         return Object.assign({}, state, {status: "error"});
+      } else if (action.status === 'NOT_FOUND') {
+        return Object.assign({}, state, {status: "NOT_FOUND"});
       } else {
         return Object.assign({}, state, {status: action})
       }
+
+    case actions.SET_JOB_ID:
+      return Object.assign({}, state, {jobId: action.jobId});
 
     case actions.SET_STATUS_TIMEOUT:
       return Object.assign({}, state, {statusTimeout: action.statusTimeout});

@@ -8,6 +8,7 @@ export const INVALID_SEQUENCE = 'INVALID_SEQUENCE';
 
 // status
 export const FETCH_STATUS = 'FETCH_STATUS';
+export const SET_JOB_ID = 'SET_JOB_ID';
 export const SET_STATUS_TIMEOUT = 'SET_STATUS_TIMEOUT';
 
 // results

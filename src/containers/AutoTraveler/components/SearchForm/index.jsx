@@ -34,6 +34,8 @@ class SearchForm extends React.Component {
 
     if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
+    } else if(/^auto_traveler/.test(state.sequence)){
+      store.dispatch(actionCreators.fetchStatus(state.sequence))
     } else if (state.sequence && /^[>]/.test(state.sequence)) {
       store.dispatch(actionCreators.onSubmit(state.sequence))
     } else if (state.sequence){
@@ -70,7 +72,7 @@ class SearchForm extends React.Component {
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     &nbsp;Running...
                   </button> : this.props.status === "FINISHED" ?
-                  <a className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} href={`http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>
+                  <a className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} href={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>
                     <span className="btn-icon"><FiDownload /></span> Download
                   </a> :
                   <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" disabled={!this.props.sequence ? "disabled" : ""}>
@@ -106,6 +108,15 @@ class SearchForm extends React.Component {
                   <div className="alert alert-warning">
                     {this.props.sequence.length < 40 ? "The sequence cannot be shorter than 40 nucleotides" : "The sequence cannot be longer than 8000 nucleotides"}
                   </div>
+                </div>
+              </div>
+            )
+          }
+          {
+            this.props.status === "NOT_FOUND" && (
+              <div className="row">
+                <div className="col-sm-9">
+                  <div className="alert alert-warning">Job not found</div>
                 </div>
               </div>
             )
