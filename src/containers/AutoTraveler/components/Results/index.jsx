@@ -29,8 +29,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-sm-9">
                 <div className="alert alert-danger">
-                  <h4>There was an error.</h4>
-                  <a href="mailto:rnacentral@gmail.com">Contact us</a> if the problem persists.
+                  There was an error. <a href="mailto:rnacentral@gmail.com">Contact us</a> if the problem persists.
                 </div>
               </div>
             </div>
@@ -39,7 +38,7 @@ class Results extends React.Component {
         {
           this.props.jobId && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
-              <img src={`http://wp-np2-20.ebi.ac.uk:8080/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}/>
+              <img src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}/>
             </div>
           ]
         }
