@@ -1,5 +1,7 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import {UncontrolledReactSVGPanZoom} from 'react-svg-pan-zoom'
+import { ReactSvgPanZoomLoader } from "react-svg-pan-zoom-loader";
 
 
 class Results extends React.Component {
@@ -38,7 +40,16 @@ class Results extends React.Component {
         {
           this.props.jobId && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
-              <img src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}/>
+              <ReactSvgPanZoomLoader
+                src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}
+                render={content => (
+                  <UncontrolledReactSVGPanZoom width={800} height={600}>
+                    <svg width={800} height={600}>
+                      {content}
+                    </svg>
+                  </UncontrolledReactSVGPanZoom>
+                )}
+              />
             </div>
           ]
         }
