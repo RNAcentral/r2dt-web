@@ -71,10 +71,7 @@ class SearchForm extends React.Component {
                   <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="button" disabled>
                     <span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
                     &nbsp;Running...
-                  </button> : this.props.status === "FINISHED" ?
-                  <a className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} href={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>
-                    <span className="btn-icon"><FiDownload /></span> Download
-                  </a> :
+                  </button> :
                   <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" disabled={!this.props.sequence ? "disabled" : ""}>
                     <span className="btn-icon"><FaSearch /></span> Run
                   </button>
