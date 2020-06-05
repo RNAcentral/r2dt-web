@@ -85,3 +85,27 @@ export function fetchStatus(jobId) {
     });
   }
 }
+
+//
+// results
+//
+export function onDownloadSVG(jobId) {
+  return function(dispatch) {
+    fetch(routes.downloadSvg(jobId), {
+      method: 'GET',
+      headers: { 'Accept': 'text/plain' },
+    })
+    .then(function (response) {
+      if (response.ok) { return response.blob() }
+      else { throw response }
+    })
+    .then(data => {
+      let link = window.document.createElement('a');
+      link.href = window.URL.createObjectURL(data);
+      link.download = jobId + '.svg';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    });
+  }
+}
