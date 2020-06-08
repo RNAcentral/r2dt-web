@@ -1,8 +1,12 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/actions';
-import { UncontrolledReactSVGPanZoom } from 'react-svg-pan-zoom'
+import { UncontrolledReactSVGPanZoom, POSITION_LEFT, ALIGN_CENTER, TOOL_NONE } from 'react-svg-pan-zoom'
 import { ReactSvgPanZoomLoader } from "react-svg-pan-zoom-loader";
+import { AutoSizer } from 'react-virtualized';
+
+const miniatureProps = { position: TOOL_NONE }
+const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER }
 
 
 class Results extends React.Component {
@@ -17,8 +21,6 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
-    const miniatureProps = { position: "none" }
-    const toolbarProps = { position: "left" }
 
     return (
       <div className="rna">
@@ -65,17 +67,24 @@ class Results extends React.Component {
                   </a>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
                 </p>
-                <div className="mt-3">
-                  <ReactSvgPanZoomLoader
-                    src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}
-                    render={content => (
-                      <UncontrolledReactSVGPanZoom width={900} height={600} toolbarProps={toolbarProps} miniatureProps={miniatureProps}>
-                        <svg width={900} height={600}>
-                          {content}
-                        </svg>
-                      </UncontrolledReactSVGPanZoom>
+                <div className="mt-3" style={{width: "100%", height: "100%"}}>
+                  <AutoSizer>
+                    {({width, height}) => width === 0 || height === 0 ? null : (
+                      <ReactSvgPanZoomLoader
+                        src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}
+                        render={content => (
+                          <UncontrolledReactSVGPanZoom
+                              width={width} height={height}
+                              toolbarProps={toolbarProps}
+                              miniatureProps={miniatureProps}
+                              background={"#fff"}
+                          >
+                            <svg width={900} height={600}>{content}</svg>
+                          </UncontrolledReactSVGPanZoom>
+                        )}
+                      />
                     )}
-                  />
+                  </AutoSizer>
                 </div>
                 <div className="mt-3">
                   <strong>Colour legend</strong>
