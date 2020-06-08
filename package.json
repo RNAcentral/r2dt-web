@@ -51,6 +51,7 @@
     "react-shadow-dom-retarget-events": "^1.0.10",
     "react-svg-pan-zoom": "^3.8.0",
     "react-svg-pan-zoom-loader": "^1.4.1",
+    "react-virtualized": "^9.21.2",
     "redux": "^4.0.1",
     "redux-thunk": "^2.3.0"
   },
