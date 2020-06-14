@@ -75,6 +75,7 @@ export function fetchStatus(jobId) {
         // Wait another second to change the status. This will allow the SVG resultType to work correctly.
         let statusTimeout = setTimeout(() => dispatch({type: types.FETCH_RESULTS}), 1000);
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
+        dispatch(svgSize(jobId));
       } else if (data === 'NOT_FOUND') {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       }
@@ -108,6 +109,24 @@ export function onDownloadSVG(jobId) {
       document.body.appendChild(link);
       link.click();
       document.body.removeChild(link);
+    });
+  }
+}
+
+export function svgSize(jobId) {
+  return function(dispatch) {
+    fetch(routes.downloadSvg(jobId), {
+      method: 'GET',
+      headers: { 'Accept': 'text/plain' },
+    })
+    .then(function (response) {
+      if (response.ok) { return response.text() }
+      else { throw response }
+    })
+    .then(data => {
+      let width = (data.match(/width="(.*?)"/)[1]);
+      let height = (data.match(/height="(.*?)"/)[1]);
+      dispatch({type: types.SVG_SIZE, width: width, height: height})
     });
   }
 }

@@ -75,6 +75,9 @@ const rootReducer = function (state = initialState, action) {
     case actions.FETCH_RESULTS:
       return Object.assign({}, state, {status: "FINISHED"});
 
+    case actions.SVG_SIZE:
+      return Object.assign({}, state, {width: action.width, height: action.height});
+
     default:
       return state;
   }

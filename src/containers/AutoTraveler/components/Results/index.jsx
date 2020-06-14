@@ -25,17 +25,6 @@ class Results extends React.Component {
     return (
       <div className="rna">
         {
-          this.props.jobId && this.props.status === "does_not_exist" && (
-            <div className="row" key={`does-not-exist-div`}>
-              <div className="col-sm-9">
-                <div className="alert alert-danger">
-                  <h4>Job with id='{ this.props.jobId }' does not exist.</h4>
-                </div>
-              </div>
-            </div>
-          )
-        }
-        {
           this.props.jobId && this.props.status === "error" && (
             <div className="row" key={`error-div`}>
               <div className="col-sm-9">
@@ -68,12 +57,12 @@ class Results extends React.Component {
                         src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}
                         render={content => (
                           <UncontrolledReactSVGPanZoom
-                              width={width} height={height}
+                              width={width} height={parseFloat(this.props.height)}
                               toolbarProps={toolbarProps}
                               miniatureProps={miniatureProps}
                               background={"#fff"}
                           >
-                            <svg width={900} height={600}>{content}</svg>
+                            <svg width={this.props.width} height={this.props.height}>{content}</svg>
                           </UncontrolledReactSVGPanZoom>
                         )}
                       />
@@ -108,6 +97,8 @@ function mapStateToProps(state) {
     status: state.status,
     submissionError: state.submissionError,
     sequence: state.sequence,
+    width: state.width,
+    height: state.height,
   };
 }
 
