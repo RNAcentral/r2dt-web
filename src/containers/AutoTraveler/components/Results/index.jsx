@@ -14,6 +14,24 @@ class Results extends React.Component {
     super(props);
   }
 
+  downloadPNG() {
+    let image = new Image();
+    let canvas = document.createElement('canvas');
+    canvas.width = this.props.width;
+    canvas.height = this.props.height;
+    canvas.getContext('2d').drawImage(image, 0, 0);
+
+    let blob = new Blob([this.props.svg], {type: "image/svg+xml;charset=utf-8"});
+    let win = window.URL || window.webkitURL || window;
+    let link = document.createElement('a');
+    link.href = win.createObjectURL(blob);
+    link.href = canvas.toDataURL('image/png');
+    link.download = this.props.jobId + '.png';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+  }
+
   render() {
     let title = {
       color: this.props.customStyle && this.props.customStyle.titleColor ? this.props.customStyle.titleColor : "#007c82",
@@ -36,7 +54,7 @@ class Results extends React.Component {
           )
         }
         {
-          this.props.jobId && this.props.status === "FINISHED" && [
+          this.props.jobId && this.props.svg && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
               <div className="col-sm-12">
                 <br />
@@ -48,7 +66,8 @@ class Results extends React.Component {
                   <a className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} href={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/autotraveler`}>
                     Download files
                   </a>
-                  <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
+                  <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
+                  <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()} disabled="disabled">Save PNG</button>
                 </p>
                 <div className="mt-3" style={{width: "100%", height: "100%"}}>
                   <AutoSizer>
@@ -61,6 +80,7 @@ class Results extends React.Component {
                               toolbarProps={toolbarProps}
                               miniatureProps={miniatureProps}
                               background={"#fff"}
+                              detectWheel={false}
                           >
                             <svg width={this.props.width} height={this.props.height}>{content}</svg>
                           </UncontrolledReactSVGPanZoom>
@@ -99,6 +119,7 @@ function mapStateToProps(state) {
     sequence: state.sequence,
     width: state.width,
     height: state.height,
+    svg: state.svg
   };
 }
 
