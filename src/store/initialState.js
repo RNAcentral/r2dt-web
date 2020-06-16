@@ -4,7 +4,8 @@ let initialState = {
   submissionError: null,
   sequence: "",
   width: 900,
-  height: 600
+  height: 600,
+  svg: null
 };
 
 export default initialState;
