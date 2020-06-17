@@ -59,6 +59,8 @@ const rootReducer = function (state = initialState, action) {
         return Object.assign({}, state, {status: "error"});
       } else if (action.status === 'NOT_FOUND') {
         return Object.assign({}, state, {status: "NOT_FOUND"});
+      } else if (action.status === 'FAILURE') {
+        return Object.assign({}, state, {status: "FAILURE"});
       } else {
         return Object.assign({}, state, {status: action})
       }

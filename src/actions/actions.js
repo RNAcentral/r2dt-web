@@ -78,6 +78,8 @@ export function fetchStatus(jobId) {
         dispatch(svgSize(jobId));
       } else if (data === 'NOT_FOUND') {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
+      } else if (data === 'FAILURE') {
+        dispatch({type: types.FETCH_STATUS, status: 'FAILURE'})
       }
     })
     .catch(error => {

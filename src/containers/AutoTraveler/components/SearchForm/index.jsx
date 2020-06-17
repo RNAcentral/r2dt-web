@@ -113,7 +113,16 @@ class SearchForm extends React.Component {
             this.props.status === "NOT_FOUND" && (
               <div className="row">
                 <div className="col-sm-9">
-                  <div className="alert alert-warning">Job not found</div>
+                  <div className="alert alert-warning">Job not found. The results might have expired. If you think this is an error, please <a href="mailto:rnacentral@gmail.com">send us</a> this job id: {this.props.jobId}</div>
+                </div>
+              </div>
+            )
+          }
+          {
+            this.props.status === "FAILURE" && (
+              <div className="row">
+                <div className="col-sm-9">
+                  <div className="alert alert-danger">There was an error. <a href="mailto:rnacentral@gmail.com">Contact us</a> if the problem persists.</div>
                 </div>
               </div>
             )
