@@ -17,11 +17,8 @@ export function onSubmit(sequence) {
       body: `email=rnacentral%40gmail.com&sequence=${sequence}`
     })
     .then(function (response) {
-      if (response.ok) {
-        return response.text();
-      } else {
-        throw response;
-      }
+      if (response.ok) { return response.text() }
+      else { throw response }
     })
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
@@ -55,17 +52,15 @@ export function fetchStatus(jobId) {
   let state = store.getState();
 
   return function(dispatch) {
-    if (!state.jobId) {dispatch({type: types.SET_JOB_ID, jobId: jobId})}
+    if (state.status === "notSubmitted") { dispatch({type: types.UPDATE_STATUS}) }
+    if (!state.jobId) { dispatch({type: types.SET_JOB_ID, jobId: jobId}) }
     fetch(routes.jobStatus(jobId), {
       method: 'GET',
       headers: { 'Accept': 'text/plain' }
     })
     .then(function(response) {
-      if (response.ok) {
-        return response.text()
-      } else {
-        throw response;
-      }
+      if (response.ok) { return response.text() }
+      else { throw response }
     })
     .then((data) => {
       if (data === 'RUNNING') {
