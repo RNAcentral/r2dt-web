@@ -4,6 +4,7 @@ import * as actionCreators from 'actions/actions';
 import { UncontrolledReactSVGPanZoom, POSITION_LEFT, ALIGN_CENTER, TOOL_NONE } from 'react-svg-pan-zoom'
 import { ReactSvgPanZoomLoader } from "react-svg-pan-zoom-loader";
 import { AutoSizer } from 'react-virtualized';
+import { saveSvgAsPng } from 'save-svg-as-png';
 
 const miniatureProps = { position: TOOL_NONE }
 const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER }
@@ -15,21 +16,9 @@ class Results extends React.Component {
   }
 
   downloadPNG() {
-    let image = new Image();
-    let canvas = document.createElement('canvas');
-    canvas.width = this.props.width;
-    canvas.height = this.props.height;
-    canvas.getContext('2d').drawImage(image, 0, 0);
-
-    let blob = new Blob([this.props.svg], {type: "image/svg+xml;charset=utf-8"});
-    let win = window.URL || window.webkitURL || window;
-    let link = document.createElement('a');
-    link.href = win.createObjectURL(blob);
-    link.href = canvas.toDataURL('image/png');
-    link.download = this.props.jobId + '.png';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    let div = document.createElement('div');
+    div.innerHTML = this.props.svg;
+    saveSvgAsPng(div.firstChild, this.props.jobId + ".png", {backgroundColor: 'white', scale: 3});
   }
 
   render() {
@@ -67,7 +56,7 @@ class Results extends React.Component {
                     Download files
                   </a>
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
-                  <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()} disabled="disabled">Save PNG</button>
+                  <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>Save PNG</button>
                 </p>
                 <div className="mt-3" style={{width: "100%", height: "100%"}}>
                   <AutoSizer>
