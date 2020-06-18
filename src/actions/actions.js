@@ -96,7 +96,7 @@ export function fetchStatus(jobId) {
 //
 export function onDownloadSVG(jobId) {
   return function(dispatch) {
-    fetch(routes.downloadSvg(jobId), {
+    fetch(routes.fetchSvg(jobId), {
       method: 'GET',
       headers: { 'Accept': 'text/plain' },
     })
@@ -117,7 +117,7 @@ export function onDownloadSVG(jobId) {
 
 export function svgSize(jobId) {
   return function(dispatch) {
-    fetch(routes.downloadSvg(jobId), {
+    fetch(routes.fetchSvg(jobId), {
       method: 'GET',
       headers: { 'Accept': 'text/plain' },
     })
