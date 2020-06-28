@@ -2,8 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/actions';
 import {ALIGN_CENTER, INITIAL_VALUE, POSITION_LEFT, ReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
-import { ReactSvgPanZoomLoader } from "react-svg-pan-zoom-loader";
-// import { AutoSizer } from 'react-virtualized';
+import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
 
 const miniatureProps = { position: TOOL_NONE }
@@ -67,24 +66,21 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>Save PNG</button>
                 </p>
-                <ReactSvgPanZoomLoader
-                  src={`https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler/result/${this.props.jobId}/svg`}
-                  render={content => (
-                    <ReactSVGPanZoom
-                      width={parseFloat(this.props.width)}
-                      height={parseFloat(this.props.height)}
-                      ref={Viewer => this.Viewer = Viewer}
-                      tool={this.state.tool} onChangeTool={tool => this.changeTool(tool)}
-                      value={this.state.value} onChangeValue={value => this.changeValue(value)}
-                      toolbarProps={toolbarProps}
-                      miniatureProps={miniatureProps}
-                      background={"#fff"}
-                      detectWheel={false}
-                    >
-                      <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>{content}</svg>
-                    </ReactSVGPanZoom>
-                  )}
-                />
+                <ReactSVGPanZoom
+                  width={parseFloat(this.props.width)}
+                  height={parseFloat(this.props.height)}
+                  ref={Viewer => this.Viewer = Viewer}
+                  tool={this.state.tool} onChangeTool={tool => this.changeTool(tool)}
+                  value={this.state.value} onChangeValue={value => this.changeValue(value)}
+                  toolbarProps={toolbarProps}
+                  miniatureProps={miniatureProps}
+                  background={"#fff"}
+                  detectWheel={false}
+                >
+                  <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
+                    <SvgLoader svgXML={this.props.svg} />
+                  </svg>
+                </ReactSVGPanZoom>
                 <div className="mt-3">
                   <strong>Colour legend</strong>
                   <ul className="list-unstyled">
