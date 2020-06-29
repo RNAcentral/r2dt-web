@@ -87,7 +87,7 @@ class Results extends React.Component {
                   toolbarProps={toolbarProps}
                   miniatureProps={miniatureProps}
                   background={"#fff"}
-                  style={{ outline: '1px solid black' }}
+                  style={{ outline: '1px solid #6c757d' }}
                 >
                   <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
                     <SvgLoader svgXML={this.props.svg} />
