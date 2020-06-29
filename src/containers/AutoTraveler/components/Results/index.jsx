@@ -76,6 +76,7 @@ class Results extends React.Component {
                   </a>
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.props.downloadSVG(this.props.jobId)}>Save SVG</button>
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>Save PNG</button>
+                  <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.props.toggleColors(this.props.svg)}>Toggle colours</button>
                 </p>
                 <ReactSVGPanZoom
                   width={width}
@@ -129,6 +130,7 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     downloadSVG: (jobId) => dispatch(actionCreators.onDownloadSVG(jobId)),
+    toggleColors: (svg) => dispatch(actionCreators.onToggleColors(svg)),
   }
 }
 

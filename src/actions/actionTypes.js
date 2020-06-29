@@ -14,4 +14,4 @@ export const SET_STATUS_TIMEOUT = 'SET_STATUS_TIMEOUT';
 // results
 export const FETCH_RESULTS = 'FETCH_RESULTS';
 export const SVG_SIZE = 'SVG_SIZE';
-
+export const SVG_COLORS = 'SVG_COLORS';

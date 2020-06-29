@@ -5,7 +5,8 @@ let initialState = {
   sequence: "",
   width: 900,
   height: 600,
-  svg: null
+  svg: null,
+  svgColor: true
 };
 
 export default initialState;

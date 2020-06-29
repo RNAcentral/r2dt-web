@@ -127,3 +127,17 @@ export function svgSize(jobId) {
     });
   }
 }
+
+export function onToggleColors(svg) {
+  let state = store.getState();
+  const colourOn = ['class="green"', 'class="red"', 'class="blue"'];
+  const colourOff = ['class="ex-green"', 'class="ex-red"', 'class="ex-blue"'];
+
+  if(state.svgColor){
+    colourOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), colourOff[i]) )
+  } else {
+    colourOff.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), colourOn[i]) )
+  }
+
+  return {type: types.SVG_COLORS, svg: svg};
+}
