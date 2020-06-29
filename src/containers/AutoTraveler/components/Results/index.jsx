@@ -13,6 +13,15 @@ class Results extends React.Component {
   constructor(props) {
     super(props);
     this.state = {tool: TOOL_NONE, value: INITIAL_VALUE}
+    this.viewerRef = React.createRef();
+    this.doFirstFit = true;
+  }
+
+  componentDidUpdate() {
+    if (this.doFirstFit && this.viewerRef.current) {
+      this.viewerRef.current.fitToViewer("center", "center");
+      this.doFirstFit = false;
+    }
   }
 
   changeTool(nextTool) {
@@ -36,6 +45,8 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
+    const width = parseFloat(this.props.width) > 900 ? parseFloat(this.props.width) : 900;
+    const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
     return (
       <div className="rna">
@@ -67,15 +78,15 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary mr-2" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>Save PNG</button>
                 </p>
                 <ReactSVGPanZoom
-                  width={parseFloat(this.props.width)}
-                  height={parseFloat(this.props.height)}
-                  ref={Viewer => this.Viewer = Viewer}
+                  width={width}
+                  height={height}
+                  ref={this.viewerRef}
                   tool={this.state.tool} onChangeTool={tool => this.changeTool(tool)}
                   value={this.state.value} onChangeValue={value => this.changeValue(value)}
                   toolbarProps={toolbarProps}
                   miniatureProps={miniatureProps}
                   background={"#fff"}
-                  detectWheel={false}
+                  style={{ outline: '1px solid black' }}
                 >
                   <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
                     <SvgLoader svgXML={this.props.svg} />
