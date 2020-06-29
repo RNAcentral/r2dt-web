@@ -55,7 +55,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-sm-9">
                 <div className="alert alert-danger">
-                  There was an error. <a href="mailto:rnacentral@gmail.com">Contact us</a> if the problem persists.
+                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>.
                 </div>
               </div>
             </div>

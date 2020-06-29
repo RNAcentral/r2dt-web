@@ -113,7 +113,10 @@ class SearchForm extends React.Component {
             this.props.status === "NOT_FOUND" && (
               <div className="row">
                 <div className="col-sm-9">
-                  <div className="alert alert-warning">Job not found. The results might have expired. If you think this is an error, please <a href="mailto:rnacentral@gmail.com">send us</a> this job id: {this.props.jobId}</div>
+                  <div className="alert alert-warning">
+                    Job not found. The results might have expired.
+                    If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>
+                  </div>
                 </div>
               </div>
             )
@@ -122,7 +125,9 @@ class SearchForm extends React.Component {
             this.props.status === "FAILURE" && (
               <div className="row">
                 <div className="col-sm-9">
-                  <div className="alert alert-danger">There was an error. <a href="mailto:rnacentral@gmail.com">Contact us</a> if the problem persists.</div>
+                  <div className="alert alert-danger">
+                    There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>.
+                  </div>
                 </div>
               </div>
             )
