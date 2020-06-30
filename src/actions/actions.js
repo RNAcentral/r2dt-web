@@ -123,9 +123,9 @@ export function svgSize(jobId) {
     .then(data => {
       let width = (data.match(/width="(.*?)"/)[1]);
       let height = (data.match(/height="(.*?)"/)[1]);
-      dispatch({type: types.SVG_SIZE, status: 'success', width: width, height: height, svg: data})
+      dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: data})
     })
-    .catch(error => dispatch({type: types.SVG_SIZE, status: 'error'}));
+    .catch(error => dispatch({type: types.GET_SVG, status: 'error'}));
   }
 }
 
