@@ -78,7 +78,14 @@ const rootReducer = function (state = initialState, action) {
       return Object.assign({}, state, {status: "FINISHED"});
 
     case actions.SVG_SIZE:
-      return Object.assign({}, state, {width: action.width, height: action.height, svg: action.svg});
+      switch (action.status) {
+        case 'success':
+          return Object.assign({}, state, {width: action.width, height: action.height, svg: action.svg});
+        case 'error':
+          return Object.assign({}, state, {});
+        default:
+          return newState;
+      }
 
     case actions.SVG_COLORS:
       return Object.assign({}, state, {svg: action.svg, svgColor: !state.svgColor});

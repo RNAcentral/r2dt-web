@@ -62,6 +62,17 @@ class Results extends React.Component {
           )
         }
         {
+          this.props.jobId && !this.props.svg && this.props.status === "FINISHED" && (
+            <div className="row" key={`error-div`}>
+              <div className="col-sm-9">
+                <div className="alert alert-warning">
+                  The sequence did not match any of the templates. If you think it's an error, please <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">get in touch</a>.
+                </div>
+              </div>
+            </div>
+          )
+        }
+        {
           this.props.jobId && this.props.svg && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
               <div className="col-sm-12">
