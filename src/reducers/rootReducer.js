@@ -29,23 +29,37 @@ const rootReducer = function (state = initialState, action) {
     case actions.EXAMPLE_SEQUENCE:
       return Object.assign({}, state, {
         jobId: null,
-        sequence: action.sequence,
         status: "notSubmitted",
+        submissionError: null,
+        sequence: action.sequence,
+        width: 900,
+        height: 600,
+        svg: null,
+        svgColor: true
       });
 
     case actions.CLEAR_SEQUENCE:
       return Object.assign({}, state, {
         jobId: null,
         status: "notSubmitted",
-        sequence: "",
         submissionError: null,
+        sequence: "",
+        width: 900,
+        height: 600,
+        svg: null,
+        svgColor: true
       });
 
     case actions.TEXTAREA_CHANGE:
       return Object.assign({}, state, {
         jobId: null,
         status: "notSubmitted",
+        submissionError: null,
         sequence: action.sequence,
+        width: 900,
+        height: 600,
+        svg: null,
+        svgColor: true
       });
 
     case actions.INVALID_SEQUENCE:
