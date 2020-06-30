@@ -70,7 +70,7 @@ export function fetchStatus(jobId) {
         // Wait another second to change the status. This will allow the SVG resultType to work correctly.
         let statusTimeout = setTimeout(() => dispatch({type: types.FETCH_RESULTS}), 1000);
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
-        dispatch(svgSize(jobId));
+        dispatch(getSvg(jobId));
       } else if (data === 'NOT_FOUND') {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       } else if (data === 'FAILURE') {
@@ -110,7 +110,7 @@ export function onDownloadSVG(jobId) {
   }
 }
 
-export function svgSize(jobId) {
+export function getSvg(jobId) {
   return function(dispatch) {
     fetch(routes.fetchSvg(jobId), {
       method: 'GET',
