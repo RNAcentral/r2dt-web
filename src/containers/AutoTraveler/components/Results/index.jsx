@@ -109,11 +109,11 @@ class Results extends React.Component {
                   <ul className="list-unstyled">
                     <li className="mt-1"><span className="traveler-black traveler-key"></span> Same as the template</li>
                     <li className="mt-1">
-                      <span className="traveler-green traveler-key"></span> Not the same as the template.
+                      <span className="traveler-green traveler-key"></span> Modified compared to the template.
                       <strong> Tip:</strong> Hover over green nucleotides for more details
                     </li>
                     <li className="mt-1"><span className="traveler-red traveler-key"></span> Inserted nucleotides</li>
-                    <li className="mt-1"><span className="traveler-blue traveler-key"></span> Re-inserted nucleotides</li>
+                    <li className="mt-1"><span className="traveler-blue traveler-key"></span> Repositioned compared to the template</li>
                     <li className="mt-1"><strong>Tip:</strong> Hover over the nucleotides to see nucleotide numbers</li>
                   </ul>
                 </div>
