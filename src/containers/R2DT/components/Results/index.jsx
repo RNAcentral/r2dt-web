@@ -55,7 +55,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-sm-9">
                 <div className="alert alert-danger">
-                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>.
+                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                 </div>
               </div>
             </div>
@@ -66,7 +66,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-sm-9">
                 <div className="alert alert-warning">
-                  The sequence did not match any of the templates. If you think it's an error, please <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">get in touch</a>.
+                  The sequence did not match any of the templates. If you think it's an error, please <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">get in touch</a>.
                 </div>
               </div>
             </div>

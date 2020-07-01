@@ -1,4 +1,4 @@
-# Auto Traveler
+# R2DT-Web
 
 This is an embeddable component that you can include into your website to visualise RNA secondary structures.
 
@@ -9,23 +9,23 @@ javascript or CSS.
 
 Download this package directly from Github.
 
-`git clone https://github.com/RNAcentral/auto-traveler-embed.git`
+`git clone https://github.com/RNAcentral/r2dt-web.git`
 
 Now you can add the component's javascript bundle (it contains all the styles and fonts) to your web page either 
 directly or through an import with Webpack:
 
-`<script type="text/javascript" src="/auto-traveler-embed/dist/auto-traveler.js"></script>`
+`<script type="text/javascript" src="/r2dt-web/dist/r2dt-web.js"></script>`
 
 To use it just insert an html tag somewhere in your html:
 
 ```
-<auto-traveler />
+<r2dt-web />
 ```
 
 To show some examples, use:
 
 ```
-<auto-traveler 
+<r2dt-web 
     examples='[
         {"description": "miRNA hsa-let-7a-1", "urs": "URS000004F5D8", "sequence": "CUAUACAAUCUACUGUCUUUC"},
     ]
@@ -36,7 +36,7 @@ You can also customise some elements of this embeddable component. See what you 
 The example below changes the color of the buttons:
 
 ```
-<auto-traveler
+<r2dt-web
     customStyle='{
       "searchButtonColor": "#007c82",
       "clearButtonColor": "#6c757d"

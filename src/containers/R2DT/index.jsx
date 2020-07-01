@@ -1,7 +1,7 @@
 import React from 'react';
 
-import Results from 'containers/AutoTraveler/components/Results/index.jsx';
-import SearchForm from 'containers/AutoTraveler/components/SearchForm/index.jsx';
+import Results from 'containers/R2DT/components/Results/index.jsx';
+import SearchForm from 'containers/R2DT/components/SearchForm/index.jsx';
 import {connect} from "react-redux";
 
 

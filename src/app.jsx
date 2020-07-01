@@ -3,17 +3,17 @@ import ReactDOM from 'react-dom';
 import retargetEvents from 'react-shadow-dom-retarget-events';
 import {Provider} from 'react-redux';
 
-import AutoTraveler from 'containers/AutoTraveler/index.jsx';
+import R2DTWebContainer from 'containers/R2DT/index.jsx';
 import configureStore from 'store/configureStore.js';
 
 import bootstrap from 'styles/bootstrap.css';
-import AutoTravelerStyles from 'styles/auto-traveler.scss';
+import R2DTWebStyles from 'styles/index.scss';
 
 // Prepare data
 export const store = configureStore();
 
 
-class AutoTravelerEmbed extends HTMLElement {
+class R2DTWeb extends HTMLElement {
   constructor() {
     super();
 
@@ -29,10 +29,10 @@ class AutoTravelerEmbed extends HTMLElement {
     // render React
     ReactDOM.render([
       <style key={bootstrap} dangerouslySetInnerHTML={{__html: bootstrap}}/>,
-      <style key={AutoTravelerStyles} dangerouslySetInnerHTML={{__html: AutoTravelerStyles}}/>,
+      <style key={R2DTWebStyles} dangerouslySetInnerHTML={{__html: R2DTWebStyles}}/>,
       <body key='body'>
         <Provider key='provider' store={store}>
-          <AutoTraveler
+          <R2DTWebContainer
               customStyle={customStyle}
               examples={examples}
           />
@@ -57,4 +57,4 @@ class AutoTravelerEmbed extends HTMLElement {
   }
 }
 
-customElements.define('auto-traveler', AutoTravelerEmbed);
+customElements.define('r2dt-web', R2DTWeb);

@@ -1,5 +1,5 @@
 {
-  "name": "@rnacentral/auto-traveler-embed",
+  "name": "@rnacentral/r2dt-web",
   "version": "1.0.0",
   "description": "Visualise RNA secondary structure using standard layouts.",
   "scripts": {
@@ -12,7 +12,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/RNAcentral/auto-traveler-embed.git"
+    "url": "git+https://github.com/RNAcentral/r2dt-web.git"
   },
   "keywords": [
     "RNA",
@@ -35,9 +35,9 @@
   ],
   "license": "Apache-2.0",
   "bugs": {
-    "url": "https://github.com/RNAcentral/auto-traveler-embed/issues"
+    "url": "https://github.com/RNAcentral/r2dt-web/issues"
   },
-  "homepage": "https://github.com/RNAcentral/auto-traveler-embed#readme",
+  "homepage": "https://github.com/RNAcentral/r2dt-web#readme",
   "dependencies": {
     "md5": "^2.2.1",
     "react": "^16.13.1",

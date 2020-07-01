@@ -115,7 +115,7 @@ class SearchForm extends React.Component {
                 <div className="col-sm-9">
                   <div className="alert alert-warning">
                     Job not found. The results might have expired.
-                    If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>
+                    If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>
                   </div>
                 </div>
               </div>
@@ -126,7 +126,7 @@ class SearchForm extends React.Component {
               <div className="row">
                 <div className="col-sm-9">
                   <div className="alert alert-danger">
-                    There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/auto-traveler-embed/issues" target="_blank">GitHub</a>.
+                    There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                   </div>
                 </div>
               </div>

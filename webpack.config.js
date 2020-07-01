@@ -17,15 +17,15 @@ module.exports = function(env) {
     entry: path.join(__dirname, 'src', 'app.jsx'),
     output: {
       path: path.join(__dirname, 'dist'),
-      publicPath: environment === 'production' ? '/auto-traveler-embed/dist/' : '/',
-      filename: 'auto-traveler.js'
+      publicPath: environment === 'production' ? '/r2dt-web/dist/' : '/',
+      filename: 'r2dt-web.js'
     },
     resolve: {
       modules: [path.join(__dirname, 'src'), path.join(__dirname, 'node_modules')]
     },
     plugins: [
       new webpack.HotModuleReplacementPlugin(),
-      new ExtractTextPlugin('auto-traveler.css'),
+      new ExtractTextPlugin('index.css'),
       new HtmlWebpackPlugin({
         inject: "body",
         template: "src/index.html",
