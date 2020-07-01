@@ -27,8 +27,8 @@ To show some examples, use:
 ```
 <r2dt-web 
     examples='[
-        {"description": "miRNA hsa-let-7a-1", "urs": "URS000004F5D8", "sequence": "CUAUACAAUCUACUGUCUUUC"},
-    ]
+        {"description": "miRNA hsa-let-7a-1", "urs": "URS000004F5D8", "sequence": "CUAUACAAUCUACUGUCUUUC"}
+    ]'
 />
 ```
 
