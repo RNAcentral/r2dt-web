@@ -32,10 +32,10 @@ class SearchForm extends React.Component {
     //   store.dispatch(actionCreators.invalidSequence('invalidCharacter'));
     // }
 
-    if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
-      store.dispatch(actionCreators.invalidSequence());
-    } else if(/^auto_traveler/.test(state.sequence)){
+    if (/^r2dt/.test(state.sequence)){
       store.dispatch(actionCreators.fetchStatus(state.sequence))
+    } else if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
+      store.dispatch(actionCreators.invalidSequence());
     } else if (state.sequence && /^[>]/.test(state.sequence)) {
       store.dispatch(actionCreators.onSubmit(state.sequence))
     } else if (state.sequence){

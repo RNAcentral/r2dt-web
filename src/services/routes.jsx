@@ -1,4 +1,4 @@
-let server = 'https://wwwdev.ebi.ac.uk/Tools/services/rest/auto_traveler';
+let server = 'https://wwwdev.ebi.ac.uk/Tools/services/rest/r2dt';
 
 module.exports = {
   submitJob: () => `${server}/run`,
