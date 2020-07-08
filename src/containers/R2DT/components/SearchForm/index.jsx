@@ -5,7 +5,7 @@ import * as actionCreators from 'actions/actions';
 import {store} from "app.jsx";
 
 import { FaSearch } from 'react-icons/fa';
-import { FiTrash2, FiDownload } from 'react-icons/fi';
+import { FiTrash2 } from 'react-icons/fi';
 
 
 class SearchForm extends React.Component {
