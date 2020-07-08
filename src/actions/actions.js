@@ -142,3 +142,17 @@ export function onToggleColors(svg) {
 
   return {type: types.SVG_COLORS, svg: svg};
 }
+
+export function onToggleNumbers(svg) {
+  let state = store.getState();
+  const numberOn = ['class="numbering-label"', 'class="numbering-line"'];
+  const numberOff = ['class="numbering-label d-none"', 'class="numbering-line d-none"'];
+
+  if(state.svgNumber){
+    numberOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOff[i]) )
+  } else {
+    numberOff.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOn[i]) )
+  }
+
+  return {type: types.SVG_NUMBERS, svg: svg};
+}

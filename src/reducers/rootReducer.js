@@ -104,6 +104,9 @@ const rootReducer = function (state = initialState, action) {
     case actions.SVG_COLORS:
       return Object.assign({}, state, {svg: action.svg, svgColor: !state.svgColor});
 
+    case actions.SVG_NUMBERS:
+      return Object.assign({}, state, {svg: action.svg, svgNumber: !state.svgNumber});
+
     default:
       return state;
   }
