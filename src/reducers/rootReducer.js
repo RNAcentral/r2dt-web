@@ -35,7 +35,8 @@ const rootReducer = function (state = initialState, action) {
         width: 900,
         height: 600,
         svg: null,
-        svgColor: true
+        svgColor: true,
+        svgNumber: true
       });
 
     case actions.CLEAR_SEQUENCE:
@@ -47,7 +48,8 @@ const rootReducer = function (state = initialState, action) {
         width: 900,
         height: 600,
         svg: null,
-        svgColor: true
+        svgColor: true,
+        svgNumber: true
       });
 
     case actions.TEXTAREA_CHANGE:
@@ -59,7 +61,8 @@ const rootReducer = function (state = initialState, action) {
         width: 900,
         height: 600,
         svg: null,
-        svgColor: true
+        svgColor: true,
+        svgNumber: true
       });
 
     case actions.INVALID_SEQUENCE:
