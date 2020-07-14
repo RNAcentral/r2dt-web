@@ -146,7 +146,7 @@ export function onToggleColors(svg) {
 export function onToggleNumbers(svg) {
   let state = store.getState();
   const numberOn = ['class="numbering-label"', 'class="numbering-line"'];
-  const numberOff = ['class="numbering-label d-none"', 'class="numbering-line d-none"'];
+  const numberOff = ['class="numbering-label" visibility="hidden"', 'class="numbering-line" visibility="hidden"'];
 
   if(state.svgNumber){
     numberOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOff[i]) )
