@@ -41,8 +41,6 @@ class SearchForm extends React.Component {
     } else if (state.sequence){
       store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence))
     }
-
-    state.sequence = "";
   }
 
   render() {
