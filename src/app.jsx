@@ -1,6 +1,5 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import retargetEvents from 'react-shadow-dom-retarget-events';
 import {Provider} from 'react-redux';
 
 import R2DTWebContainer from 'containers/R2DT/index.jsx';
@@ -18,9 +17,14 @@ class R2DTWeb extends HTMLElement {
     super();
 
     // prepare DOM and shadow DOM
+    // workaround found at https://github.com/facebook/react/issues/9242 to avoid re-renders
     const shadowRoot = this.attachShadow({mode: 'open'});
     const mountPoint = document.createElement('html');
     shadowRoot.appendChild(mountPoint);
+    Object.defineProperty(mountPoint, "ownerDocument", { value: shadowRoot });
+    shadowRoot.createElement = (...args) => document.createElement(...args);
+    shadowRoot.createElementNS = (...args) => document.createElementNS(...args);
+    shadowRoot.createTextNode = (...args) => document.createTextNode(...args);
 
     // parse arguments
     const customStyle = JSON.parse(this.attributes.customStyle ? this.attributes.customStyle.nodeValue : null);
@@ -41,9 +45,6 @@ class R2DTWeb extends HTMLElement {
       ],
       mountPoint
     );
-
-    // retarget React events to work with shadow DOM
-    retargetEvents(shadowRoot);
   }
 
   connectedCallback() {
