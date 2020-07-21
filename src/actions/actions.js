@@ -75,6 +75,8 @@ export function fetchStatus(jobId) {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       } else if (data === 'FAILURE') {
         dispatch({type: types.FETCH_STATUS, status: 'FAILURE'})
+      } else if (data === 'ERROR') {
+        dispatch({type: types.FETCH_STATUS, status: 'ERROR'})
       }
     })
     .catch(error => {
