@@ -120,7 +120,7 @@ class SearchForm extends React.Component {
             )
           }
           {
-            this.props.status === "FAILURE" && (
+            (this.props.status === "FAILURE" || this.props.status === "ERROR") && (
               <div className="row">
                 <div className="col-sm-9">
                   <div className="alert alert-danger">
