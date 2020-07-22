@@ -133,6 +133,18 @@ class Results extends React.Component {
             </div>
           ]
         }
+        {
+          this.props.jobId && this.props.svg && this.props.status === "FINISHED" && this.props.notation && [
+            <div className="row" key={`notation-div`}>
+              <div className="col-sm-12">
+                <p className="mt-3 notation-title">Dot-bracket notation</p>
+                <pre className="notation">
+                  <span className="notation-font">{this.props.notation}</span>
+                </pre>
+              </div>
+            </div>
+          ]
+        }
       </div>
     )
   }
@@ -146,7 +158,8 @@ function mapStateToProps(state) {
     sequence: state.sequence,
     width: state.width,
     height: state.height,
-    svg: state.svg
+    svg: state.svg,
+    notation: state.notation
   };
 }
 

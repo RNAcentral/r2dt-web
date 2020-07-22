@@ -36,7 +36,8 @@ const rootReducer = function (state = initialState, action) {
         height: 600,
         svg: null,
         svgColor: true,
-        svgNumber: true
+        svgNumber: true,
+        notation: ""
       });
 
     case actions.CLEAR_SEQUENCE:
@@ -49,7 +50,8 @@ const rootReducer = function (state = initialState, action) {
         height: 600,
         svg: null,
         svgColor: true,
-        svgNumber: true
+        svgNumber: true,
+        notation: ""
       });
 
     case actions.TEXTAREA_CHANGE:
@@ -62,7 +64,8 @@ const rootReducer = function (state = initialState, action) {
         height: 600,
         svg: null,
         svgColor: true,
-        svgNumber: true
+        svgNumber: true,
+        notation: ""
       });
 
     case actions.INVALID_SEQUENCE:
@@ -109,6 +112,19 @@ const rootReducer = function (state = initialState, action) {
 
     case actions.SVG_NUMBERS:
       return Object.assign({}, state, {svg: action.svg, svgNumber: !state.svgNumber});
+
+    case actions.UPDATE_SEQUENCE:
+      return Object.assign({}, state, {sequence: action.sequence});
+
+    case actions.FASTA:
+      switch (action.status) {
+        case 'success':
+          return Object.assign({}, state, {notation: action.notation});
+        case 'error':
+          return Object.assign({}, state, {});
+        default:
+          return newState;
+      }
 
     default:
       return state;
