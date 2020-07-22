@@ -7,7 +7,8 @@ let initialState = {
   height: 600,
   svg: null,
   svgColor: true,
-  svgNumber: true
+  svgNumber: true,
+  notation: ""
 };
 
 export default initialState;

@@ -16,3 +16,5 @@ export const FETCH_RESULTS = 'FETCH_RESULTS';
 export const GET_SVG = 'GET_SVG';
 export const SVG_COLORS = 'SVG_COLORS';
 export const SVG_NUMBERS = 'SVG_NUMBERS';
+export const FASTA = 'FASTA';
+export const UPDATE_SEQUENCE = 'UPDATE_SEQUENCE';

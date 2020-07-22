@@ -71,6 +71,7 @@ export function fetchStatus(jobId) {
         let statusTimeout = setTimeout(() => dispatch({type: types.FETCH_RESULTS}), 1000);
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
         dispatch(getSvg(jobId));
+        dispatch(getFasta(jobId));
       } else if (data === 'NOT_FOUND') {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       } else if (data === 'FAILURE') {
@@ -136,4 +137,30 @@ export function onToggleNumbers(svg) {
   }
 
   return {type: types.SVG_NUMBERS, svg: svg};
+}
+
+export function getFasta(jobId) {
+  let state = store.getState();
+
+  return function(dispatch) {
+    fetch(routes.fetchFasta(jobId), {
+      method: 'GET',
+      headers: { 'Accept': 'text/plain' },
+    })
+    .then(function (response) {
+      if (response.ok) { return response.text() }
+      else { throw response }
+    })
+    .then(data => {
+      let lines = (data.match(/[^\r\n]+/g));
+      let description = lines[0];
+      let sequence = lines[1];
+      let notation = lines[2];
+      if (description && sequence && !/^[>]/.test(state.sequence)){
+        dispatch({type: types.UPDATE_SEQUENCE, sequence: description + '\n' + sequence})
+      }
+      dispatch({type: types.FASTA, status: 'success', notation: notation})
+    })
+    .catch(error => dispatch({type: types.FASTA, status: 'error'}));
+  }
 }
