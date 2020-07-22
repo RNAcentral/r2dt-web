@@ -72,6 +72,7 @@ export function fetchStatus(jobId) {
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
         dispatch(getSvg(jobId));
         dispatch(getFasta(jobId));
+        dispatch(getTsv(jobId));
       } else if (data === 'NOT_FOUND') {
         dispatch({type: types.FETCH_STATUS, status: 'NOT_FOUND'})
       } else if (data === 'FAILURE') {
@@ -162,5 +163,25 @@ export function getFasta(jobId) {
       dispatch({type: types.FASTA, status: 'success', notation: notation})
     })
     .catch(error => dispatch({type: types.FASTA, status: 'error'}));
+  }
+}
+
+export function getTsv(jobId) {
+  return function(dispatch) {
+    fetch(routes.fetchTsv(jobId), {
+      method: 'GET',
+      headers: { 'Accept': 'text/plain' },
+    })
+    .then(function (response) {
+      if (response.ok) { return response.text() }
+      else { throw response }
+    })
+    .then(data => {
+      let lines = (data.match(/[^\t]+/g));
+      let template = lines[1];
+      let source = lines[2].trimEnd();
+      dispatch({type: types.TSV, status: 'success', template: template, source: source})
+    })
+    .catch(error => dispatch({type: types.TSV, status: 'error'}));
   }
 }

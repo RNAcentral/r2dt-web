@@ -37,7 +37,9 @@ const rootReducer = function (state = initialState, action) {
         svg: null,
         svgColor: true,
         svgNumber: true,
-        notation: ""
+        notation: "",
+        template: "",
+        source: ""
       });
 
     case actions.CLEAR_SEQUENCE:
@@ -51,7 +53,9 @@ const rootReducer = function (state = initialState, action) {
         svg: null,
         svgColor: true,
         svgNumber: true,
-        notation: ""
+        notation: "",
+        template: "",
+        source: ""
       });
 
     case actions.TEXTAREA_CHANGE:
@@ -65,7 +69,9 @@ const rootReducer = function (state = initialState, action) {
         svg: null,
         svgColor: true,
         svgNumber: true,
-        notation: ""
+        notation: "",
+        template: "",
+        source: ""
       });
 
     case actions.INVALID_SEQUENCE:
@@ -122,6 +128,16 @@ const rootReducer = function (state = initialState, action) {
           return Object.assign({}, state, {notation: action.notation});
         case 'error':
           return Object.assign({}, state, {notation: "error"});
+        default:
+          return newState;
+      }
+
+    case actions.TSV:
+      switch (action.status) {
+        case 'success':
+          return Object.assign({}, state, {template: action.template, source: action.source});
+        case 'error':
+          return Object.assign({}, state, {template: "error", source: "error"});
         default:
           return newState;
       }
