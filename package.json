@@ -39,6 +39,7 @@
   },
   "homepage": "https://github.com/RNAcentral/r2dt-web#readme",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-helmet": "^5.2.0",
