@@ -6,4 +6,5 @@ module.exports = {
   jobStatus:  (jobId) => `${server}/status/${jobId}`,
   fetchSvg:   (jobId) => `${server}/result/${jobId}/svg`,
   fetchFasta: (jobId) => `${server}/result/${jobId}/fasta`,
+  fetchTsv:   (jobId) => `${server}/result/${jobId}/tsv`,
 };

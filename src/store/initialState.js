@@ -8,7 +8,9 @@ let initialState = {
   svg: null,
   svgColor: true,
   svgNumber: true,
-  notation: ""
+  notation: "",
+  template: "",
+  source: ""
 };
 
 export default initialState;
