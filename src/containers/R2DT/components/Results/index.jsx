@@ -145,7 +145,7 @@ class Results extends React.Component {
                 <p className="mt-3 notation-title">Dot-bracket notation</p>
                 {
                   this.props.notation === "error" ? <div className="alert alert-danger">
-                    There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
+                    There was an error loading the dot-bracket notation. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                   </div> : <pre className="notation">
                     <span className="notation-font">{this.props.notation}</span>
                   </pre>
