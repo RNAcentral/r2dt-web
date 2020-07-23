@@ -5,7 +5,7 @@ import {ALIGN_CENTER, INITIAL_VALUE, POSITION_LEFT, ReactSVGPanZoom, TOOL_NONE} 
 import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
 import { MdColorLens } from 'react-icons/md';
-import { RiImage2Line, RiFileCodeLine } from "react-icons/ri";
+import { RiImage2Line, RiFileCodeLine, RiFileCopy2Line } from "react-icons/ri";
 import { BsToggles } from "react-icons/bs";
 
 const miniatureProps = { position: TOOL_NONE }
@@ -118,6 +118,7 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.toggleNumbers(this.props.svg)}><span className="btn-icon"><BsToggles size="1.2em"/></span> Toggle numbers</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}><span className="btn-icon"><RiImage2Line size="1.2em"/></span> Save PNG</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}><span className="btn-icon"><RiFileCodeLine size="1.2em"/></span> Save SVG</button>
+                  <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button>
                 </div>
                 <ReactSVGPanZoom
                   width={width}
