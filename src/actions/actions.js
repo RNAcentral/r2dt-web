@@ -45,6 +45,10 @@ export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
 }
 
+export function onSearchPerformed() {
+  return {type: types.SEARCH_PERFORMED}
+}
+
 //
 // status
 //

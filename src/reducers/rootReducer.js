@@ -77,6 +77,9 @@ const rootReducer = function (state = initialState, action) {
     case actions.INVALID_SEQUENCE:
       return Object.assign({}, state, {status: "invalidSequence"});
 
+    case actions.SEARCH_PERFORMED:
+      return Object.assign({}, state, {searchPerformed: !state.searchPerformed});
+
     //
     // status
     //
