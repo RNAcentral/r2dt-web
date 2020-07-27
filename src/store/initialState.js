@@ -10,7 +10,8 @@ let initialState = {
   svgNumber: true,
   notation: "",
   template: "",
-  source: ""
+  source: "",
+  searchPerformed: false
 };
 
 export default initialState;

@@ -29,6 +29,7 @@ class R2DTWeb extends HTMLElement {
     // parse arguments
     const customStyle = JSON.parse(this.attributes.customStyle ? this.attributes.customStyle.nodeValue : null);
     const examples = JSON.parse(this.attributes.examples ? this.attributes.examples.nodeValue : null);
+    const search = JSON.parse(this.attributes.search ? this.attributes.search.nodeValue : null);
 
     // render React
     ReactDOM.render([
@@ -39,6 +40,7 @@ class R2DTWeb extends HTMLElement {
           <R2DTWebContainer
               customStyle={customStyle}
               examples={examples}
+              search={search}
           />
         </Provider>
       </body>
