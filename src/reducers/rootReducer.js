@@ -9,6 +9,18 @@ const rootReducer = function (state = initialState, action) {
     //
     // submission form
     //
+    case actions.FIREBASE_STATUS:
+      switch (action.status) {
+        case 'fetchError':
+          return Object.assign({}, state, { firebaseStatus: "fetchError" });
+        case 'postError':
+          return Object.assign({}, state, { firebaseStatus: "postError" });
+        case 'patchError':
+          return Object.assign({}, state, { firebaseStatus: "patchError" });
+        default:
+          return newState;
+      }
+
     case actions.SUBMIT_JOB:
       switch (action.status) {
         case 'success':
@@ -22,6 +34,9 @@ const rootReducer = function (state = initialState, action) {
         default:
           return newState;
       }
+
+    case actions.SET_FIREBASE_ID:
+      return Object.assign({}, state, {firebaseId: action.data});
 
     case actions.UPDATE_STATUS:
       return Object.assign({}, state, {status: "RUNNING"});
@@ -39,7 +54,10 @@ const rootReducer = function (state = initialState, action) {
         svgNumber: true,
         notation: "",
         template: "",
-        source: ""
+        source: "",
+        searchPerformed: false,
+        firebaseId: null,
+        firebaseStatus: "",
       });
 
     case actions.CLEAR_SEQUENCE:
@@ -55,7 +73,10 @@ const rootReducer = function (state = initialState, action) {
         svgNumber: true,
         notation: "",
         template: "",
-        source: ""
+        source: "",
+        searchPerformed: false,
+        firebaseId: null,
+        firebaseStatus: "",
       });
 
     case actions.TEXTAREA_CHANGE:
@@ -71,7 +92,10 @@ const rootReducer = function (state = initialState, action) {
         svgNumber: true,
         notation: "",
         template: "",
-        source: ""
+        source: "",
+        searchPerformed: false,
+        firebaseId: null,
+        firebaseStatus: "",
       });
 
     case actions.INVALID_SEQUENCE:

@@ -20,7 +20,7 @@ class SearchForm extends React.Component {
 
   exampleSequence(sequence) {
     store.dispatch(actionCreators.onExampleSequence(sequence));
-    store.dispatch(actionCreators.onSubmit(sequence));
+    store.dispatch(actionCreators.firebaseFetchData(sequence));
   }
 
   searchSequence(description, sequence) {
@@ -47,9 +47,9 @@ class SearchForm extends React.Component {
     } else if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
     } else if (state.sequence && /^[>]/.test(state.sequence)) {
-      store.dispatch(actionCreators.onSubmit(state.sequence))
+      store.dispatch(actionCreators.firebaseFetchData(state.sequence));
     } else if (state.sequence){
-      store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence))
+      store.dispatch(actionCreators.firebaseFetchData('>description' + '\n' + state.sequence));
     }
   }
 
@@ -62,6 +62,7 @@ class SearchForm extends React.Component {
     const fixCssBtn = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "38px" : "";
     const hideRnacentral = this.props.customStyle && this.props.customStyle.hideRnacentral && this.props.customStyle.hideRnacentral === "true" ? "none" : "initial";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
+    const firebaseStatus = this.props.firebaseStatus;
     return (
       <div className="rna">
         {
@@ -146,6 +147,18 @@ class SearchForm extends React.Component {
             </div>
           )
         }
+        {
+          (firebaseStatus === "fetchError" || firebaseStatus === "postError" || firebaseStatus === "patchError") && (
+            <div className="row">
+              <div className="col-sm-9">
+                <div className="alert alert-warning">
+                  <p><strong>There was an error with Firebase</strong></p>
+                  <span>Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a></span>
+                </div>
+              </div>
+            </div>
+          )
+        }
       </div>
     )
   }
@@ -156,7 +169,8 @@ const mapStateToProps = (state) => ({
   status: state.status,
   submissionError: state.submissionError,
   sequence: state.sequence,
-  searchPerformed: state.searchPerformed
+  searchPerformed: state.searchPerformed,
+  firebaseStatus: state.firebaseStatus
 });
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,4 +1,6 @@
 // submission form
+export const FIREBASE_STATUS = 'FIREBASE_STATUS';
+export const SET_FIREBASE_ID = 'SET_FIREBASE_ID';
 export const SUBMIT_JOB = 'SUBMIT_JOB';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const EXAMPLE_SEQUENCE = 'EXAMPLE_SEQUENCE';
