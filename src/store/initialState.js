@@ -11,7 +11,9 @@ let initialState = {
   notation: "",
   template: "",
   source: "",
-  searchPerformed: false
+  searchPerformed: false,
+  firebaseId: null,
+  firebaseStatus: "",
 };
 
 export default initialState;
