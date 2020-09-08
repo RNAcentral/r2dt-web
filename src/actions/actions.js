@@ -5,7 +5,98 @@ import {store} from 'app.jsx';
 //
 // submission form
 //
+export function firebaseFetchData(sequence) {
+  let foundR2DT = false;
+  let currentDate = new Date();
+
+  return function(dispatch) {
+    fetch(routes.firebase(), {
+      method: 'GET',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      }
+    })
+    .then(function (response) {
+      if (response.ok) { return response.json() }
+      else { throw response }
+    })
+    .then(data => {
+      data && Object.entries(data).map(([key,value]) => {
+        if (sequence === value.sequence){
+          let submitted = new Date(value.date)
+          submitted.setDate(submitted.getDate()+7);
+          submitted.setHours(submitted.getHours() - 1);
+
+          if (currentDate < submitted) {
+            dispatch({type: types.SET_FIREBASE_ID, data: key})
+            dispatch(fetchStatus(value.r2dt_id));
+            foundR2DT = true;
+          } else {
+            dispatch({type: types.SET_FIREBASE_ID, data: key})
+          }
+        }
+      });
+      if (!foundR2DT) { dispatch(onSubmit(sequence)) }
+    })
+    .catch(error => dispatch({type: types.FIREBASE_STATUS, status: 'fetchError'}));
+  }
+}
+
+export function firebasePost(r2dt_id, sequence) {
+  const currentDate = new Date();
+
+  return function(dispatch) {
+    fetch(routes.firebase(), {
+      method: 'POST',
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        r2dt_id: r2dt_id,
+        sequence: sequence,
+        date: currentDate
+      })
+    })
+    .then(function (response) {
+      if (response.ok) { return response.json() }
+      else { throw response }
+    })
+    .then(data => {dispatch({type: types.SET_FIREBASE_ID, data: data.name})})
+    .catch(error => dispatch({type: types.FIREBASE_STATUS, status: 'postError'}));
+  }
+}
+
+export function firebasePatch(r2dt_id, svg) {
+  let state = store.getState();
+  const currentDate = new Date();
+  let data = {}
+
+  if (svg === "notVerified") {
+    data = { r2dt_id: r2dt_id, date: currentDate }
+  } else {
+    data = { svg: svg }
+  }
+
+  if (state.firebaseId) {
+    return function(dispatch) {
+      fetch(routes.firebaseId(state.firebaseId), {
+        method: 'PATCH',
+        headers: {
+          'Accept': 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data)
+      })
+      .catch(error => dispatch({type: types.FIREBASE_STATUS, status: 'patchError'}));
+    }
+  }
+}
+
 export function onSubmit(sequence) {
+  let state = store.getState();
+
   return function(dispatch) {
     dispatch({type: types.UPDATE_STATUS});
     fetch(routes.submitJob(), {
@@ -22,6 +113,8 @@ export function onSubmit(sequence) {
     })
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
+        if (state.firebaseId) { dispatch(firebasePatch(data, "notVerified")) }
+        else { dispatch(firebasePost(data, sequence)) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
@@ -43,6 +136,10 @@ export function onSequenceTextAreaChange(event) {
 
 export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
+}
+
+export function onSearchPerformed() {
+  return {type: types.SEARCH_PERFORMED}
 }
 
 //
@@ -106,9 +203,13 @@ export function getSvg(jobId) {
     .then(data => {
       let width = (data.match(/width="(.*?)"/)[1]);
       let height = (data.match(/height="(.*?)"/)[1]);
-      dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: data})
+      dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: data});
+      dispatch(firebasePatch("", true));
     })
-    .catch(error => dispatch({type: types.GET_SVG, status: 'error'}));
+    .catch(error => {
+      dispatch(firebasePatch("", false));
+      dispatch({type: types.GET_SVG, status: 'error'});
+    });
   }
 }
 

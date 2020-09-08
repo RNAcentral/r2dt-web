@@ -1,4 +1,6 @@
 // submission form
+export const FIREBASE_STATUS = 'FIREBASE_STATUS';
+export const SET_FIREBASE_ID = 'SET_FIREBASE_ID';
 export const SUBMIT_JOB = 'SUBMIT_JOB';
 export const UPDATE_STATUS = 'UPDATE_STATUS';
 export const EXAMPLE_SEQUENCE = 'EXAMPLE_SEQUENCE';
@@ -19,3 +21,4 @@ export const SVG_NUMBERS = 'SVG_NUMBERS';
 export const FASTA = 'FASTA';
 export const TSV = 'TSV';
 export const UPDATE_SEQUENCE = 'UPDATE_SEQUENCE';
+export const SEARCH_PERFORMED = 'SEARCH_PERFORMED';
