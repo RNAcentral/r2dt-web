@@ -1,6 +1,6 @@
 let ebiDevOrProd = process.env.REACT_APP_BRANCH === 'dev' ? 'wwwdev' : 'www';
 let server =  `https://${ebiDevOrProd}.ebi.ac.uk/Tools/services/rest/r2dt`;
-let firebaseServer = 'https://r2dt-dev.firebaseio.com';
+let firebaseServer = process.env.REACT_APP_FIREBASE;
 
 module.exports = {
   submitJob:  () => `${server}/run`,
