@@ -10,7 +10,10 @@ let initialState = {
   svgNumber: true,
   notation: "",
   template: "",
-  source: ""
+  source: "",
+  searchPerformed: false,
+  firebaseId: null,
+  firebaseStatus: "",
 };
 
 export default initialState;

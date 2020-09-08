@@ -25,6 +25,10 @@ class Results extends React.Component {
       this.viewerRef.current.fitToViewer("center", "center");
       this.doFirstFit = false;
     }
+    if (!this.props.jobId && !this.doFirstFit) {
+      this.setState({tool: TOOL_NONE, value: INITIAL_VALUE});
+      this.doFirstFit = true;
+    }
   }
 
   changeTool(nextTool) {
