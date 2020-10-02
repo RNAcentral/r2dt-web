@@ -108,7 +108,6 @@ class Results extends React.Component {
           this.props.jobId && this.props.svg && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
               <div className="col-sm-12">
-                <br />
                 <span style={title}>Secondary structure </span>
                 {
                   (this.props.template === "error" || this.props.source === "error") ? <p className="text-muted mt-3">
