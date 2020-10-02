@@ -23,14 +23,8 @@ class SearchForm extends React.Component {
     store.dispatch(actionCreators.firebaseFetchData(sequence));
   }
 
-  searchSequence(description, sequence) {
-    if (sequence.length < 40 || sequence.length > 8000) {
-      store.dispatch(actionCreators.invalidSequence());
-    } else {
-      store.dispatch(actionCreators.onExampleSequence(description + "\n" + sequence));
-      store.dispatch(actionCreators.onSubmit(description + "\n" + sequence));
-      store.dispatch(actionCreators.onSearchPerformed());
-    }
+  searchUrs(urs) {
+    store.dispatch(actionCreators.onSubmitUrs(urs));
   }
 
   onSubmit(event) {
@@ -54,8 +48,7 @@ class SearchForm extends React.Component {
   }
 
   render() {
-    const description = this.props.search && this.props.search.description ? this.props.search.description : ">description";
-    const sequence = this.props.search && this.props.search.sequence ? this.props.search.sequence : null;
+    const urs = this.props.search ? this.props.search["urs"] : null;
     const searchButtonColor = this.props.customStyle && this.props.customStyle.searchButtonColor ? this.props.customStyle.searchButtonColor : "";
     const clearButtonColor = this.props.customStyle && this.props.customStyle.clearButtonColor ? this.props.customStyle.clearButtonColor : "#6c757d";
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
@@ -66,7 +59,7 @@ class SearchForm extends React.Component {
     return (
       <div className="rna">
         {
-          !sequence ? <div>
+          !urs ? <div>
             <div className="row">
               <div className="col-sm-9">
                 <small className="text-muted" style={{display: hideRnacentral}}><img src={'https://rnacentral.org/static/img/logo/rnacentral-logo.png'} alt="RNAcentral logo" style={{width: "1%", verticalAlign: "text-top"}}/> Powered by <a className="custom-link mr-2" style={{color: linkColor}} target='_blank' href='https://rnacentral.org/'>RNAcentral</a></small>
@@ -100,7 +93,7 @@ class SearchForm extends React.Component {
                 </div>
               </div>
             </form>
-          </div> : !this.props.searchPerformed && this.props.status !== "invalidSequence" ? this.searchSequence(description, sequence) : this.props.status === "RUNNING" ? <div><span className={`spinner-border ${fixCss ? '' : 'spinner-border-sm'}`} role="status" aria-hidden="true"></span> Running...</div> : ""
+          </div> : this.props.status === "notSubmitted" ? this.searchUrs(urs) : ""
         }
         {
           this.props.submissionError && (
@@ -169,7 +162,6 @@ const mapStateToProps = (state) => ({
   status: state.status,
   submissionError: state.submissionError,
   sequence: state.sequence,
-  searchPerformed: state.searchPerformed,
   firebaseStatus: state.firebaseStatus
 });
 
