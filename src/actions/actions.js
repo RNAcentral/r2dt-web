@@ -122,7 +122,6 @@ export function onSubmit(sequence) {
 }
 
 export function onSubmitUrs(urs) {
-  console.log("oi");
   let state = store.getState();
 
   return function(dispatch) {
