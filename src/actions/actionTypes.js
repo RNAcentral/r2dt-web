@@ -21,4 +21,4 @@ export const SVG_NUMBERS = 'SVG_NUMBERS';
 export const FASTA = 'FASTA';
 export const TSV = 'TSV';
 export const UPDATE_SEQUENCE = 'UPDATE_SEQUENCE';
-export const SEARCH_PERFORMED = 'SEARCH_PERFORMED';
+export const URS_RESULTS = 'URS_RESULTS';

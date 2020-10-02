@@ -121,6 +121,38 @@ export function onSubmit(sequence) {
   }
 }
 
+export function onSubmitUrs(urs) {
+  console.log("oi");
+  let state = store.getState();
+
+  return function(dispatch) {
+    if (state.status === "notSubmitted") { dispatch({type: types.UPDATE_STATUS}) }
+    fetch(routes.fetchUrs(urs), {
+      method: 'GET'
+    })
+    .then(function (response) {
+      if (response.ok) { return response.json() }
+      else { throw response }
+    })
+    .then(response => {
+      let width = (response.data.layout.match(/width="(.*?)"/)[1]);
+      let height = (response.data.layout.match(/height="(.*?)"/)[1]);
+      dispatch({
+        type: types.URS_RESULTS,
+        status: 'success',
+        width: width,
+        height: height,
+        svg: response.data.layout,
+        notation: response.data.secondary_structure,
+        template: response.data.model_id,
+        source: response.data.source,
+        jobId: urs
+      })
+    })
+    .catch(error => dispatch({type: types.URS_RESULTS, status: 'error'}));
+  }
+}
+
 export function onExampleSequence(sequence) {
   return {type: types.EXAMPLE_SEQUENCE, sequence: sequence};
 }
@@ -136,10 +168,6 @@ export function onSequenceTextAreaChange(event) {
 
 export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
-}
-
-export function onSearchPerformed() {
-  return {type: types.SEARCH_PERFORMED}
 }
 
 //
