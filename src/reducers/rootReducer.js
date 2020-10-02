@@ -55,7 +55,6 @@ const rootReducer = function (state = initialState, action) {
         notation: "",
         template: "",
         source: "",
-        searchPerformed: false,
         firebaseId: null,
         firebaseStatus: "",
       });
@@ -74,7 +73,6 @@ const rootReducer = function (state = initialState, action) {
         notation: "",
         template: "",
         source: "",
-        searchPerformed: false,
         firebaseId: null,
         firebaseStatus: "",
       });
@@ -93,16 +91,12 @@ const rootReducer = function (state = initialState, action) {
         notation: "",
         template: "",
         source: "",
-        searchPerformed: false,
         firebaseId: null,
         firebaseStatus: "",
       });
 
     case actions.INVALID_SEQUENCE:
       return Object.assign({}, state, {status: "invalidSequence"});
-
-    case actions.SEARCH_PERFORMED:
-      return Object.assign({}, state, {searchPerformed: !state.searchPerformed});
 
     //
     // status
@@ -129,6 +123,25 @@ const rootReducer = function (state = initialState, action) {
     //
     case actions.FETCH_RESULTS:
       return Object.assign({}, state, {status: "FINISHED"});
+
+    case actions.URS_RESULTS:
+      switch (action.status) {
+        case 'success':
+          return Object.assign({}, state, {
+            status: "FINISHED",
+            width: action.width,
+            height: action.height,
+            svg: action.svg,
+            notation: action.notation,
+            template: action.template,
+            source: action.source,
+            jobId: action.jobId
+          });
+        case 'error':
+          return Object.assign({}, state, {status: "ERROR"});
+        default:
+          return newState;
+      }
 
     case actions.GET_SVG:
       switch (action.status) {

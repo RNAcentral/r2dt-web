@@ -27,7 +27,7 @@ class SequenceSearch extends React.Component {
     let url = window.location.href;
     let splitUrl = url.split("?jobid=");
     let domain = splitUrl[0]
-    if (this.props.jobId){
+    if (this.props.jobId && /^r2dt/.test(this.props.jobId)){
       window.history.replaceState("", "", domain + "?jobid=" + this.props.jobId);
     } else {
       window.history.replaceState("", "", domain);
