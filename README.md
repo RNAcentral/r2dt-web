@@ -5,18 +5,20 @@ This is an embeddable component that you can include into your website to visual
 This plugin is written in React/Redux. It is bundled as a Web Component, so it should not clash with your website's 
 javascript or CSS.
 
-## Installation
+## How to use
 
-Download this package directly from Github.
+To use the latest stable version without worrying about updates, use the component's javascript package available at 
+Github:
 
-`git clone https://github.com/RNAcentral/r2dt-web.git`
+`<script type="text/javascript" src="https://rnacentral.github.io/r2dt-web/dist/r2dt-web.js"></script>`
 
-Now you can add the component's javascript bundle (it contains all the styles and fonts) to your web page either 
-directly or through an import with Webpack:
+If you prefer to install this package and perform the updates manually, see the [Installation](#Installation) section. 
 
-`<script type="text/javascript" src="/r2dt-web/dist/r2dt-web.js"></script>`
+This tool can be used in two ways:
 
-To use it just insert an html tag somewhere in your html:
+**1- Allow the user to enter a sequence and search for the secondary structure**. 
+
+For that, you just need to insert this html tag somewhere in your html:
 
 ```
 <r2dt-web />
@@ -27,7 +29,8 @@ To show some examples, use:
 ```
 <r2dt-web 
     examples='[
-        {"description": "miRNA hsa-let-7a-1", "urs": "URS000004F5D8", "sequence": "CUAUACAAUCUACUGUCUUUC"}
+        {"description": "RNA5S1-8", "sequence": "GUCUACGGCCAUACCACCCUGAACGCGCCCGAUCUCGUCUGAUCUCGGAAGCUAAGCAGGGUCGGGCCUGGUUAGUACUUGGAUGGGAGACCGCCUGGGAAUACCGGGUGCUGUAGGCUUU"},
+        {"description": "TRT-TGT2-1", "sequence": "GGCTCCATAGCTCAGTGGTTAGAGCACTGGTCTTGTAAACCAGGGGTCGCGAGTTCGATCCTCGCTGGGGCCT"}
     ]'
 />
 ```
@@ -46,10 +49,43 @@ The example below changes the color of the buttons:
 
 For a minimal example, see [index.html](./index.html).
 
+**2- Given a specific URS, show the secondary structure**
+
+To show the secondary structure for a specific sequence, you need to pass the **U**nique **R**NA **S**equence 
+identifier (URS), for example: 
+
+```
+<r2dt-web search='{"urs": "URS000044DFF6"}' />
+```
+
+Click [here](https://rnacentral.org/help#how-to-find-rnacentral-id) to see how you can find an RNAcentral identifier 
+for an RNA sequence.
+
+Obviously, you can automate this process by passing the URS as a variable, for example:
+
+```
+<r2dt-web search='{"urs": "{{ variable }}"}' />
+```
+
+For a minimal example, see [urs-example.html](./urs-example.html).
+
+## Installation
+
+Download this package directly from Github.
+
+`git clone https://github.com/RNAcentral/r2dt-web.git`
+
+Now you can add the component's javascript bundle (it contains all the styles and fonts) to your web page either 
+directly or through an import with Webpack:
+
+`<script type="text/javascript" src="/r2dt-web/dist/r2dt-web.js"></script>`
+
+You will need to run the `git pull` command whenever there are updates.
+
 ## Attributes/parameters
 
-This component accepts a number of attributes. You pass them as html attributes
-and their values are strings (this is a requirement of Web Components):
+This component accepts a number of attributes. You pass them as html attributes and their values are strings 
+(this is a requirement of Web Components):
 
 #### layout
 
@@ -61,6 +97,8 @@ fixCss                      | fix the CSS. Use *"fixCss": "true"* if the button 
 linkColor                   | change the color of the links                                                     |
 searchButtonColor           | change the color of the `Search` button                                           |
 clearButtonColor            | change the color of the `Clear` button                                            |
+titleColor                  | change the color of the `Secondary structure` text                                |
+titleSize                   | change the size of the `Secondary structure` text                                 |
 
 ## Developer details
 
@@ -79,21 +117,12 @@ clearButtonColor            | change the color of the `Clear` button            
 This embed is implemented as a Web Component, wrapping a piece of code in React/Redux.
 
 Being a Web Component, it isolates CSS styles from the main page to avoid clash of styles with it.
-The CSS styles and fonts are bundled into the javascript inline via Webpack 3 build system,
-see webpack.config.js file. Upon load of RNAcentral-sequence-search.js, the component registers
-itself in the custom elements registry.
+The CSS styles and fonts are bundled into the javascript inline via Webpack 3 build system, see webpack.config.js file. 
+Upon load of r2dt-web.js, the component registers itself in the custom elements registry.
 
-There are some peculiarities about interaction of Web Components with React.
-
-First, there is a known issue with React events breaking, when React component is mounted under a shadow root in
-shadow DOM. We solve this by retargeting React events for shadow dom with this package:
-
-* https://www.npmjs.com/package/react-shadow-dom-retarget-events.
-
-Second, Web Components accept input parameters as strings. That means that we have to parse
-parameters in Web Component initialization code and pass the resulting objects as props to React.
-Here are some examples of passing the parameters to the Web Component or from Web Component
-to React:
+Web Components accept input parameters as strings. That means that we have to parse parameters in Web Component 
+initialization code and pass the resulting objects as props to React. Here are some examples of passing the 
+parameters to the Web Component or from Web Component to React:
 
 * https://hackernoon.com/how-to-turn-react-component-into-native-web-component-84834315cb24
 * https://stackoverflow.com/questions/50404970/web-components-pass-data-to-and-from/50416836
