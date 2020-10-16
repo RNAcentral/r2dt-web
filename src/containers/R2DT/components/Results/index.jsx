@@ -131,6 +131,7 @@ class Results extends React.Component {
                   value={this.state.value} onChangeValue={value => this.changeValue(value)}
                   toolbarProps={toolbarProps}
                   miniatureProps={miniatureProps}
+                  detectAutoPan={false}
                   background={"#fff"}
                   style={{ outline: '1px solid #6c757d' }}
                 >
