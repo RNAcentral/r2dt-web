@@ -80,6 +80,7 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
+    const width = this.state.windowWidth > 1100 ? 1100 : this.state.windowWidth - 40;
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
     return (
@@ -127,7 +128,7 @@ class Results extends React.Component {
                 </div>
                 <div className="border border-secondary">
                   <UncontrolledReactSVGPanZoom
-                    width={this.state.windowWidth > 1140 ? 1140 : this.state.windowWidth}
+                    width={width}
                     height={height}
                     ref={this.viewerRef}
                     toolbarProps={toolbarProps}
