@@ -127,7 +127,7 @@ class Results extends React.Component {
                 </div>
                 <div className="border border-secondary">
                   <UncontrolledReactSVGPanZoom
-                    width={this.state.windowWidth - 40}
+                    width={this.state.windowWidth > 1140 ? 1140 : this.state.windowWidth}
                     height={height}
                     ref={this.viewerRef}
                     toolbarProps={toolbarProps}
