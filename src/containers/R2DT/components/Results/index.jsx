@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import * as actionCreators from 'actions/actions';
-import {ALIGN_CENTER, INITIAL_VALUE, POSITION_LEFT, ReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
+import {ALIGN_CENTER, POSITION_LEFT, UncontrolledReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
 import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
 import { MdColorLens } from 'react-icons/md';
@@ -15,7 +15,6 @@ const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlig
 class Results extends React.Component {
   constructor(props) {
     super(props);
-    this.state = {tool: TOOL_NONE, value: INITIAL_VALUE}
     this.viewerRef = React.createRef();
     this.doFirstFit = true;
   }
@@ -26,17 +25,8 @@ class Results extends React.Component {
       this.doFirstFit = false;
     }
     if (!this.props.jobId && !this.doFirstFit) {
-      this.setState({tool: TOOL_NONE, value: INITIAL_VALUE});
       this.doFirstFit = true;
     }
-  }
-
-  changeTool(nextTool) {
-    this.setState({tool: nextTool})
-  }
-
-  changeValue(nextValue) {
-    this.setState({value: nextValue})
   }
 
   downloadPNG() {
@@ -123,22 +113,21 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}><span className="btn-icon"><RiFileCodeLine size="1.2em"/></span> Save SVG</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button>
                 </div>
-                <ReactSVGPanZoom
-                  width={width}
-                  height={height}
-                  ref={this.viewerRef}
-                  tool={this.state.tool} onChangeTool={tool => this.changeTool(tool)}
-                  value={this.state.value} onChangeValue={value => this.changeValue(value)}
-                  toolbarProps={toolbarProps}
-                  miniatureProps={miniatureProps}
-                  detectAutoPan={false}
-                  background={"#fff"}
-                  style={{ outline: '1px solid #6c757d' }}
-                >
-                  <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
-                    <SvgLoader svgXML={this.props.svg} />
-                  </svg>
-                </ReactSVGPanZoom>
+                <div className="border border-secondary">
+                  <UncontrolledReactSVGPanZoom
+                    width={width}
+                    height={height}
+                    ref={this.viewerRef}
+                    toolbarProps={toolbarProps}
+                    miniatureProps={miniatureProps}
+                    detectAutoPan={false}
+                    background={"#fff"}
+                  >
+                    <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
+                      <SvgLoader svgXML={this.props.svg} />
+                    </svg>
+                  </UncontrolledReactSVGPanZoom>
+                </div>
                 <div className="mt-3">
                   <strong>Colour legend</strong>
                   <ul className="list-unstyled">
