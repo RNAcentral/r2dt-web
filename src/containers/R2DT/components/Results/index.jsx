@@ -14,10 +14,11 @@ const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlig
 
 class Results extends React.Component {
   constructor(props) {
-    super(props);
-    this.viewerRef = React.createRef();
+    super(props);Reac
+    this.viewerRef = t.createRef();
+    this.divRef = React.createRef();
     this.doFirstFit = true;
-    this.state = { windowWidth: window.innerWidth };
+    this.state = { divWidth: window.innerWidth };
   }
 
   componentDidMount() {
@@ -39,7 +40,8 @@ class Results extends React.Component {
   }
 
   handleResize(e) {
-    this.setState({ windowWidth: window.innerWidth });
+    const { current } = this.divRef;
+    current && this.setState({ divWidth: current.offsetWidth });
   };
 
   downloadPNG() {
@@ -80,11 +82,11 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
-    const width = this.state.windowWidth > 1100 ? 1100 : this.state.windowWidth - 40;
+    const width = this.state.divWidth > 1100 ? 1100 : this.state.divWidth - 40;
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
     return (
-      <div className="rna">
+      <div className="rna" ref={this.divRef}>
         {
           this.props.jobId && this.props.status === "error" && (
             <div className="row" key={`error-div`}>
