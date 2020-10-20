@@ -14,8 +14,8 @@ const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlig
 
 class Results extends React.Component {
   constructor(props) {
-    super(props);Reac
-    this.viewerRef = t.createRef();
+    super(props);
+    this.viewerRef = React.createRef();
     this.divRef = React.createRef();
     this.doFirstFit = true;
     this.state = { divWidth: window.innerWidth };
