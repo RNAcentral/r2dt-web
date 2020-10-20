@@ -28,7 +28,7 @@ export function firebaseFetchData(sequence) {
           submitted.setDate(submitted.getDate()+7);
           submitted.setHours(submitted.getHours() - 1);
 
-          if (currentDate < submitted) {
+          if (currentDate < submitted && (value.status === "RUNNING" || value.status === "FINISHED")) {
             dispatch({type: types.SET_FIREBASE_ID, data: key})
             dispatch(fetchStatus(value.r2dt_id));
             foundR2DT = true;
@@ -68,13 +68,15 @@ export function firebasePost(r2dt_id, sequence) {
   }
 }
 
-export function firebasePatch(r2dt_id, svg) {
+export function firebasePatch(r2dt_id, svg, status) {
   let state = store.getState();
   const currentDate = new Date();
-  let data = {}
+  let data = {};
 
   if (svg === "notVerified") {
     data = { r2dt_id: r2dt_id, date: currentDate }
+  } else if (status !== "notVerified") {
+    data = { status: status }
   } else {
     data = { svg: svg }
   }
@@ -113,7 +115,7 @@ export function onSubmit(sequence) {
     })
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
-        if (state.firebaseId) { dispatch(firebasePatch(data, "notVerified")) }
+        if (state.firebaseId) { dispatch(firebasePatch(data, "notVerified", "notVerified")) }
         else { dispatch(firebasePost(data, sequence)) }
         dispatch(fetchStatus(data));
     })
@@ -204,6 +206,7 @@ export function fetchStatus(jobId) {
       } else if (data === 'ERROR') {
         dispatch({type: types.FETCH_STATUS, status: 'ERROR'})
       }
+      dispatch(firebasePatch("", "", data));
     })
     .catch(error => {
       if (store.getState().hasOwnProperty('statusTimeout')) {
@@ -231,10 +234,10 @@ export function getSvg(jobId) {
       let width = (data.match(/width="(.*?)"/)[1]);
       let height = (data.match(/height="(.*?)"/)[1]);
       dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: data});
-      dispatch(firebasePatch("", true));
+      dispatch(firebasePatch("", true, "notVerified"));
     })
     .catch(error => {
-      dispatch(firebasePatch("", false));
+      dispatch(firebasePatch("", false, "notVerified"));
       dispatch({type: types.GET_SVG, status: 'error'});
     });
   }
