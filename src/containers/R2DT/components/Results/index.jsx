@@ -63,16 +63,21 @@ class Results extends React.Component {
 
   sourceLink(source, linkColor){
     let link = "#";
+    let name = "";
     if (source.toLowerCase() === "crw") {
       link = "http://www.rna.ccbb.utexas.edu/";
+      name = "CRW";
     } else if (source.toLowerCase() === "rfam") {
       link = "https://rfam.org/";
+      name = "Rfam";
     } else if (source.toLowerCase() === "ribovision") {
       link = "http://apollo.chemistry.gatech.edu/RiboVision/";
+      name = "RiboVision";
     } else if (source.toLowerCase() === "gtrnadb") {
       link = "http://gtrnadb.ucsc.edu/";
+      name = "GtRNAdb"
     }
-    return <a className="custom-link" style={{color: linkColor}} href={link} target="_blank">{source}</a>
+    return <a className="custom-link" style={{color: linkColor}} href={link} target="_blank">{name}</a>
   }
 
   render() {
