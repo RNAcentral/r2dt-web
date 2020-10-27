@@ -14,7 +14,6 @@ class SearchForm extends React.Component {
     return examples.map(example =>
       <li key={example.description}>
         <a className="custom-link" style={{color: linkColor}} onClick={() => this.exampleSequence('>' + example.description + '\n' +example.sequence)}>{example.description}</a>
-        <small>{!!(example.urs) ? ` (${example.urs})` : " "}</small>
       </li>)
   }
 
@@ -61,16 +60,16 @@ class SearchForm extends React.Component {
         {
           !urs ? <div>
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12">
                 <small className="text-muted" style={{display: hideRnacentral}}><img src={'https://rnacentral.org/static/img/logo/rnacentral-logo.png'} alt="RNAcentral logo" style={{width: "1%", verticalAlign: "text-top"}}/> Powered by <a className="custom-link mr-2" style={{color: linkColor}} target='_blank' href='https://rnacentral.org/'>RNAcentral</a></small>
               </div>
             </div>
             <form onSubmit={(e) => this.onSubmit(e)}>
               <div className="row mt-1">
-                <div className="col-sm-9">
+                <div className="col-12 col-sm-9 mb-2">
                   <textarea style={{fontSize: fixCss}} className="form-control" id="sequence" name="sequence" rows="7" value={this.props.sequence} onChange={(e) => this.props.onSequenceTextareaChange(e)} placeholder="Enter RNA/DNA sequence (with an optional description in FASTA format) or job id" />
                 </div>
-                <div className="col-sm-3">
+                <div className="col-12 col-sm-3">
                   {
                     this.props.status === "RUNNING" ?
                       <button className="btn btn-primary mb-2" style={{background: searchButtonColor, borderColor: searchButtonColor, fontSize: fixCss, height: fixCssBtn}} type="button" disabled>
@@ -88,7 +87,7 @@ class SearchForm extends React.Component {
                 </div>
               </div>
               <div className="row">
-                <div className="col-sm-9">
+                <div className="col-12 col-sm-9">
                   {this.props.examples ? <div id="examples"><ul className="text-muted">Examples: {this.showExamples(linkColor)}</ul></div> : ""}
                 </div>
               </div>
@@ -98,7 +97,7 @@ class SearchForm extends React.Component {
         {
           this.props.submissionError && (
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12 col-sm-9">
                 <div className="alert alert-danger">
                   { this.props.submissionError }
                 </div>
@@ -109,7 +108,7 @@ class SearchForm extends React.Component {
         {
           this.props.status === "invalidSequence" && (
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
                   {this.props.sequence.length < 40 ? "The sequence cannot be shorter than 40 nucleotides" : "The sequence cannot be longer than 8000 nucleotides"}
                 </div>
@@ -120,7 +119,7 @@ class SearchForm extends React.Component {
         {
           this.props.status === "NOT_FOUND" && (
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
                   Job not found. The results might have expired.
                   If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>
@@ -132,7 +131,7 @@ class SearchForm extends React.Component {
         {
           (this.props.status === "FAILURE" || this.props.status === "ERROR") && (
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12 col-sm-9">
                 <div className="alert alert-danger">
                   There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                 </div>
@@ -143,7 +142,7 @@ class SearchForm extends React.Component {
         {
           (firebaseStatus === "fetchError" || firebaseStatus === "postError" || firebaseStatus === "patchError") && (
             <div className="row">
-              <div className="col-sm-9">
+              <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
                   <p><strong>There was an error with Firebase</strong></p>
                   <span>Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a></span>
