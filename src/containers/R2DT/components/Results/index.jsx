@@ -149,16 +149,16 @@ class Results extends React.Component {
                   </UncontrolledReactSVGPanZoom>
                 </div>
                 <div className="mt-3">
-                  <span className="text-bold">Colour legend</span>
+                  <strong>Colour legend</strong>
                   <ul className="list-unstyled">
                     <li className="mt-1"><span className="traveler-black traveler-key"></span> Same as the template</li>
                     <li className="mt-1">
                       <span className="traveler-green traveler-key"></span> Modified compared to the template.
-                      <span className="text-bold"> Tip:</span> Hover over green nucleotides for more details
+                      <strong> Tip:</strong> Hover over green nucleotides for more details
                     </li>
                     <li className="mt-1"><span className="traveler-red traveler-key"></span> Inserted nucleotides</li>
                     <li className="mt-1"><span className="traveler-blue traveler-key"></span> Repositioned compared to the template</li>
-                    <li className="mt-1"><span className="text-bold"> Tip:</span> Hover over the nucleotides to see nucleotide numbers</li>
+                    <li className="mt-1"><strong>Tip:</strong> Hover over the nucleotides to see nucleotide numbers</li>
                   </ul>
                 </div>
               </div>
