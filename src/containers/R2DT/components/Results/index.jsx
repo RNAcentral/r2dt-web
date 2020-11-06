@@ -115,7 +115,7 @@ class Results extends React.Component {
           )
         }
         {
-          this.props.jobId && this.props.svg && this.props.status === "FINISHED" && [
+          this.props.jobId && this.props.svg && this.props.notation && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
               <div className="col-12">
                 <span style={title}>Secondary structure </span>
