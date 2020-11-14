@@ -148,7 +148,7 @@ const rootReducer = function (state = initialState, action) {
         case 'success':
           return Object.assign({}, state, {width: action.width, height: action.height, svg: action.svg});
         case 'error':
-          return Object.assign({}, state, {});
+          return Object.assign({}, state, {svg: "SVG not available"});
         default:
           return newState;
       }
