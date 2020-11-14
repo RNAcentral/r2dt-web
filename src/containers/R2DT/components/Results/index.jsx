@@ -104,7 +104,7 @@ class Results extends React.Component {
           )
         }
         {
-          this.props.jobId && !this.props.svg && this.props.status === "FINISHED" && (
+          this.props.jobId && this.props.svg === "SVG not available" && this.props.status === "FINISHED" && (
             <div className="row" key={`error-div`}>
               <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
@@ -115,7 +115,7 @@ class Results extends React.Component {
           )
         }
         {
-          this.props.jobId && this.props.svg && this.props.notation && this.props.status === "FINISHED" && [
+          this.props.jobId && this.props.svg !== "SVG not available" && this.props.status === "FINISHED" && [
             <div className="row" key={`results-div`}>
               <div className="col-12">
                 <span style={title}>Secondary structure </span>
@@ -131,7 +131,7 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.toggleNumbers(this.props.svg)}><span className="btn-icon"><BsToggles size="1.2em"/></span> Toggle numbers</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}><span className="btn-icon"><RiImage2Line size="1.2em"/></span> Save PNG</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}><span className="btn-icon"><RiFileCodeLine size="1.2em"/></span> Save SVG</button>
-                  <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button>
+                  {this.props.notation ? <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button> : ""}
                 </div>
                 <div className="border border-secondary">
                   <UncontrolledReactSVGPanZoom
@@ -166,7 +166,7 @@ class Results extends React.Component {
           ]
         }
         {
-          this.props.jobId && this.props.svg && this.props.status === "FINISHED" && this.props.notation && [
+          this.props.jobId && this.props.svg !== "SVG not available" && this.props.status === "FINISHED" && this.props.notation && [
             <div className="row" key={`notation-div`}>
               <div className="col-12">
                 <p className="notation-title">Dot-bracket notation</p>
