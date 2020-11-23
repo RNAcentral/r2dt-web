@@ -13,6 +13,7 @@ let initialState = {
   source: "",
   firebaseId: null,
   firebaseStatus: "",
+  advancedSearchCollapsed: true,
 };
 
 export default initialState;
