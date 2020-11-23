@@ -98,6 +98,9 @@ const rootReducer = function (state = initialState, action) {
     case actions.INVALID_SEQUENCE:
       return Object.assign({}, state, {status: "invalidSequence"});
 
+    case actions.TOGGLE_ADVANCED_SEARCH:
+      return Object.assign({}, state, { advancedSearchCollapsed: !state.advancedSearchCollapsed });
+
     //
     // status
     //

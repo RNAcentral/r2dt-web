@@ -172,6 +172,10 @@ export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
 }
 
+export function onToggleAdvancedSearch() {
+  return {type: types.TOGGLE_ADVANCED_SEARCH };
+}
+
 //
 // status
 //
