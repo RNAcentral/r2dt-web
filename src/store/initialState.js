@@ -14,6 +14,7 @@ let initialState = {
   firebaseId: null,
   firebaseStatus: "",
   advancedSearchCollapsed: true,
+  templateId: "",
 };
 
 export default initialState;
