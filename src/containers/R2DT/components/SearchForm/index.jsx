@@ -97,7 +97,7 @@ class SearchForm extends React.Component {
                       <Typeahead className='search-template' id='search-template-id'
                         options={templates} placeholder="Search for a template"
                         minLength={2}
-                        onChange={(selected) => { if (selected) {console.log(selected)}}}
+                        onChange={(e) => this.props.onChangeTemplateId(e)}
                         emptyLabel={'No templates found'} >
                         {({ onClear, selected }) => (
                           <div className="rbt-aux">
@@ -184,11 +184,13 @@ const mapStateToProps = (state) => ({
   submissionError: state.submissionError,
   sequence: state.sequence,
   firebaseStatus: state.firebaseStatus,
-  advancedSearchCollapsed: state.advancedSearchCollapsed
+  advancedSearchCollapsed: state.advancedSearchCollapsed,
+  templateId: state.templateId
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSequenceTextareaChange: (event) => dispatch(actionCreators.onSequenceTextAreaChange(event)),
+  onChangeTemplateId: (event) => dispatch(actionCreators.onChangeTemplateId(event)),
   onClearSequence: () => dispatch(actionCreators.onClearSequence()),
   onToggleAdvancedSearch: () => dispatch(actionCreators.onToggleAdvancedSearch()),
 });

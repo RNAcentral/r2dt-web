@@ -75,6 +75,8 @@ const rootReducer = function (state = initialState, action) {
         source: "",
         firebaseId: null,
         firebaseStatus: "",
+        advancedSearchCollapsed: true,
+        templateId: "",
       });
 
     case actions.TEXTAREA_CHANGE:
@@ -94,6 +96,9 @@ const rootReducer = function (state = initialState, action) {
         firebaseId: null,
         firebaseStatus: "",
       });
+
+    case actions.TEMPLATE_CHANGE:
+      return Object.assign({}, state, {templateId: action.templateId});
 
     case actions.INVALID_SEQUENCE:
       return Object.assign({}, state, {status: "invalidSequence"});

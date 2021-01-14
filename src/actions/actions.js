@@ -43,7 +43,7 @@ export function firebaseFetchData(sequence) {
   }
 }
 
-export function firebasePost(r2dt_id, sequence) {
+export function firebasePost(r2dt_id, sequence, templateId) {
   const currentDate = new Date();
 
   return function(dispatch) {
@@ -56,6 +56,7 @@ export function firebasePost(r2dt_id, sequence) {
       body: JSON.stringify({
         r2dt_id: r2dt_id,
         sequence: sequence,
+        template_id: templateId,
         date: currentDate
       })
     })
@@ -108,7 +109,7 @@ export function onSubmit(sequence) {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `email=rnacentral%40gmail.com&sequence=${sequence}`
+      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`
     })
     .then(function (response) {
       if (response.ok) { return response.text() }
@@ -117,7 +118,7 @@ export function onSubmit(sequence) {
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
         if (state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
-        else { dispatch(firebasePost(data, sequence)) }
+        else { dispatch(firebasePost(data, sequence, state.templateId)) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
@@ -166,6 +167,11 @@ export function onClearSequence() {
 export function onSequenceTextAreaChange(event) {
   let sequence = event.target.value;
   return {type: types.TEXTAREA_CHANGE, sequence: sequence};
+}
+
+export function onChangeTemplateId(event) {
+  let templateId = event[0] && event[0].model_id ? event[0].model_id : "";
+  return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
 }
 
 export function invalidSequence() {
