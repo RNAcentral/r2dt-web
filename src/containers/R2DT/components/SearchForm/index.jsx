@@ -3,7 +3,6 @@ import {connect} from 'react-redux';
 
 import * as actionCreators from 'actions/actions';
 import {store} from "app.jsx";
-import { ClearButton, Typeahead } from 'react-bootstrap-typeahead';
 import { templates} from "data/index.js";
 
 import { FaSearch } from 'react-icons/fa';
@@ -94,17 +93,13 @@ class SearchForm extends React.Component {
               <div className="row">
                 <div className="col-12 col-sm-9">
                   <div>{ this.props.advancedSearchCollapsed ? "" :
-                      <Typeahead className='search-template' id='search-template-id'
-                        options={templates} placeholder="Search for a template"
-                        minLength={2}
-                        onChange={(e) => this.props.onChangeTemplateId(e)}
-                        emptyLabel={'No templates found'} >
-                        {({ onClear, selected }) => (
-                          <div className="rbt-aux">
-                            {!!selected.length && <ClearButton onClick={onClear} />}
-                          </div>
-                        )}
-                      </Typeahead> }
+                    <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
+                      {templates.map((item) => (
+                        <option key={item.model_id} value={item.model_id}>
+                          {item.label}
+                        </option>
+                      ))}
+                    </select> }
                   </div>
                 </div>
               </div>
