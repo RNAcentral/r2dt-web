@@ -170,7 +170,7 @@ export function onSequenceTextAreaChange(event) {
 }
 
 export function onChangeTemplateId(event) {
-  let templateId = event[0] && event[0].model_id ? event[0].model_id : "";
+  let templateId = event ? event.target.value : "";
   return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
 }
 
