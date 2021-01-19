@@ -5,7 +5,7 @@ import {store} from 'app.jsx';
 //
 // submission form
 //
-export function firebaseFetchData(sequence) {
+export function firebaseFetchData(sequence, templateId) {
   let foundR2DT = false;
   let currentDate = new Date();
 
@@ -23,7 +23,7 @@ export function firebaseFetchData(sequence) {
     })
     .then(data => {
       data && Object.entries(data).map(([key,value]) => {
-        if (sequence === value.sequence){
+        if (sequence === value.sequence && templateId === value.templateId){
           let submitted = new Date(value.date)
           submitted.setDate(submitted.getDate()+7);
           submitted.setHours(submitted.getHours() - 1);
@@ -56,7 +56,7 @@ export function firebasePost(r2dt_id, sequence, templateId) {
       body: JSON.stringify({
         r2dt_id: r2dt_id,
         sequence: sequence,
-        template_id: templateId,
+        templateId: templateId,
         date: currentDate
       })
     })

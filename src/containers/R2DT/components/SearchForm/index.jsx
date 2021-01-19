@@ -21,7 +21,7 @@ class SearchForm extends React.Component {
 
   exampleSequence(sequence) {
     store.dispatch(actionCreators.onExampleSequence(sequence));
-    store.dispatch(actionCreators.firebaseFetchData(sequence));
+    store.dispatch(actionCreators.firebaseFetchData(sequence, ""));
   }
 
   searchUrs(urs) {
@@ -42,9 +42,9 @@ class SearchForm extends React.Component {
     } else if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
     } else if (state.sequence && /^[>]/.test(state.sequence)) {
-      store.dispatch(actionCreators.firebaseFetchData(state.sequence));
+      store.dispatch(actionCreators.firebaseFetchData(state.sequence, state.templateId));
     } else if (state.sequence){
-      store.dispatch(actionCreators.firebaseFetchData('>description' + '\n' + state.sequence));
+      store.dispatch(actionCreators.firebaseFetchData('>description' + '\n' + state.sequence, state.templateId));
     }
   }
 
