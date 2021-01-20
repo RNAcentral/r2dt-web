@@ -91,10 +91,10 @@ class SearchForm extends React.Component {
                   {
                     this.props.status === "RUNNING" ?
                       <a>
-                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor, fontSize: fixCss}}>Hide advanced</span> }
                       </a> :
                       <a className="custom-link" onClick={ this.props.onToggleAdvancedSearch }>
-                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor, fontSize: fixCss}}>Hide advanced</span> }
                       </a>
                   }
                 </div>
