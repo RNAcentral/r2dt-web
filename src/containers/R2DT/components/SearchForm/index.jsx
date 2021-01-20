@@ -19,8 +19,11 @@ class SearchForm extends React.Component {
   }
 
   exampleSequence(sequence) {
+    const state = store.getState();
     store.dispatch(actionCreators.onExampleSequence(sequence));
-    store.dispatch(actionCreators.firebaseFetchData(sequence, ""));
+    if (state.advancedSearchCollapsed) {
+      store.dispatch(actionCreators.firebaseFetchData(sequence, state.templateId));
+    }
   }
 
   searchUrs(urs) {
