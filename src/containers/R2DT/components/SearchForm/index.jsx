@@ -100,6 +100,7 @@ class SearchForm extends React.Component {
                 <div className="col-12 col-sm-9">
                   <div>{ this.props.advancedSearchCollapsed ? "" :
                     <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
+                      <option key="default" value="">Select a template</option>
                       {templates.map((item) => (
                         <option key={item.model_id} value={item.model_id}>
                           {item.label}
