@@ -85,9 +85,15 @@ class SearchForm extends React.Component {
                   <button className="btn btn-secondary mb-2" style={{background: clearButtonColor, borderColor: clearButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" onClick={ this.props.onClearSequence } disabled={!this.props.sequence ? "disabled" : ""}>
                     <span className="btn-icon"><FiTrash2 /></span> Clear
                   </button><br />
-                  <a className="custom-link" onClick={ this.props.onToggleAdvancedSearch }>
-                    { this.props.advancedSearchCollapsed ? <span style={{color: linkColor}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
-                  </a>
+                  {
+                    this.props.status === "RUNNING" ?
+                      <a>
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                      </a> :
+                      <a className="custom-link" onClick={ this.props.onToggleAdvancedSearch }>
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                      </a>
+                  }
                 </div>
               </div>
               <div className="row">
