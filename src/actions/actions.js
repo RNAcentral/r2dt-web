@@ -179,7 +179,11 @@ export function invalidSequence() {
 }
 
 export function onToggleAdvancedSearch() {
-  return {type: types.TOGGLE_ADVANCED_SEARCH };
+  let state = store.getState();
+  return function(dispatch) {
+    if (!state.advancedSearchCollapsed) {dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })}
+    dispatch({type: types.TOGGLE_ADVANCED_SEARCH });
+  }
 }
 
 //
