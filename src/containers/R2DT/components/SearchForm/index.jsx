@@ -91,10 +91,10 @@ class SearchForm extends React.Component {
                   {
                     this.props.status === "RUNNING" ?
                       <a>
-                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
                       </a> :
                       <a className="custom-link" onClick={ this.props.onToggleAdvancedSearch }>
-                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor}}>Hide advanced</span> }
                       </a>
                   }
                 </div>
@@ -104,8 +104,8 @@ class SearchForm extends React.Component {
                   <div>{ this.props.advancedSearchCollapsed ? "" :
                     <div className="card">
                       <div className="card-body">
-                        <p className="card-title h5">Advanced options</p>
-                        <p className="card-text">Enter a sequence, select a template from the list below and click Run</p>
+                        <p className="card-title" style={{fontSize: fixCss}}>Advanced options</p>
+                        <p className="card-text" style={{fontSize: fixCss}}>Enter a sequence, select a template from the list below and click Run</p>
                         <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
                           <option key="default" value="">Select a template</option>
                           {templates.map((item) => (
