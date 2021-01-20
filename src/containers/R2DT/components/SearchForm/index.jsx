@@ -104,7 +104,7 @@ class SearchForm extends React.Component {
                   <div>{ this.props.advancedSearchCollapsed ? "" :
                     <div className="card">
                       <div className="card-body">
-                        <p className="card-title" style={{fontSize: fixCss}}>Advanced options</p>
+                        <p className="card-title" style={{fontSize: fixCss}}><strong>Advanced options</strong></p>
                         <p className="card-text" style={{fontSize: fixCss}}>Enter a sequence, select a template from the list below and click Run</p>
                         <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
                           <option key="default" value="">Select a template</option>
