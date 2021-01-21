@@ -108,7 +108,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
-                  The sequence did not match any of the templates. If you think it's an error, please <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">get in touch</a>.
+                  { this.props.advancedSearchCollapsed ? "The sequence did not match any of the templates." : "The sequence did not match the selected template." } If you think it's an error, please <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">get in touch</a>.
                 </div>
               </div>
             </div>
@@ -197,7 +197,8 @@ function mapStateToProps(state) {
     svg: state.svg,
     notation: state.notation,
     template: state.template,
-    source: state.source
+    source: state.source,
+    advancedSearchCollapsed: state.advancedSearchCollapsed,
   };
 }
 
