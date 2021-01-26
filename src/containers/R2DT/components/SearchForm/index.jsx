@@ -136,6 +136,7 @@ class SearchForm extends React.Component {
                                 placeholder="Type to find the template"
                                 minLength={3}
                                 onChange={(e) => this.props.onChangeTemplateId(e)}
+                                inputProps={{style: { fontSize: fixCss } }}
                                 emptyLabel={'No templates found'} >
                                 {({ onClear, selected }) => (
                                   <div className="rbt-aux">
