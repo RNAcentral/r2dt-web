@@ -15,6 +15,7 @@ let initialState = {
   firebaseStatus: "",
   advancedSearchCollapsed: true,
   templateId: "",
+  searchMethod: "option1",
 };
 
 export default initialState;
