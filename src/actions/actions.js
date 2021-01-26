@@ -170,8 +170,20 @@ export function onSequenceTextAreaChange(event) {
 }
 
 export function onChangeTemplateId(event) {
-  let templateId = event ? event.target.value : "";
+  let state = store.getState();
+  let templateId = ""
+
+  if (state.searchMethod === "option1") {
+    templateId = event ? event.target.value : ""
+  } else {
+    templateId = event[0] && event[0].model_id ? event[0].model_id : "";
+  }
+
   return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
+}
+
+export function handleOptionChange(event) {
+  return {type: types.SEARCH_METHOD, searchMethod: event.target.value};
 }
 
 export function invalidSequence() {
