@@ -5,7 +5,7 @@ import {store} from 'app.jsx';
 //
 // submission form
 //
-export function firebaseFetchData(sequence) {
+export function firebaseFetchData(sequence, templateId) {
   let foundR2DT = false;
   let currentDate = new Date();
 
@@ -23,7 +23,7 @@ export function firebaseFetchData(sequence) {
     })
     .then(data => {
       data && Object.entries(data).map(([key,value]) => {
-        if (sequence === value.sequence){
+        if (sequence === value.sequence && templateId === value.templateId){
           let submitted = new Date(value.date)
           submitted.setDate(submitted.getDate()+7);
           submitted.setHours(submitted.getHours() - 1);
@@ -43,7 +43,7 @@ export function firebaseFetchData(sequence) {
   }
 }
 
-export function firebasePost(r2dt_id, sequence) {
+export function firebasePost(r2dt_id, sequence, templateId) {
   const currentDate = new Date();
 
   return function(dispatch) {
@@ -56,6 +56,7 @@ export function firebasePost(r2dt_id, sequence) {
       body: JSON.stringify({
         r2dt_id: r2dt_id,
         sequence: sequence,
+        templateId: templateId,
         date: currentDate
       })
     })
@@ -108,7 +109,7 @@ export function onSubmit(sequence) {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `email=rnacentral%40gmail.com&sequence=${sequence}`
+      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`
     })
     .then(function (response) {
       if (response.ok) { return response.text() }
@@ -117,7 +118,7 @@ export function onSubmit(sequence) {
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
         if (state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
-        else { dispatch(firebasePost(data, sequence)) }
+        else { dispatch(firebasePost(data, sequence, state.templateId)) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
@@ -168,8 +169,35 @@ export function onSequenceTextAreaChange(event) {
   return {type: types.TEXTAREA_CHANGE, sequence: sequence};
 }
 
+export function onChangeTemplateId(event) {
+  let state = store.getState();
+  let templateId = ""
+
+  if (state.searchMethod === "option1") {
+    templateId = event ? event.target.value : ""
+  } else {
+    templateId = event[0] && event[0].model_id ? event[0].model_id : "";
+  }
+
+  return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
+}
+
+export function handleOptionChange(event) {
+  return {type: types.SEARCH_METHOD, searchMethod: event.target.value};
+}
+
 export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
+}
+
+export function onToggleAdvancedSearch() {
+  let state = store.getState();
+  return function(dispatch) {
+    if (!state.advancedSearchCollapsed && !state.jobId) {
+      dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })
+    }
+    dispatch({type: types.TOGGLE_ADVANCED_SEARCH });
+  }
 }
 
 //
@@ -266,8 +294,8 @@ export function onToggleColors(svg) {
 
 export function onToggleNumbers(svg) {
   let state = store.getState();
-  const numberOn = ['class="numbering-label"', 'class="numbering-line"'];
-  const numberOff = ['class="numbering-label" visibility="hidden"', 'class="numbering-line" visibility="hidden"'];
+  const numberOn = ['class="numbering-label sequential"', 'class="numbering-line sequential"'];
+  const numberOff = ['class="numbering-label sequential" visibility="hidden"', 'class="numbering-line sequential" visibility="hidden"'];
 
   if(state.svgNumber){
     numberOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOff[i]) )
@@ -305,6 +333,8 @@ export function getFasta(jobId) {
 }
 
 export function getTsv(jobId) {
+  let state = store.getState();
+
   return function(dispatch) {
     fetch(routes.fetchTsv(jobId), {
       method: 'GET',
@@ -318,7 +348,8 @@ export function getTsv(jobId) {
       let lines = (data.match(/[^\t]+/g));
       let template = lines[1];
       let source = lines[2].trimEnd();
-      dispatch({type: types.TSV, status: 'success', template: template, source: source})
+      dispatch({type: types.TSV, status: 'success', template: template, source: source});
+      if (!state.templateId) { dispatch({type: types.TEMPLATE_CHANGE, templateId: template}) }
     })
     .catch(error => dispatch({type: types.TSV, status: 'error'}));
   }

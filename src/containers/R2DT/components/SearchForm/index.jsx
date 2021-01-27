@@ -1,8 +1,10 @@
 import React from 'react';
 import {connect} from 'react-redux';
+import { ClearButton, Typeahead } from 'react-bootstrap-typeahead';
 
 import * as actionCreators from 'actions/actions';
 import {store} from "app.jsx";
+import { templates} from "data/index.js";
 
 import { FaSearch } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
@@ -18,8 +20,11 @@ class SearchForm extends React.Component {
   }
 
   exampleSequence(sequence) {
+    const state = store.getState();
     store.dispatch(actionCreators.onExampleSequence(sequence));
-    store.dispatch(actionCreators.firebaseFetchData(sequence));
+    if (state.advancedSearchCollapsed) {
+      store.dispatch(actionCreators.firebaseFetchData(sequence, state.templateId));
+    }
   }
 
   searchUrs(urs) {
@@ -40,9 +45,9 @@ class SearchForm extends React.Component {
     } else if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
       store.dispatch(actionCreators.invalidSequence());
     } else if (state.sequence && /^[>]/.test(state.sequence)) {
-      store.dispatch(actionCreators.firebaseFetchData(state.sequence));
+      store.dispatch(actionCreators.firebaseFetchData(state.sequence, state.templateId));
     } else if (state.sequence){
-      store.dispatch(actionCreators.firebaseFetchData('>description' + '\n' + state.sequence));
+      store.dispatch(actionCreators.firebaseFetchData('>description' + '\n' + state.sequence, state.templateId));
     }
   }
 
@@ -84,6 +89,66 @@ class SearchForm extends React.Component {
                   <button className="btn btn-secondary mb-2" style={{background: clearButtonColor, borderColor: clearButtonColor, fontSize: fixCss, height: fixCssBtn}} type="submit" onClick={ this.props.onClearSequence } disabled={!this.props.sequence ? "disabled" : ""}>
                     <span className="btn-icon"><FiTrash2 /></span> Clear
                   </button><br />
+                  {
+                    this.props.status === "RUNNING" ?
+                      <a>
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor, fontSize: fixCss}}>Hide advanced</span> }
+                      </a> :
+                      <a className="custom-link" onClick={ this.props.onToggleAdvancedSearch }>
+                        { this.props.advancedSearchCollapsed ? <span style={{color: linkColor, fontSize: fixCss}}>Show advanced</span> : <span style={{color: linkColor, fontSize: fixCss}}>Hide advanced</span> }
+                      </a>
+                  }
+                </div>
+              </div>
+              <div className="row">
+                <div className="col-12 col-sm-9">
+                  <div>{ this.props.advancedSearchCollapsed ? "" :
+                    <div className="card">
+                      <div className="card-body">
+                        <p className="card-title" style={{fontSize: fixCss}}><strong>Advanced options</strong></p>
+                        <p className="card-text" style={{fontSize: fixCss}}>Enter a sequence, select a template and click Run</p>
+                        <div className="row mb-2">
+                          <div className="col-12">
+                            <div className="form-check">
+                              <input className="form-check-input" type="radio" name="radios" id="radio1" value="option1" checked={ this.props.searchMethod === 'option1' } onChange={ (e) => this.props.handleOptionChange(e) }/>
+                              <label className="form-check-label" htmlFor="radio1">Browse all templates</label>
+                            </div>
+                            <div className="form-check">
+                              <input className="form-check-input" type="radio" name="radios" id="radio2" value="option2" checked={ this.props.searchMethod === 'option2' } onChange={ (e) => this.props.handleOptionChange(e) }/>
+                              <label className="form-check-label" htmlFor="radio2">Type to find a template</label>
+                            </div>
+                          </div>
+                        </div>
+                        {
+                          this.props.searchMethod === "option1" ?
+                              <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
+                                <option key="default" value="">Select a template</option>
+                                {templates.map((item) => (
+                                  <option key={item.model_id} value={item.model_id}>
+                                    {item.label}
+                                  </option>
+                                ))}
+                              </select> :
+                              <Typeahead
+                                className='search-template'
+                                id='search-template-id'
+                                options={templates}
+                                placeholder="Type to find a template"
+                                minLength={2}
+                                paginate={false}
+                                onChange={(e) => this.props.onChangeTemplateId(e)}
+                                inputProps={{style: { fontSize: fixCss } }}
+                                emptyLabel={'No templates found'} >
+                                {({ onClear, selected }) => (
+                                  <div className="rbt-aux">
+                                    {!!selected.length && <ClearButton onClick={onClear} />}
+                                  </div>
+                                )}
+                              </Typeahead>
+                        }
+                      </div>
+                    </div> }
+                  </div>
                 </div>
               </div>
               <div className="row">
@@ -161,12 +226,18 @@ const mapStateToProps = (state) => ({
   status: state.status,
   submissionError: state.submissionError,
   sequence: state.sequence,
-  firebaseStatus: state.firebaseStatus
+  firebaseStatus: state.firebaseStatus,
+  advancedSearchCollapsed: state.advancedSearchCollapsed,
+  templateId: state.templateId,
+  searchMethod: state.searchMethod,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSequenceTextareaChange: (event) => dispatch(actionCreators.onSequenceTextAreaChange(event)),
+  handleOptionChange: (event) => dispatch(actionCreators.handleOptionChange(event)),
+  onChangeTemplateId: (event) => dispatch(actionCreators.onChangeTemplateId(event)),
   onClearSequence: () => dispatch(actionCreators.onClearSequence()),
+  onToggleAdvancedSearch: () => dispatch(actionCreators.onToggleAdvancedSearch()),
 });
 
 
