@@ -10,5 +10,5 @@ module.exports = {
   fetchTsv:   (jobId) => `${server}/result/${jobId}/tsv`,
   firebase:   () => `${firebaseServer}/data.json`,
   firebaseId: (id) => `${firebaseServer}/data/${id}.json`,
-  fetchUrs:   (urs) => `https://rnacentral.org/api/v1/rna/${urs}/2d/0000`
+  fetchUrs:   (urs) => `https://rnacentral.org/api/v1/rna/${urs}/2d`
 };
