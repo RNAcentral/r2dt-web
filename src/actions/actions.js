@@ -193,7 +193,9 @@ export function invalidSequence() {
 export function onToggleAdvancedSearch() {
   let state = store.getState();
   return function(dispatch) {
-    if (!state.advancedSearchCollapsed) {dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })}
+    if (!state.advancedSearchCollapsed && !state.jobId) {
+      dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })
+    }
     dispatch({type: types.TOGGLE_ADVANCED_SEARCH });
   }
 }
