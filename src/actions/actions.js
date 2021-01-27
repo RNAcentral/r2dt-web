@@ -331,6 +331,8 @@ export function getFasta(jobId) {
 }
 
 export function getTsv(jobId) {
+  let state = store.getState();
+
   return function(dispatch) {
     fetch(routes.fetchTsv(jobId), {
       method: 'GET',
@@ -344,7 +346,8 @@ export function getTsv(jobId) {
       let lines = (data.match(/[^\t]+/g));
       let template = lines[1];
       let source = lines[2].trimEnd();
-      dispatch({type: types.TSV, status: 'success', template: template, source: source})
+      dispatch({type: types.TSV, status: 'success', template: template, source: source});
+      if (!state.templateId) { dispatch({type: types.TEMPLATE_CHANGE, templateId: template}) }
     })
     .catch(error => dispatch({type: types.TSV, status: 'error'}));
   }
