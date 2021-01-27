@@ -115,7 +115,7 @@ class SearchForm extends React.Component {
                             </div>
                             <div className="form-check">
                               <input className="form-check-input" type="radio" name="radios" id="radio2" value="option2" checked={ this.props.searchMethod === 'option2' } onChange={ (e) => this.props.handleOptionChange(e) }/>
-                              <label className="form-check-label" htmlFor="radio2">Type to find the template</label>
+                              <label className="form-check-label" htmlFor="radio2">Type to find a template</label>
                             </div>
                           </div>
                         </div>
@@ -133,7 +133,7 @@ class SearchForm extends React.Component {
                                 className='search-template'
                                 id='search-template-id'
                                 options={templates}
-                                placeholder="Type to find the template"
+                                placeholder="Type to find a template"
                                 minLength={3}
                                 onChange={(e) => this.props.onChangeTemplateId(e)}
                                 inputProps={{style: { fontSize: fixCss } }}
