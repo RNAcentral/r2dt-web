@@ -23,7 +23,8 @@ class SearchForm extends React.Component {
     const state = store.getState();
     store.dispatch(actionCreators.onExampleSequence(sequence));
     if (state.advancedSearchCollapsed) {
-      store.dispatch(actionCreators.firebaseFetchData(sequence, state.templateId));
+      store.dispatch(actionCreators.clearTemplateId());
+      store.dispatch(actionCreators.firebaseFetchData(sequence, ""));
     }
   }
 

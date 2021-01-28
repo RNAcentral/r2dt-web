@@ -182,6 +182,10 @@ export function onChangeTemplateId(event) {
   return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
 }
 
+export function clearTemplateId() {
+  return {type: types.TEMPLATE_CHANGE, templateId: ""}
+}
+
 export function handleOptionChange(event) {
   return {type: types.SEARCH_METHOD, searchMethod: event.target.value};
 }
