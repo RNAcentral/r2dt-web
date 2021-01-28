@@ -165,8 +165,13 @@ export function onClearSequence() {
 }
 
 export function onSequenceTextAreaChange(event) {
+  let state = store.getState();
   let sequence = event.target.value;
-  return {type: types.TEXTAREA_CHANGE, sequence: sequence};
+
+  return function(dispatch) {
+    if (state.advancedSearchCollapsed) { dispatch({type: types.TEMPLATE_CHANGE, templateId: ""}) }
+    dispatch({type: types.TEXTAREA_CHANGE, sequence: sequence});
+  }
 }
 
 export function onChangeTemplateId(event) {
