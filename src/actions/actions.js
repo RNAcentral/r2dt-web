@@ -303,8 +303,18 @@ export function onToggleColors(svg) {
 
 export function onToggleNumbers(svg) {
   let state = store.getState();
-  const numberOn = ['class="numbering-label sequential"', 'class="numbering-line sequential"'];
-  const numberOff = ['class="numbering-label sequential" visibility="hidden"', 'class="numbering-line sequential" visibility="hidden"'];
+  const numberOn = [
+    'class="numbering-label"',
+    'class="numbering-line"',
+    'class="numbering-label sequential"',
+    'class="numbering-line sequential"'
+  ];
+  const numberOff = [
+    'class="numbering-label" visibility="hidden"',
+    'class="numbering-line" visibility="hidden"',
+    'class="numbering-label sequential" visibility="hidden"',
+    'class="numbering-line sequential" visibility="hidden"'
+  ];
 
   if(state.svgNumber){
     numberOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOff[i]) )
