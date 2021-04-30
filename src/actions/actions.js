@@ -274,7 +274,8 @@ export function getSvg(jobId) {
     .then(data => {
       let width = (data.match(/width="(.*?)"/)[1]);
       let height = (data.match(/height="(.*?)"/)[1]);
-      dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: data});
+      let replaceSVGColor = data.replace("rgb(255, 0, 0)", "rgb(255,0,255)")
+      dispatch({type: types.GET_SVG, status: 'success', width: width, height: height, svg: replaceSVGColor});
       svg = true;
     })
     .catch(error => {
