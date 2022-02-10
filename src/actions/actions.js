@@ -37,7 +37,7 @@ export function firebaseFetchData(sequence, templateId) {
           }
         }
       });
-      if (!foundR2DT) { dispatch(onSubmit(sequence)) }
+      if (!foundR2DT) { dispatch(onSubmit(sequence, true)) }
     })
     .catch(error => dispatch({type: types.FIREBASE_STATUS, status: 'fetchError'}));
   }
@@ -98,7 +98,7 @@ export function firebasePatch(r2dt_id, svg, status) {
   }
 }
 
-export function onSubmit(sequence) {
+export function onSubmit(sequence, example=false) {
   let state = store.getState();
 
   return function(dispatch) {
@@ -117,8 +117,8 @@ export function onSubmit(sequence) {
     })
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
-        if (state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
-        else { dispatch(firebasePost(data, sequence, state.templateId)) }
+        if (example && state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
+        if (example && !state.firebaseId) { dispatch(firebasePost(data, sequence, state.templateId)) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
