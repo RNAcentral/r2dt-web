@@ -119,6 +119,7 @@ export function onSubmit(sequence, example=false) {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
         if (example && state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
         if (example && !state.firebaseId) { dispatch(firebasePost(data, sequence, state.templateId)) }
+        if (!example) { dispatch({type: types.SET_FIREBASE_ID, data: ""}) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
