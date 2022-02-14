@@ -37,7 +37,7 @@ export function firebaseFetchData(sequence, templateId) {
           }
         }
       });
-      if (!foundR2DT) { dispatch(onSubmit(sequence)) }
+      if (!foundR2DT) { dispatch(onSubmit(sequence, true)) }
     })
     .catch(error => dispatch({type: types.FIREBASE_STATUS, status: 'fetchError'}));
   }
@@ -98,7 +98,7 @@ export function firebasePatch(r2dt_id, svg, status) {
   }
 }
 
-export function onSubmit(sequence) {
+export function onSubmit(sequence, example=false) {
   let state = store.getState();
 
   return function(dispatch) {
@@ -117,8 +117,9 @@ export function onSubmit(sequence) {
     })
     .then(data => {
         dispatch({type: types.SUBMIT_JOB, status: 'success', data: data});
-        if (state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
-        else { dispatch(firebasePost(data, sequence, state.templateId)) }
+        if (example && state.firebaseId) { dispatch(firebasePatch(data, "", "")) }
+        if (example && !state.firebaseId) { dispatch(firebasePost(data, sequence, state.templateId)) }
+        if (!example) { dispatch({type: types.SET_FIREBASE_ID, data: ""}) }
         dispatch(fetchStatus(data));
     })
     .catch(error => dispatch({type: types.SUBMIT_JOB, status: 'error', response: error}));
@@ -304,8 +305,18 @@ export function onToggleColors(svg) {
 
 export function onToggleNumbers(svg) {
   let state = store.getState();
-  const numberOn = ['class="numbering-label sequential"', 'class="numbering-line sequential"'];
-  const numberOff = ['class="numbering-label sequential" visibility="hidden"', 'class="numbering-line sequential" visibility="hidden"'];
+  const numberOn = [
+    'class="numbering-label"',
+    'class="numbering-line"',
+    'class="numbering-label sequential"',
+    'class="numbering-line sequential"'
+  ];
+  const numberOff = [
+    'class="numbering-label" visibility="hidden"',
+    'class="numbering-line" visibility="hidden"',
+    'class="numbering-label sequential" visibility="hidden"',
+    'class="numbering-line sequential" visibility="hidden"'
+  ];
 
   if(state.svgNumber){
     numberOn.forEach( (tag, i) => svg = svg.replace(new RegExp(tag, "g"), numberOff[i]) )

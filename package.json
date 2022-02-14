@@ -1,13 +1,13 @@
 {
   "name": "@rnacentral/r2dt-web",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Visualise RNA secondary structure using standard layouts.",
   "scripts": {
     "clean": "rm -rf dist/*",
-    "build:prod": "node_modules/.bin/webpack -p --env.prod",
+    "build:prod": "node_modules/.bin/webpack --mode production",
     "build": "npm run clean && npm run build:prod",
-    "profile:build": "node_modules/.bin/webpack -p --env.prod --profile --json > webpack-stats.json",
-    "serve": "node_modules/.bin/webpack-dev-server --progress --colors --history-api-fallback",
+    "profile:build": "node_modules/.bin/webpack --mode production --profile --json > webpack-stats.json",
+    "serve": "node_modules/.bin/webpack-dev-server --mode development --progress --color --history-api-fallback",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
@@ -20,10 +20,6 @@
     "rna-secondary-structure"
   ],
   "contributors": [
-    {
-      "name": "Boris A. Burkov",
-      "email": "burkov@ebi.ac.uk"
-    },
     {
       "name": "Anton I. Petrov",
       "email": "apetrov@ebi.ac.uk"
@@ -39,45 +35,34 @@
   },
   "homepage": "https://github.com/RNAcentral/r2dt-web#readme",
   "dependencies": {
-    "dotenv": "^8.2.0",
-    "react": "^16.13.1",
-    "react-bootstrap-typeahead": "^5.1.4",
-    "react-dom": "^16.13.1",
-    "react-helmet": "^5.2.0",
-    "react-icons": "^3.9.0",
-    "react-redux": "^5.1.2",
-    "react-router": "^4.2.0",
-    "react-router-dom": "^4.2.2",
-    "react-svg-pan-zoom": "^3.8.0",
-    "react-svgmt": "^1.1.11",
-    "redux": "^4.0.1",
-    "redux-thunk": "^2.3.0",
+    "dotenv-webpack": "^7.1.0",
+    "react": "^17.0.2",
+    "react-bootstrap-typeahead": "^5.2.1",
+    "react-dom": "^17.0.2",
+    "react-icons": "^4.3.1",
+    "react-redux": "^7.2.6",
+    "react-svg-pan-zoom": "^3.11.0",
+    "react-svgmt": "^1.2.0",
+    "redux": "^4.1.2",
+    "redux-devtools-extension": "^2.13.9",
+    "redux-thunk": "^2.4.1",
     "save-svg-as-png": "^1.4.17"
   },
   "devDependencies": {
-    "babel-core": "^6.25.0",
-    "babel-jest": "^25.0.0",
-    "babel-loader": "^7.1.1",
-    "babel-plugin-transform-custom-element-classes": "^0.1.0",
-    "babel-plugin-transform-es2015-destructuring": "^6.23.0",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-es2015": "^6.24.1",
-    "babel-preset-react": "^6.24.1",
-    "css-loader": "^3.2.0",
-    "css-to-string-loader": "^0.1.3",
-    "extract-text-webpack-plugin": "^4.0.0-beta.0",
-    "file-loader": "^6.0.0",
-    "html-webpack-plugin": "^3.2.0",
-    "jest": "^25.0.0",
+    "@babel/core": "^7.17.2",
+    "@babel/preset-env": "^7.16.11",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "css-loader": "^6.6.0",
+    "file-loader": "^6.2.0",
+    "html-webpack-plugin": "^5.5.0",
     "navigator": "~1.0.1",
-    "node-sass": "^4.14.1",
-    "react-router-config": "^1.0.0-beta.4",
-    "redux-devtools-extension": "^2.13.8",
-    "sass-loader": "^6.0.6",
-    "style-loader": "^0.23.1",
-    "url-loader": "^2.3.0",
-    "webpack": "^4.41.5",
-    "webpack-cli": "^3.3.10",
-    "webpack-dev-server": "^3.11.0"
+    "node-sass": "^7.0.1",
+    "sass-loader": "^12.4.0",
+    "style-loader": "^3.3.1",
+    "url-loader": "^4.1.1",
+    "webpack": "^5.68.0",
+    "webpack-cli": "^4.9.2",
+    "webpack-dev-server": "^4.7.4"
   }
 }
