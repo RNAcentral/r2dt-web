@@ -1,13 +1,10 @@
 import React from 'react';
-import {connect} from 'react-redux';
-import { ClearButton, Typeahead } from 'react-bootstrap-typeahead';
-
+import { connect } from 'react-redux';
 import * as actionCreators from 'actions/actions';
-import {store} from "app.jsx";
-import { templates} from "data/index.js";
-
+import { store } from 'app.jsx';
 import { FaSearch } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
+import Advanced from 'containers/R2DT/components/SearchForm/components/Advanced/index.jsx'
 
 
 class SearchForm extends React.Component {
@@ -103,53 +100,7 @@ class SearchForm extends React.Component {
               </div>
               <div className="row">
                 <div className="col-12 col-sm-9">
-                  <div>{ this.props.advancedSearchCollapsed ? "" :
-                    <div className="card">
-                      <div className="card-body">
-                        <p className="card-title" style={{fontSize: fixCss}}><strong>Advanced options</strong></p>
-                        <p className="card-text" style={{fontSize: fixCss}}>Enter a sequence, select a template and click Run</p>
-                        <div className="row mb-2">
-                          <div className="col-12">
-                            <div className="form-check">
-                              <input className="form-check-input" type="radio" name="radios" id="radio1" value="option1" checked={ this.props.searchMethod === 'option1' } onChange={ (e) => this.props.handleOptionChange(e) }/>
-                              <label className="form-check-label" htmlFor="radio1">Browse all templates</label>
-                            </div>
-                            <div className="form-check">
-                              <input className="form-check-input" type="radio" name="radios" id="radio2" value="option2" checked={ this.props.searchMethod === 'option2' } onChange={ (e) => this.props.handleOptionChange(e) }/>
-                              <label className="form-check-label" htmlFor="radio2">Type to find a template</label>
-                            </div>
-                          </div>
-                        </div>
-                        {
-                          this.props.searchMethod === "option1" ?
-                              <select style={{fontSize: fixCss}} className="form-control" value={this.props.templateId} onChange={(e) => this.props.onChangeTemplateId(e)}>
-                                <option key="default" value="">Select a template</option>
-                                {templates.map((item) => (
-                                  <option key={item.model_id} value={item.model_id}>
-                                    {item.label}
-                                  </option>
-                                ))}
-                              </select> :
-                              <Typeahead
-                                className='search-template'
-                                id='search-template-id'
-                                options={templates}
-                                placeholder="Type to find a template"
-                                minLength={2}
-                                paginate={false}
-                                onChange={(e) => this.props.onChangeTemplateId(e)}
-                                inputProps={{style: { fontSize: fixCss } }}
-                                emptyLabel={'No templates found'} >
-                                {({ onClear, selected }) => (
-                                  <div className="rbt-aux">
-                                    {!!selected.length && <ClearButton onClick={onClear} />}
-                                  </div>
-                                )}
-                              </Typeahead>
-                        }
-                      </div>
-                    </div> }
-                  </div>
+                  { this.props.advancedSearchCollapsed ? "" : <Advanced customStyle={ this.props.customStyle } /> }
                 </div>
               </div>
               <div className="row">
@@ -229,14 +180,10 @@ const mapStateToProps = (state) => ({
   sequence: state.sequence,
   firebaseStatus: state.firebaseStatus,
   advancedSearchCollapsed: state.advancedSearchCollapsed,
-  templateId: state.templateId,
-  searchMethod: state.searchMethod,
 });
 
 const mapDispatchToProps = (dispatch) => ({
   onSequenceTextareaChange: (event) => dispatch(actionCreators.onSequenceTextAreaChange(event)),
-  handleOptionChange: (event) => dispatch(actionCreators.handleOptionChange(event)),
-  onChangeTemplateId: (event) => dispatch(actionCreators.onChangeTemplateId(event)),
   onClearSequence: () => dispatch(actionCreators.onClearSequence()),
   onToggleAdvancedSearch: () => dispatch(actionCreators.onToggleAdvancedSearch()),
 });
