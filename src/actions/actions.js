@@ -189,7 +189,10 @@ export function onChangeTemplateId(event) {
 }
 
 export function onChangeConstrainedFolding() {
-  return {type: types.TOGGLE_CONSTRAINED_FOLDING}
+  return function(dispatch) {
+    dispatch({type: types.TOGGLE_CONSTRAINED_FOLDING})
+    dispatch({type: types.FOLD_TYPE, foldType: ""})
+  }
 }
 
 export function onChangeFoldType(event) {
