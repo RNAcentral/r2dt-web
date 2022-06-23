@@ -109,7 +109,7 @@ export function onSubmit(sequence, example=false) {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`
+      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}&constraint=${state.constrainedFolding}&fold_type=${state.foldType}`
     })
     .then(function (response) {
       if (response.ok) { return response.text() }
@@ -188,6 +188,14 @@ export function onChangeTemplateId(event) {
   return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
 }
 
+export function onChangeConstrainedFolding() {
+  return {type: types.TOGGLE_CONSTRAINED_FOLDING}
+}
+
+export function onChangeFoldType(event) {
+  return {type: types.FOLD_TYPE, foldType: event.target.value}
+}
+
 export function clearTemplateId() {
   return {type: types.TEMPLATE_CHANGE, templateId: ""}
 }
@@ -205,6 +213,12 @@ export function onToggleAdvancedSearch() {
   return function(dispatch) {
     if (!state.advancedSearchCollapsed && !state.jobId) {
       dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })
+    }
+    if (!state.advancedSearchCollapsed && state.constrainedFolding) {
+      dispatch({type: types.TOGGLE_CONSTRAINED_FOLDING})
+    }
+    if (!state.advancedSearchCollapsed && state.foldType) {
+      dispatch({type: types.FOLD_TYPE, foldType: ""})
     }
     dispatch({type: types.TOGGLE_ADVANCED_SEARCH });
   }

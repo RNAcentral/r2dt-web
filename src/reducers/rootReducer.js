@@ -110,6 +110,12 @@ const rootReducer = function (state = initialState, action) {
     case actions.TOGGLE_ADVANCED_SEARCH:
       return Object.assign({}, state, { advancedSearchCollapsed: !state.advancedSearchCollapsed });
 
+    case actions.TOGGLE_CONSTRAINED_FOLDING:
+      return Object.assign({}, state, { constrainedFolding: !state.constrainedFolding });
+
+    case actions.FOLD_TYPE:
+      return Object.assign({}, state, { foldType: action.foldType });
+
     //
     // status
     //
