@@ -100,6 +100,12 @@ export function firebasePatch(r2dt_id, svg, status) {
 
 export function onSubmit(sequence, example=false) {
   let state = store.getState();
+  let body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`;
+  if (state.constrainedFolding && state.foldType.length > 0) {
+    body = body + `&constraint=${state.constrainedFolding}&fold_type=${state.foldType}`
+  } else if (state.constrainedFolding) {
+    body = body + `&constraint=${state.constrainedFolding}`
+  }
 
   return function(dispatch) {
     dispatch({type: types.UPDATE_STATUS});
@@ -109,7 +115,7 @@ export function onSubmit(sequence, example=false) {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}&constraint=${state.constrainedFolding}&fold_type=${state.foldType}`
+      body: body
     })
     .then(function (response) {
       if (response.ok) { return response.text() }
