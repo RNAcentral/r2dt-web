@@ -3,6 +3,7 @@ import {connect} from 'react-redux';
 import { ClearButton, Typeahead } from 'react-bootstrap-typeahead';
 import * as actionCreators from 'actions/actions';
 import { templates } from 'data/index.js';
+import { FiExternalLink } from 'react-icons/fi';
 
 
 class Advanced extends React.Component {
@@ -18,7 +19,9 @@ class Advanced extends React.Component {
             <div className="col-12 col-sm-6">
               <div className="card">
                 <div className="card-header">
-                  <span style={{fontSize: fixCss}}>Select the template you want to use</span>
+                  <span style={{fontSize: fixCss}}>
+                    Select a template. <a href="https://github.com/RNAcentral/R2DT/tree/develop#manually-selecting-templates" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
+                  </span>
                 </div>
                 <div className="card-body">
                   <div className="row mb-2 form-group">
@@ -68,7 +71,9 @@ class Advanced extends React.Component {
             <div className="col-12 col-sm-6">
               <div className="card">
                 <div className="card-header">
-                  <span style={{fontSize: fixCss}}>Enable constraint flag to select the constraint folding mode</span>
+                  <span style={{fontSize: fixCss}}>
+                    Enable constrained folding. <a href="https://github.com/RNAcentral/R2DT/tree/develop#constraint-based-folding-for-insertions" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
+                  </span>
                 </div>
                 <div className="card-body">
                   <div className="row mb-2">
@@ -79,15 +84,22 @@ class Advanced extends React.Component {
                       </div>
                     </div>
                   </div>
-                  <select style={{fontSize: fixCss}} className="form-control" value={this.props.foldType} onChange={(e) => this.props.onChangeFoldType(e)} disabled={this.props.constrainedFolding ? "": "disabled"}>
-                    <option key="default" value=""></option>
-                    <option key="full_molecule" value="full_molecule">full_molecule</option>
-                    <option key="insertions_only" value="insertions_only">insertions_only</option>
-                    <option key="all_constraints_enforced" value="all_constraints_enforced">all_constraints_enforced</option>
-                  </select>
+                  {
+                    this.props.constrainedFolding ? <select style={{fontSize: fixCss}} className="form-control" value={this.props.foldType} onChange={(e) => this.props.onChangeFoldType(e)}>
+                      <option key="auto" value="">Auto</option>
+                      <option key="full_molecule" value="full_molecule">Full molecule</option>
+                      <option key="insertions_only" value="insertions_only">Insertions only</option>
+                      <option key="all_constraints_enforced" value="all_constraints_enforced">All constraints enforced</option>
+                    </select> : ""
+                  }
                 </div>
               </div>
             </div>
+          </div>
+          <div className="row">
+            <p className="mt-3">
+              <i>See the <a href="https://github.com/RNAcentral/R2DT/blob/develop/Readme.md" target="_blank">documentation</a> for details or read the <a href="https://www.nature.com/articles/s41467-021-23555-5" target="_blank">R2DT paper</a> in Nature Communications</i>
+            </p>
           </div>
         </div>
       </div>
