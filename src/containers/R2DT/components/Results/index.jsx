@@ -143,6 +143,8 @@ class Results extends React.Component {
                     miniatureProps={miniatureProps}
                     detectAutoPan={false}
                     background={"#fff"}
+                    scaleFactorMin={0.5}
+                    scaleFactorMax={5}
                   >
                     <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
                       <SvgLoader svgXML={this.props.svg} />
