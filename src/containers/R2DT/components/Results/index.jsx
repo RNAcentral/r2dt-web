@@ -88,7 +88,7 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
-    const width = window.innerWidth - 40;  // using - 40 to display the right side border
+    const width = document.getElementsByTagName('r2dt-web')[0].offsetWidth - 40;  // using - 40 to display the right side border
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
     return (
