@@ -20,7 +20,7 @@ class Advanced extends React.Component {
               <div className="card">
                 <div className="card-header">
                   <span style={{fontSize: fixCss}}>
-                    Select a template. <a href="https://github.com/RNAcentral/R2DT/tree/develop#manually-selecting-templates" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
+                    Select a template. <a href="https://rnacentral.org/help/secondary-structure#template" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
                   </span>
                 </div>
                 <div className="card-body">
@@ -72,7 +72,7 @@ class Advanced extends React.Component {
               <div className="card">
                 <div className="card-header">
                   <span style={{fontSize: fixCss}}>
-                    Enable constrained folding. <a href="https://github.com/RNAcentral/R2DT/tree/develop#constraint-based-folding-for-insertions" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
+                    Enable constrained folding. <a href="https://rnacentral.org/help/secondary-structure#constrained_folding" target="_blank">Learn more <span style={{verticalAlign: "2px"}}><FiExternalLink /></span></a>
                   </span>
                 </div>
                 <div className="card-body">
@@ -98,7 +98,7 @@ class Advanced extends React.Component {
           </div>
           <div className="row">
             <p className="mt-3">
-              <i>See the <a href="https://github.com/RNAcentral/R2DT/blob/develop/Readme.md" target="_blank">documentation</a> for details or read the <a href="https://www.nature.com/articles/s41467-021-23555-5" target="_blank">R2DT paper</a> in Nature Communications</i>
+              <i>See the <a href="https://rnacentral.org/help/secondary-structure" target="_blank">documentation</a> for details or read the <a href="https://www.nature.com/articles/s41467-021-23555-5" target="_blank">R2DT paper</a> in Nature Communications</i>
             </p>
           </div>
         </div>
