@@ -100,6 +100,12 @@ export function firebasePatch(r2dt_id, svg, status) {
 
 export function onSubmit(sequence, example=false) {
   let state = store.getState();
+  let body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`;
+  if (state.constrainedFolding && state.foldType.length > 0) {
+    body = body + `&constraint=${state.constrainedFolding}&fold_type=${state.foldType}`
+  } else if (state.constrainedFolding) {
+    body = body + `&constraint=${state.constrainedFolding}`
+  }
 
   return function(dispatch) {
     dispatch({type: types.UPDATE_STATUS});
@@ -109,7 +115,7 @@ export function onSubmit(sequence, example=false) {
         'Accept': 'text/plain',
         'Content-Type': 'application/x-www-form-urlencoded'
       },
-      body: `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`
+      body: body
     })
     .then(function (response) {
       if (response.ok) { return response.text() }
@@ -188,6 +194,17 @@ export function onChangeTemplateId(event) {
   return {type: types.TEMPLATE_CHANGE, templateId: templateId ? templateId : ""};
 }
 
+export function onChangeConstrainedFolding() {
+  return function(dispatch) {
+    dispatch({type: types.TOGGLE_CONSTRAINED_FOLDING})
+    dispatch({type: types.FOLD_TYPE, foldType: ""})
+  }
+}
+
+export function onChangeFoldType(event) {
+  return {type: types.FOLD_TYPE, foldType: event.target.value}
+}
+
 export function clearTemplateId() {
   return {type: types.TEMPLATE_CHANGE, templateId: ""}
 }
@@ -205,6 +222,12 @@ export function onToggleAdvancedSearch() {
   return function(dispatch) {
     if (!state.advancedSearchCollapsed && !state.jobId) {
       dispatch({type: types.TEMPLATE_CHANGE, templateId: "" })
+    }
+    if (!state.advancedSearchCollapsed && state.constrainedFolding) {
+      dispatch({type: types.TOGGLE_CONSTRAINED_FOLDING})
+    }
+    if (!state.advancedSearchCollapsed && state.foldType) {
+      dispatch({type: types.FOLD_TYPE, foldType: ""})
     }
     dispatch({type: types.TOGGLE_ADVANCED_SEARCH });
   }

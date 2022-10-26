@@ -16,6 +16,8 @@ let initialState = {
   advancedSearchCollapsed: true,
   templateId: "",
   searchMethod: "option1",
+  constrainedFolding: false,
+  foldType: ""
 };
 
 export default initialState;
