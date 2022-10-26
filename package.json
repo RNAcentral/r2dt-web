@@ -37,10 +37,10 @@
   "dependencies": {
     "dotenv-webpack": "^7.1.0",
     "react": "^17.0.2",
-    "react-bootstrap-typeahead": "^5.2.1",
+    "react-bootstrap-typeahead": "^5.2.2",
     "react-dom": "^17.0.2",
-    "react-icons": "^4.3.1",
-    "react-redux": "^7.2.6",
+    "react-icons": "^4.4.0",
+    "react-redux": "^7.2.8",
     "react-svg-pan-zoom": "^3.11.0",
     "react-svgmt": "^1.2.0",
     "redux": "^4.1.2",
@@ -49,20 +49,20 @@
     "save-svg-as-png": "^1.4.17"
   },
   "devDependencies": {
-    "@babel/core": "^7.17.2",
-    "@babel/preset-env": "^7.16.11",
-    "@babel/preset-react": "^7.16.7",
-    "babel-loader": "^8.2.3",
-    "css-loader": "^6.6.0",
+    "@babel/core": "^7.18.5",
+    "@babel/preset-env": "^7.18.2",
+    "@babel/preset-react": "^7.17.12",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
     "file-loader": "^6.2.0",
     "html-webpack-plugin": "^5.5.0",
     "navigator": "~1.0.1",
     "node-sass": "^7.0.1",
-    "sass-loader": "^12.4.0",
+    "sass-loader": "^12.6.0",
     "style-loader": "^3.3.1",
     "url-loader": "^4.1.1",
-    "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-dev-server": "^4.7.4"
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.10.0",
+    "webpack-dev-server": "^4.9.2"
   }
 }

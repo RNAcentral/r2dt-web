@@ -22,11 +22,11 @@ class Results extends React.Component {
   }
 
   componentDidMount() {
-    window.addEventListener("resize", (e) => this.handleResize(e));
+    window.addEventListener("resize", () => this.handleResize());
   }
 
   componentWillUnMount() {
-    window.addEventListener("resize", (e) => this.handleResize(e));
+    window.addEventListener("resize", () => this.handleResize());
   }
 
   componentDidUpdate() {
@@ -39,7 +39,8 @@ class Results extends React.Component {
     }
   }
 
-  handleResize(e) {
+  // border responsive
+  handleResize() {
     const { current } = this.divRef;
     current && this.setState({ divWidth: current.offsetWidth });
   };
@@ -87,7 +88,7 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
-    const width = this.state.divWidth > 1100 ? 1100 : this.state.divWidth - 40;
+    const width = document.getElementsByTagName('r2dt-web')[0].offsetWidth - 40;  // using - 40 to display the right side border
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
     return (
@@ -142,6 +143,8 @@ class Results extends React.Component {
                     miniatureProps={miniatureProps}
                     detectAutoPan={false}
                     background={"#fff"}
+                    scaleFactorMin={0.5}
+                    scaleFactorMax={5}
                   >
                     <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
                       <SvgLoader svgXML={this.props.svg} />
