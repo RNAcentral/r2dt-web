@@ -78,6 +78,8 @@ const rootReducer = function (state = initialState, action) {
         advancedSearchCollapsed: true,
         templateId: "",
         searchMethod: "option1",
+        constrainedFolding: false,
+        foldType: ""
       });
 
     case actions.TEXTAREA_CHANGE:
