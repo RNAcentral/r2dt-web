@@ -7,6 +7,7 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 import { MdColorLens } from 'react-icons/md';
 import { RiImage2Line, RiFileCodeLine, RiFileCopy2Line } from "react-icons/ri";
 import { BsToggles } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 
 const miniatureProps = { position: TOOL_NONE }
 const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER }
@@ -133,6 +134,7 @@ class Results extends React.Component {
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}><span className="btn-icon"><RiImage2Line size="1.2em"/></span> Save PNG</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}><span className="btn-icon"><RiFileCodeLine size="1.2em"/></span> Save SVG</button>
                   {this.props.notation ? <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button> : ""}
+                  <a className="btn btn-outline-secondary" style={{fontSize: fixCss}} href={`https://ldwlab.github.io/XRNA-TypeScript/?r2dt_job_id=${this.props.jobId}`} target="_blank"><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit diagram</a>
                 </div>
                 <div className="border border-secondary">
                   <UncontrolledReactSVGPanZoom
