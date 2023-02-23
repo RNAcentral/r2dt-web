@@ -4,6 +4,7 @@ import * as actionCreators from 'actions/actions';
 import { store } from 'app.jsx';
 import { FaSearch } from 'react-icons/fa';
 import { FiTrash2 } from 'react-icons/fi';
+import ReactGA from 'react-ga4';
 import Advanced from 'containers/R2DT/components/SearchForm/components/Advanced/index.jsx'
 
 
@@ -26,6 +27,10 @@ class SearchForm extends React.Component {
   }
 
   searchUrs(urs) {
+    // register full page URLs in GA4
+    // ref: https://www.optimizesmart.com/how-to-view-full-page-urls-in-ga4/
+    ReactGA.initialize('G-HEBH0L4399');
+    ReactGA.send({ hitType: "pageview", page: window.location.href });
     store.dispatch(actionCreators.onSubmitUrs(urs));
   }
 
