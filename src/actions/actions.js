@@ -251,7 +251,7 @@ export function fetchStatus(jobId) {
       else { throw response }
     })
     .then((data) => {
-      if (data === 'RUNNING') {
+      if (data === 'RUNNING' || data === 'QUEUED') {
         let statusTimeout = setTimeout(() => store.dispatch(fetchStatus(jobId)), 2000);
         dispatch({type: types.SET_STATUS_TIMEOUT, timeout: statusTimeout});
       } else if (data === 'FINISHED') {
