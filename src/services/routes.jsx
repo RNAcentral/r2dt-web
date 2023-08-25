@@ -13,5 +13,6 @@ module.exports = {
   firebase:   () => `${firebaseServer}/data.json`,
   firebaseId: (id) => `${firebaseServer}/data/${id}.json`,
   fetchUrs:   (urs) => `https://${rnacentralServer}.org/api/v1/rna/${urs}/2d/`,
-  rnaCanvas:  (jobId) => `${rnaCanvasServer}?rna_2d_schema_url=${server}/result/${jobId}/json`
+  rnaCanvas:  (jobId) => `${rnaCanvasServer}?rna_2d_schema_url=${server}/result/${jobId}/json`,
+  xRNA:       (jobId) => `https://ldwlab.github.io/XRNA-React/?source_url=${server}/result/${jobId}/json`
 };
