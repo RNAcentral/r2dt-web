@@ -91,14 +91,15 @@ This component accepts a number of attributes. You pass them as html attributes 
 
 Parameters that you can use to customise some elements of this embeddable component
 
-parameter                   | description                                                                       |
-----------------------------|-----------------------------------------------------------------------------------|
-fixCss                      | fix the CSS. Use *"fixCss": "true"* if the button sizes are different             |
-linkColor                   | change the color of the links                                                     |
-searchButtonColor           | change the color of the `Search` button                                           |
-clearButtonColor            | change the color of the `Clear` button                                            |
-titleColor                  | change the color of the `Secondary structure` text                                |
-titleSize                   | change the size of the `Secondary structure` text                                 |
+| parameter         | description                                                           |
+|-------------------|-----------------------------------------------------------------------|
+| fixCss            | fix the CSS. Use *"fixCss": "true"* if the button sizes are different |
+| linkColor         | change the color of the links                                         |
+| searchButtonColor | change the color of the `Search` button                               |
+| clearButtonColor  | change the color of the `Clear` button                                |
+| titleColor        | change the color of the `Secondary structure` text                    |
+| titleSize         | change the size of the `Secondary structure` text                     |
+| hideTitle         | hide the title. Use *"hideTitle": "true"* to not show the title       |
 
 ## Developer details
 
