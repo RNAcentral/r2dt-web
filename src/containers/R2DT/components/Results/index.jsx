@@ -68,7 +68,7 @@ class Results extends React.Component {
     let link = "#";
     let name = "";
     if (source.toLowerCase() === "crw") {
-      link = "http://www.rna.ccbb.utexas.edu/";
+      link = "https://crw2-comparative-rna-web.org/";
       name = "CRW";
     } else if (source.toLowerCase() === "rfam") {
       link = "https://rfam.org/";
