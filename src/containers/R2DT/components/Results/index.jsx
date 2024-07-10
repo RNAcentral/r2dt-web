@@ -10,9 +10,8 @@ import { RiImage2Line, RiFileCodeLine, RiFileCopy2Line } from "react-icons/ri";
 import { BsToggles } from "react-icons/bs";
 import { FaEdit, FaRegEdit } from "react-icons/fa";
 
-const miniatureProps = { position: TOOL_NONE }
-const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER }
-
+const miniatureProps = { position: TOOL_NONE };
+const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER };
 
 class Results extends React.Component {
   constructor(props) {
@@ -27,8 +26,8 @@ class Results extends React.Component {
     window.addEventListener("resize", () => this.handleResize());
   }
 
-  componentWillUnMount() {
-    window.addEventListener("resize", () => this.handleResize());
+  componentWillUnmount() {
+    window.removeEventListener("resize", () => this.handleResize());
   }
 
   componentDidUpdate() {
@@ -91,8 +90,40 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
+    const legendLocation = this.props.customStyle && this.props.customStyle.legendLocation && this.props.customStyle.legendLocation === "right" ? "right" : "";
     const width = document.getElementsByTagName('r2dt-web')[0] && document.getElementsByTagName('r2dt-web')[0].offsetWidth ? document.getElementsByTagName('r2dt-web')[0].offsetWidth - 40 : 1100;  // using - 40 to display the right side border
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
+
+    const renderLegend = () => (
+      <div className="mt-3" style={{ fontSize: fixCss }}>
+        <strong>Colour legend</strong>
+        <ul className="list-unstyled">
+          <li className="mt-1"><span className="traveler-black traveler-key"></span> Same as the template</li>
+          <li className="mt-1"><span className="traveler-green traveler-key"></span> Modified compared to the template</li>
+          <li className="mt-1"><span className="traveler-magenta traveler-key"></span> Inserted nucleotides</li>
+          <li className="mt-1"><span className="traveler-blue traveler-key"></span> Repositioned compared to the template</li>
+          <li className="mt-2"><strong>Tip:</strong> Hover over nucleotides for more details</li>
+        </ul>
+      </div>
+    );
+
+    const renderSVGComponent = () => (
+      <UncontrolledReactSVGPanZoom
+        width={legendLocation === "right" ? width * 0.7 : width}  // 70% of the total width if legend is on the right
+        height={height}
+        ref={this.viewerRef}
+        toolbarProps={toolbarProps}
+        miniatureProps={miniatureProps}
+        detectAutoPan={false}
+        background={"#fff"}
+        scaleFactorMin={0.5}
+        scaleFactorMax={5}
+      >
+        <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
+          <SvgLoader svgXML={this.props.svg} />
+        </svg>
+      </UncontrolledReactSVGPanZoom>
+    );
 
     return (
       <div className="rna" ref={this.divRef}>
@@ -145,36 +176,23 @@ class Results extends React.Component {
                     </>
                   }
                 </div>
-                <div className="border border-secondary">
-                  <UncontrolledReactSVGPanZoom
-                    width={width}
-                    height={height}
-                    ref={this.viewerRef}
-                    toolbarProps={toolbarProps}
-                    miniatureProps={miniatureProps}
-                    detectAutoPan={false}
-                    background={"#fff"}
-                    scaleFactorMin={0.5}
-                    scaleFactorMax={5}
-                  >
-                    <svg width={parseFloat(this.props.width)} height={parseFloat(this.props.height)}>
-                      <SvgLoader svgXML={this.props.svg} />
-                    </svg>
-                  </UncontrolledReactSVGPanZoom>
-                </div>
-                <div className="mt-3" style={{fontSize: fixCss}}>
-                  <strong>Colour legend</strong>
-                  <ul className="list-unstyled">
-                    <li className="mt-1"><span className="traveler-black traveler-key"></span> Same as the template</li>
-                    <li className="mt-1">
-                      <span className="traveler-green traveler-key"></span> Modified compared to the template.
-                      <strong> Tip:</strong> Hover over green nucleotides for more details
-                    </li>
-                    <li className="mt-1"><span className="traveler-magenta traveler-key"></span> Inserted nucleotides</li>
-                    <li className="mt-1"><span className="traveler-blue traveler-key"></span> Repositioned compared to the template</li>
-                    <li className="mt-1"><strong>Tip:</strong> Hover over the nucleotides to see nucleotide numbers</li>
-                  </ul>
-                </div>
+                {
+                  legendLocation === "right" ? (
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <div style={{ flex: '1 1 70%' }} className="border border-secondary">
+                        { renderSVGComponent() }
+                      </div>
+                      <div style={{ flex: '1 1 30%', marginLeft: '1rem' }}>
+                        { renderLegend() }
+                      </div>
+                    </div>
+                  ) : (
+                    <div className="border border-secondary">
+                      { renderSVGComponent() }
+                    </div>
+                  )
+                }
+                { legendLocation !== "right" && renderLegend() }
               </div>
             </div>
           ]
@@ -182,12 +200,12 @@ class Results extends React.Component {
         {
           this.props.jobId && this.props.svg !== "SVG not available" && this.props.status === "FINISHED" && this.props.notation && [
             <div className="row" key={`notation-div`}>
-              <div className="col-12">
-                <p className="notation-title">Dot-bracket notation</p>
+              <div className={`col-12 ${legendLocation === "right" ? 'mt-3' : ''}`}>
+                <span><strong>Dot-bracket notation</strong></span>
                 {
                   this.props.notation === "error" ? <div className="alert alert-danger">
                     There was an error loading the dot-bracket notation. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
-                  </div> : <pre className="notation">
+                  </div> : <pre className="mt-1 notation">
                     <span className="notation-font">{this.props.notation}</span>
                   </pre>
                 }
