@@ -90,7 +90,7 @@ class Results extends React.Component {
     };
     const fixCss = this.props.customStyle && this.props.customStyle.fixCss && this.props.customStyle.fixCss === "true" ? "1.5rem" : "";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
-    const legendLocation = this.props.customStyle && this.props.customStyle.legendLocation && this.props.customStyle.legendLocation === "right" ? "right" : "";
+    const legendLocation = this.props.customStyle && this.props.customStyle.legendLocation ? this.props.customStyle.legendLocation : "";
     const width = document.getElementsByTagName('r2dt-web')[0] && document.getElementsByTagName('r2dt-web')[0].offsetWidth ? document.getElementsByTagName('r2dt-web')[0].offsetWidth - 40 : 1100;  // using - 40 to display the right side border
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
 
@@ -109,7 +109,7 @@ class Results extends React.Component {
 
     const renderSVGComponent = () => (
       <UncontrolledReactSVGPanZoom
-        width={legendLocation === "right" ? width * 0.7 : width}  // 70% of the total width if legend is on the right
+        width={legendLocation ? width * 0.7 : width}  // 70% of the total width if legend is on the right or left
         height={height}
         ref={this.viewerRef}
         toolbarProps={toolbarProps}
@@ -177,14 +177,25 @@ class Results extends React.Component {
                   }
                 </div>
                 {
-                  legendLocation === "right" ? (
+                  legendLocation === "right" || legendLocation === "left" ? (
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      {
+                        legendLocation === "left" && (
+                          <div style={{ flex: '1 1 30%', marginRight: '1rem' }}>
+                            { renderLegend() }
+                          </div>
+                        )
+                      }
                       <div style={{ flex: '1 1 70%' }} className="border border-secondary">
                         { renderSVGComponent() }
                       </div>
-                      <div style={{ flex: '1 1 30%', marginLeft: '1rem' }}>
-                        { renderLegend() }
-                      </div>
+                      {
+                        legendLocation === "right" && (
+                          <div style={{ flex: '1 1 30%', marginLeft: '1rem' }}>
+                            { renderLegend() }
+                          </div>
+                        )
+                      }
                     </div>
                   ) : (
                     <div className="border border-secondary">
@@ -192,7 +203,7 @@ class Results extends React.Component {
                     </div>
                   )
                 }
-                { legendLocation !== "right" && renderLegend() }
+                { legendLocation !== "right" && legendLocation !== "left" && renderLegend() }
               </div>
             </div>
           ]
@@ -200,7 +211,7 @@ class Results extends React.Component {
         {
           this.props.jobId && this.props.svg !== "SVG not available" && this.props.status === "FINISHED" && this.props.notation && [
             <div className="row" key={`notation-div`}>
-              <div className={`col-12 ${legendLocation === "right" ? 'mt-3' : ''}`}>
+              <div className={`col-12 ${legendLocation ? 'mt-3' : ''}`}>
                 <span><strong>Dot-bracket notation</strong></span>
                 {
                   this.props.notation === "error" ? <div className="alert alert-danger">
