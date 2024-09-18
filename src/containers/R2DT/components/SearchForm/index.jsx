@@ -37,19 +37,28 @@ class SearchForm extends React.Component {
   onSubmit(event) {
     event.preventDefault();
     const state = store.getState();
-
-    // TODO: validate the sequence
-    // if(!/^(>.+?[\n\r])*?[acgtunwsmkrybdhvxACGTUNWSMKRYDBHVX\s]+$/.test(sequence)){
-    //   store.dispatch(actionCreators.invalidSequence('invalidCharacter'));
-    // }
+    const userInput = state.sequence.split("\n");
+    const isDotBracket = /[.()]/;
 
     if (/^r2dt/.test(state.sequence)){
       store.dispatch(actionCreators.fetchStatus(state.sequence))
-    } else if (state.sequence && (state.sequence.length < 40 || state.sequence.length > 8000)) {
+    } else if (userInput.length === 3 && /^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
+      const fastaHeader = userInput[0];
+      const sequence = userInput[1];
+      const dotBracket = userInput[2];
+
+      if (sequence.length !== dotBracket.length) {
+        store.dispatch(actionCreators.invalidDotBracket());
+      } else if (sequence.length < 40 || sequence.length > 8000) {
+        store.dispatch(actionCreators.invalidSequence());
+      } else {
+        store.dispatch(actionCreators.onSubmit(fastaHeader + '\n' + sequence + '\n' + dotBracket));
+      }
+    } else if (state.sequence.length < 40 || state.sequence.length > 8000) {
       store.dispatch(actionCreators.invalidSequence());
-    } else if (state.sequence && /^[>]/.test(state.sequence)) {
+    } else if (/^[>]/.test(state.sequence)) {
       store.dispatch(actionCreators.onSubmit(state.sequence));
-    } else if (state.sequence){
+    } else {
       store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence));
     }
   }
@@ -133,6 +142,17 @@ class SearchForm extends React.Component {
               <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
                   {this.props.sequence.length < 40 ? "The sequence cannot be shorter than 40 nucleotides" : "The sequence cannot be longer than 8000 nucleotides"}
+                </div>
+              </div>
+            </div>
+          )
+        }
+        {
+          this.props.status === "invalidDotBracket" && (
+            <div className="row">
+              <div className="col-12 col-sm-9">
+                <div className="alert alert-warning">
+                  The secondary structure in dot-bracket notation must be the same length as the fasta sequence
                 </div>
               </div>
             </div>
