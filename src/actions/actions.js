@@ -217,6 +217,10 @@ export function invalidSequence() {
   return {type: types.INVALID_SEQUENCE}
 }
 
+export function invalidDotBracket() {
+  return {type: types.INVALID_DOT_BRACKET}
+}
+
 export function onToggleAdvancedSearch() {
   let state = store.getState();
   return function(dispatch) {
