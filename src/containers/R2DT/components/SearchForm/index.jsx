@@ -40,13 +40,9 @@ class SearchForm extends React.Component {
     const userInput = state.sequence.split("\n");
     const isDotBracket = /[.()]/;
 
-    if (userInput && userInput[userInput.length - 1] === "") {
-        userInput.pop();
-    }
-
     if (/^r2dt/.test(state.sequence)){
       store.dispatch(actionCreators.fetchStatus(state.sequence))
-    } else if (userInput.length === 3 && /^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
+    } else if (/^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
       const fastaHeader = userInput[0];
       const sequence = userInput[1].replace(/\s+/g, "");
       const dotBracket = userInput[2].replace(/\s+/g, "");
