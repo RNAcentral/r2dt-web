@@ -42,10 +42,10 @@ class SearchForm extends React.Component {
 
     if (/^r2dt/.test(state.sequence)){
       store.dispatch(actionCreators.fetchStatus(state.sequence))
-    } else if (userInput.length === 3 && /^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
+    } else if (/^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
       const fastaHeader = userInput[0];
-      const sequence = userInput[1];
-      const dotBracket = userInput[2];
+      const sequence = userInput[1].replace(/\s+/g, "");
+      const dotBracket = userInput[2].replace(/\s+/g, "");
 
       if (sequence.length !== dotBracket.length) {
         store.dispatch(actionCreators.invalidDotBracket());
@@ -59,7 +59,7 @@ class SearchForm extends React.Component {
     } else if (/^[>]/.test(state.sequence)) {
       store.dispatch(actionCreators.onSubmit(state.sequence));
     } else {
-      store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence));
+      store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence.replace(/\s+/g, "")));
     }
   }
 
