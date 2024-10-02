@@ -52,7 +52,7 @@ class SearchForm extends React.Component {
       } else if (sequence.length < 40 || sequence.length > 8000) {
         store.dispatch(actionCreators.invalidSequence());
       } else {
-        store.dispatch(actionCreators.onSubmit(fastaHeader + '\n' + sequence + '\n' + dotBracket));
+        store.dispatch(actionCreators.onSubmit(fastaHeader + '\n' + sequence + '\n' + dotBracket, false, true));
       }
     } else if (state.sequence.length < 40 || state.sequence.length > 8000) {
       store.dispatch(actionCreators.invalidSequence());
