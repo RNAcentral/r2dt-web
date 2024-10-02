@@ -98,12 +98,13 @@ export function firebasePatch(r2dt_id, svg, status) {
   }
 }
 
-export function onSubmit(sequence, example=false) {
+export function onSubmit(sequence, example=false, dotBracket=false) {
   let state = store.getState();
-  let body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${state.templateId}`;
-  if (state.constrainedFolding && state.foldType.length > 0) {
+  let templateId = dotBracket ? "" : state.templateId;
+  let body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${templateId}`;
+  if (!dotBracket && state.constrainedFolding && state.foldType.length > 0) {
     body = body + `&constraint=${state.constrainedFolding}&fold_type=${state.foldType}`
-  } else if (state.constrainedFolding) {
+  } else if (!dotBracket && state.constrainedFolding) {
     body = body + `&constraint=${state.constrainedFolding}`
   }
 
