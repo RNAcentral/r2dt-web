@@ -5,10 +5,10 @@ import routes from 'services/routes.jsx';
 import {ALIGN_CENTER, POSITION_LEFT, UncontrolledReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
 import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
-import { MdColorLens } from 'react-icons/md';
-import { RiImage2Line, RiFileCodeLine, RiFileCopy2Line } from "react-icons/ri";
-import { BsToggles } from "react-icons/bs";
+import { BsFiletypePng, BsFiletypeSvg, BsToggles } from "react-icons/bs";
 import { FaEdit, FaRegEdit } from "react-icons/fa";
+import { MdColorLens } from 'react-icons/md';
+import { RiDownload2Fill, RiFileCopy2Line } from "react-icons/ri";
 
 const miniatureProps = { position: TOOL_NONE };
 const toolbarProps = { position: POSITION_LEFT, SVGAlignY: ALIGN_CENTER, SVGAlignX: ALIGN_CENTER };
@@ -18,16 +18,21 @@ class Results extends React.Component {
     super(props);
     this.viewerRef = React.createRef();
     this.divRef = React.createRef();
+    this.downloadMenuRef = React.createRef();
+    this.editMenuRef = React.createRef();
     this.doFirstFit = true;
+    this.handleClickOutside = this.handleClickOutside.bind(this);
     this.state = { divWidth: window.innerWidth };
   }
 
   componentDidMount() {
     window.addEventListener("resize", () => this.handleResize());
+    window.addEventListener("click", this.handleClickOutside);  // close dropdown on outside click
   }
 
   componentWillUnmount() {
     window.removeEventListener("resize", () => this.handleResize());
+    window.removeEventListener("click", this.handleClickOutside);
   }
 
   componentDidUpdate() {
@@ -44,7 +49,55 @@ class Results extends React.Component {
   handleResize() {
     const { current } = this.divRef;
     current && this.setState({ divWidth: current.offsetWidth });
-  };
+  }
+
+  // close dropdowns when clicking outside
+  handleClickOutside = (event) => {
+    const downloadMenu = this.downloadMenuRef.current;
+    const editMenu = this.editMenuRef.current;
+
+    // close the download dropdown if clicked outside
+    if (downloadMenu && !downloadMenu.contains(event.target) && event.target.id !== "downloadDropdownButton") {
+      downloadMenu.classList.remove("show");
+    }
+
+    // close the edit dropdown if clicked outside
+    if (editMenu && !editMenu.contains(event.target) && event.target.id !== "editDropdownButton") {
+      editMenu.classList.remove("show");
+    }
+  }
+
+  // toggle the download dropdown menu
+  toggleDownloadDropdown = (event) => {
+    event.stopPropagation();
+    const downloadMenu = this.downloadMenuRef.current;
+    const editMenu = this.editMenuRef.current;
+
+    // close the edit dropdown if it's open
+    if (editMenu && editMenu.classList.contains("show")) {
+      editMenu.classList.remove("show");
+    }
+
+    if (downloadMenu) {
+      downloadMenu.classList.toggle("show");
+    }
+  }
+
+  // toggle the edit dropdown menu
+  toggleEditDropdown = (event) => {
+    event.stopPropagation();
+    const editMenu = this.editMenuRef.current;
+    const downloadMenu = this.downloadMenuRef.current;
+
+    // close the download dropdown if it's open
+    if (downloadMenu && downloadMenu.classList.contains("show")) {
+      downloadMenu.classList.remove("show");
+    }
+
+    if (editMenu) {
+      editMenu.classList.toggle("show");
+    }
+  }
 
   downloadPNG() {
     let div = document.createElement('div');
@@ -168,15 +221,25 @@ class Results extends React.Component {
                 <div className="btn-group mb-3" role="group" aria-label="button options">
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.toggleColors(this.props.svg)}><span className="btn-icon"><MdColorLens size="1.2em"/></span> Toggle colours</button>
                   <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.props.toggleNumbers(this.props.svg)}><span className="btn-icon"><BsToggles size="1.2em"/></span> Toggle numbers</button>
-                  <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}><span className="btn-icon"><RiImage2Line size="1.2em"/></span> Save PNG</button>
-                  <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}><span className="btn-icon"><RiFileCodeLine size="1.2em"/></span> Save SVG</button>
                   {this.props.notation ? <button className="btn btn-outline-secondary" style={{fontSize: fixCss}} onClick={() => navigator.clipboard.writeText(this.props.notation)}><span className="btn-icon"><RiFileCopy2Line size="1.2em"/></span> Copy dot-bracket notation</button> : ""}
                   {
                     this.props.search ? "" : <>
-                      <a className="btn btn-outline-secondary" style={{fontSize: fixCss}} href={routes.rnaCanvas(this.props.jobId)} target="_blank"><span className="btn-icon"><FaRegEdit size="1.2em"/></span> Edit in RNAcanvas</a>
-                      <a className="btn btn-outline-secondary" style={{fontSize: fixCss}} href={routes.xRNA(this.props.jobId)} target="_blank"><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit in XRNA</a>
+                      <div className="btn-group" role="group">
+                        <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="editDropdownButton" onClick={this.toggleEditDropdown}><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit image</button>
+                        <ul className="dropdown-menu" id="editDropdownMenu" ref={this.editMenuRef}>
+                          <li><a className="dropdown-item" href={routes.rnaCanvas(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in RNAcanvas</a></li>
+                          <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in XRNA</a></li>
+                        </ul>
+                      </div>
                     </>
                   }
+                  <div className="btn-group" role="group">
+                    <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="dropdownMenuButton" onClick={this.toggleDownloadDropdown}><span className="btn-icon"><RiDownload2Fill size="1.2em"/></span> Download</button>
+                    <ul className="dropdown-menu" id="dropdownMenu" ref={this.downloadMenuRef}>
+                      <li><button className="dropdown-item" onClick={() => this.downloadPNG()}><BsFiletypePng/> PNG</button></li>
+                      <li><button className="dropdown-item" onClick={() => this.downloadSVG()}><BsFiletypeSvg/> SVG</button></li>
+                    </ul>
+                  </div>
                 </div>
                 {
                   legendLocation === "right" || legendLocation === "left" ? (
