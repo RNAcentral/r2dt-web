@@ -248,7 +248,7 @@ class Results extends React.Component {
                     this.props.search ? "" : <>
                       <div className="btn-group" role="group">
                         <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="editDropdownButton" onClick={this.toggleEditDropdown}><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit image</button>
-                        <ul className="dropdown-menu" id="editDropdownMenu" ref={this.editMenuRef}>
+                        <ul className="dropdown-menu" style={{fontSize: fixCss}} id="editDropdownMenu" ref={this.editMenuRef}>
                           <li><a className="dropdown-item" href={routes.rnaCanvas(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in RNAcanvas</a></li>
                           <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in XRNA</a></li>
                         </ul>
@@ -257,7 +257,7 @@ class Results extends React.Component {
                   }
                   <div className="btn-group" role="group">
                     <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="dropdownMenuButton" onClick={this.toggleDownloadDropdown}><span className="btn-icon"><RiDownload2Fill size="1.2em"/></span> Download</button>
-                    <ul className="dropdown-menu" id="dropdownMenu" ref={this.downloadMenuRef}>
+                    <ul className="dropdown-menu" style={{fontSize: fixCss}} id="dropdownMenu" ref={this.downloadMenuRef}>
                       <li><button className="dropdown-item" onClick={() => this.downloadJson()}><BsFiletypeJson/> JSON</button></li>
                       <li><button className="dropdown-item" onClick={() => this.downloadPNG()}><BsFiletypePng/> PNG</button></li>
                       <li><button className="dropdown-item" onClick={() => this.downloadSVG()}><BsFiletypeSvg/> SVG</button></li>
