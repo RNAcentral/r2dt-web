@@ -5,7 +5,7 @@ import routes from 'services/routes.jsx';
 import {ALIGN_CENTER, POSITION_LEFT, UncontrolledReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
 import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
-import { BsFiletypePng, BsFiletypeSvg, BsToggles } from "react-icons/bs";
+import { BsFiletypeJson, BsFiletypePng, BsFiletypeSvg, BsToggles } from "react-icons/bs";
 import { FaEdit, FaRegEdit } from "react-icons/fa";
 import { MdColorLens } from 'react-icons/md';
 import { RiDownload2Fill, RiFileCopy2Line } from "react-icons/ri";
@@ -98,6 +98,28 @@ class Results extends React.Component {
       editMenu.classList.toggle("show");
     }
   }
+
+  downloadJson() {
+    fetch(routes.fetchJson(this.props.jobId))
+      .then(response => response.json())
+      .then(data => {
+        const jsonBlob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+
+        // create a link element to trigger the download
+        const downloadLink = document.createElement("a");
+        downloadLink.href = URL.createObjectURL(jsonBlob);
+        downloadLink.download = `${this.props.jobId}.json`;
+
+        // append the link to the document, trigger the click, and then remove it
+        document.body.appendChild(downloadLink);
+        downloadLink.click();
+        document.body.removeChild(downloadLink);
+      })
+      .catch(error => {
+        console.error("Error downloading JSON:", error);
+      });
+  }
+
 
   downloadPNG() {
     let div = document.createElement('div');
@@ -236,6 +258,7 @@ class Results extends React.Component {
                   <div className="btn-group" role="group">
                     <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="dropdownMenuButton" onClick={this.toggleDownloadDropdown}><span className="btn-icon"><RiDownload2Fill size="1.2em"/></span> Download</button>
                     <ul className="dropdown-menu" id="dropdownMenu" ref={this.downloadMenuRef}>
+                      <li><button className="dropdown-item" onClick={() => this.downloadJson()}><BsFiletypeJson/> JSON</button></li>
                       <li><button className="dropdown-item" onClick={() => this.downloadPNG()}><BsFiletypePng/> PNG</button></li>
                       <li><button className="dropdown-item" onClick={() => this.downloadSVG()}><BsFiletypeSvg/> SVG</button></li>
                     </ul>
