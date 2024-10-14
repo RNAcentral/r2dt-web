@@ -9,6 +9,7 @@ module.exports = {
   jobStatus:  (jobId) => `${server}/status/${jobId}`,
   fetchSvg:   (jobId) => `${server}/result/${jobId}/svg`,
   fetchFasta: (jobId) => `${server}/result/${jobId}/fasta`,
+  fetchJson:  (jobId) => `${server}/result/${jobId}/json`,
   fetchTsv:   (jobId) => `${server}/result/${jobId}/tsv`,
   firebase:   () => `${firebaseServer}/data.json`,
   firebaseId: (id) => `${firebaseServer}/data/${id}.json`,
