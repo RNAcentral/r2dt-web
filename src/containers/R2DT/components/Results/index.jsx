@@ -5,8 +5,8 @@ import routes from 'services/routes.jsx';
 import {ALIGN_CENTER, POSITION_LEFT, UncontrolledReactSVGPanZoom, TOOL_NONE} from 'react-svg-pan-zoom';
 import { SvgLoader } from 'react-svgmt';
 import { saveSvgAsPng } from 'save-svg-as-png';
-import { BsFiletypeJson, BsFiletypePng, BsFiletypeSvg, BsToggles } from "react-icons/bs";
-import { FaEdit, FaRegEdit } from "react-icons/fa";
+import { BsToggles } from "react-icons/bs";
+import { FaEdit } from "react-icons/fa";
 import { MdColorLens } from 'react-icons/md';
 import { RiDownload2Fill, RiFileCopy2Line } from "react-icons/ri";
 
@@ -99,27 +99,32 @@ class Results extends React.Component {
     }
   }
 
-  downloadJson() {
-    fetch(routes.fetchJson(this.props.jobId))
-      .then(response => response.json())
-      .then(data => {
-        const jsonBlob = new Blob([JSON.stringify(data, null, 2)], { type: "application/json" });
+  downloadFile = async (event, url, filename) => {
+    event.preventDefault();
 
-        // create a link element to trigger the download
-        const downloadLink = document.createElement("a");
-        downloadLink.href = URL.createObjectURL(jsonBlob);
-        downloadLink.download = `${this.props.jobId}.json`;
+    try {
+      const response = await fetch(url, { mode: "cors" });
+      if (!response.ok) {
+        console.error(`Failed to fetch ${filename}`);
+        return;
+      }
 
-        // append the link to the document, trigger the click, and then remove it
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-      })
-      .catch(error => {
-        console.error("Error downloading JSON:", error);
-      });
-  }
+      const blob = await response.blob();
+      const downloadLink = document.createElement("a");
+      const objectUrl = URL.createObjectURL(blob);
 
+      downloadLink.href = objectUrl;
+      downloadLink.download = filename;
+
+      document.body.appendChild(downloadLink);
+      downloadLink.click();
+
+      URL.revokeObjectURL(objectUrl);
+      document.body.removeChild(downloadLink);
+    } catch (error) {
+      console.error(`Error downloading ${filename}:`, error);
+    }
+  };
 
   downloadPNG() {
     let div = document.createElement('div');
@@ -136,6 +141,24 @@ class Results extends React.Component {
     document.body.appendChild(downloadLink);
     downloadLink.click();
     document.body.removeChild(downloadLink);
+  }
+
+  downloadJson = (event) => {
+    const url = routes.fetchJson(this.props.jobId);
+    const filename = `${this.props.jobId}.json`;
+    this.downloadFile(event, url, filename);
+  }
+
+  downloadSVGAnnotated = (event) => {
+    const url = routes.fetchSvgAn(this.props.jobId);
+    const filename = `${this.props.jobId}_annotated.svg`;
+    this.downloadFile(event, url, filename);
+  }
+
+  downloadThumbnail = (event) => {
+    const url = routes.fetchThumb(this.props.jobId);
+    const filename = `${this.props.jobId}_thumbnail.svg`;
+    this.downloadFile(event, url, filename);
   }
 
   sourceLink(source, linkColor){
@@ -249,8 +272,8 @@ class Results extends React.Component {
                       <div className="btn-group" role="group">
                         <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="editDropdownButton" onClick={this.toggleEditDropdown}><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit image</button>
                         <ul className="dropdown-menu" style={{fontSize: fixCss}} id="editDropdownMenu" ref={this.editMenuRef}>
-                          <li><a className="dropdown-item" href={routes.rnaCanvas(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in RNAcanvas</a></li>
-                          <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank"><FaRegEdit /> Edit in XRNA</a></li>
+                          <li><a className="dropdown-item" href={routes.rnaCanvas(this.props.jobId)} target="_blank">Edit in RNAcanvas</a></li>
+                          <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank">Edit in XRNA</a></li>
                         </ul>
                       </div>
                     </>
@@ -258,9 +281,11 @@ class Results extends React.Component {
                   <div className="btn-group" role="group">
                     <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="dropdownMenuButton" onClick={this.toggleDownloadDropdown}><span className="btn-icon"><RiDownload2Fill size="1.2em"/></span> Download</button>
                     <ul className="dropdown-menu" style={{fontSize: fixCss}} id="dropdownMenu" ref={this.downloadMenuRef}>
-                      <li><button className="dropdown-item" onClick={() => this.downloadJson()}><BsFiletypeJson/> JSON</button></li>
-                      <li><button className="dropdown-item" onClick={() => this.downloadPNG()}><BsFiletypePng/> PNG</button></li>
-                      <li><button className="dropdown-item" onClick={() => this.downloadSVG()}><BsFiletypeSvg/> SVG</button></li>
+                      <li><a className="btn dropdown-item" href={routes.fetchJson(this.props.jobId)} onClick={this.downloadJson}>JSON</a></li>
+                      <li><button className="dropdown-item" onClick={() => this.downloadPNG()}>PNG</button></li>
+                      <li><button className="dropdown-item" onClick={() => this.downloadSVG()}>SVG</button></li>
+                      <li><a className="btn dropdown-item" href={routes.fetchSvgAn(this.props.jobId)} onClick={this.downloadSVGAnnotated}>SVG annotated</a></li>
+                      <li><a className="btn dropdown-item" href={routes.fetchThumb(this.props.jobId)} onClick={this.downloadThumbnail}>Thumbnail</a></li>
                     </ul>
                   </div>
                 </div>
