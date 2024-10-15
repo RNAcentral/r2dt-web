@@ -7,8 +7,11 @@ let rnaCanvasServer = process.env.REACT_APP_BRANCH === 'dev' ? 'https://rna2draw
 module.exports = {
   submitJob:  () => `${server}/run`,
   jobStatus:  (jobId) => `${server}/status/${jobId}`,
-  fetchSvg:   (jobId) => `${server}/result/${jobId}/svg`,
   fetchFasta: (jobId) => `${server}/result/${jobId}/fasta`,
+  fetchJson:  (jobId) => `${server}/result/${jobId}/json`,
+  fetchSvg:   (jobId) => `${server}/result/${jobId}/svg`,
+  fetchSvgAn: (jobId) => `${server}/result/${jobId}/svg_annotated`,
+  fetchThumb: (jobId) => `${server}/result/${jobId}/thumbnail`,
   fetchTsv:   (jobId) => `${server}/result/${jobId}/tsv`,
   firebase:   () => `${firebaseServer}/data.json`,
   firebaseId: (id) => `${firebaseServer}/data/${id}.json`,
