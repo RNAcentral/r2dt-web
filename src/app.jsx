@@ -5,7 +5,7 @@ import {Provider} from 'react-redux';
 import R2DTWebContainer from 'containers/R2DT/index.jsx';
 import configureStore from 'store/configureStore.js';
 
-import bootstrap from 'styles/bootstrap.css';
+import bootstrap from 'styles/bootstrap.scss';
 import R2DTWebStyles from 'styles/index.scss';
 
 // Prepare data
@@ -47,9 +47,6 @@ class R2DTWeb extends HTMLElement {
       ],
       mountPoint
     );
-  }
-
-  connectedCallback() {
   }
 
   disconnectedCallback() {
