@@ -1,6 +1,6 @@
 {
   "name": "@rnacentral/r2dt-web",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Visualise RNA secondary structure using standard layouts.",
   "scripts": {
     "clean": "rm -rf dist/*",
