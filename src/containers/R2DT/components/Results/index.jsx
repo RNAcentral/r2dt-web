@@ -191,6 +191,7 @@ class Results extends React.Component {
     const legendLocation = this.props.customStyle && this.props.customStyle.legendLocation ? this.props.customStyle.legendLocation : "";
     const width = document.getElementsByTagName('r2dt-web')[0] && document.getElementsByTagName('r2dt-web')[0].offsetWidth ? document.getElementsByTagName('r2dt-web')[0].offsetWidth - 40 : 1100;  // using - 40 to display the right side border
     const height = parseFloat(this.props.height) > 600 ? parseFloat(this.props.height) : 600;
+    const hasDotBracket = /[.()]/.test(this.props.sequence);
 
     const renderLegend = () => (
       <div className="mt-3" style={{ fontSize: fixCss }}>
@@ -284,7 +285,11 @@ class Results extends React.Component {
                       <li><a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchJson(this.props.jobId)} onClick={this.downloadJson}>JSON</a></li>
                       <li><button className="dropdown-item" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>PNG</button></li>
                       <li><button className="dropdown-item" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}>SVG</button></li>
-                      <li><a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchSvgAn(this.props.jobId)} onClick={this.downloadSVGAnnotated}>SVG annotated</a></li>
+                      {
+                        !hasDotBracket ? <li>
+                          <a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchSvgAn(this.props.jobId)} onClick={this.downloadSVGAnnotated}>SVG annotated</a>
+                        </li> : ""
+                      }
                       <li><a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchThumb(this.props.jobId)} onClick={this.downloadThumbnail}>Thumbnail</a></li>
                     </ul>
                   </div>
