@@ -282,15 +282,23 @@ class Results extends React.Component {
                   <div className="btn-group" role="group">
                     <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="dropdownMenuButton" onClick={this.toggleDownloadDropdown}><span className="btn-icon"><RiDownload2Fill size="1.2em"/></span> Download</button>
                     <ul className="dropdown-menu" id="dropdownMenu" ref={this.downloadMenuRef}>
-                      <li><a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchJson(this.props.jobId)} onClick={this.downloadJson}>JSON</a></li>
+                      {
+                        this.props.search ? "" : <li>
+                          <a className="btn dropdown-item" style={{fontSize: fixCss}}  href={routes.fetchJson(this.props.jobId)} onClick={this.downloadJson}>JSON</a>
+                        </li>
+                      }
                       <li><button className="dropdown-item" style={{fontSize: fixCss}} onClick={() => this.downloadPNG()}>PNG</button></li>
                       <li><button className="dropdown-item" style={{fontSize: fixCss}} onClick={() => this.downloadSVG()}>SVG</button></li>
                       {
-                        !hasDotBracket ? <li>
+                        hasDotBracket || this.props.search ? "" : <li>
                           <a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchSvgAn(this.props.jobId)} onClick={this.downloadSVGAnnotated}>SVG annotated</a>
-                        </li> : ""
+                        </li>
                       }
-                      <li><a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchThumb(this.props.jobId)} onClick={this.downloadThumbnail}>Thumbnail</a></li>
+                      {
+                        this.props.search ? "" : <li>
+                          <a className="btn dropdown-item" style={{fontSize: fixCss}} href={routes.fetchThumb(this.props.jobId)} onClick={this.downloadThumbnail}>Thumbnail</a>
+                        </li>
+                      }
                     </ul>
                   </div>
                 </div>
