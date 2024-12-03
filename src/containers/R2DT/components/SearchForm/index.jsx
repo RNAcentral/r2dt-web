@@ -12,8 +12,8 @@ class SearchForm extends React.Component {
   showExamples(linkColor){
     const examples = this.props.examples;
     return examples.map(example =>
-      <li key={example.description}>
-        <a className="custom-link" style={{color: linkColor}} onClick={() => this.exampleSequence('>' + example.description + '\n' +example.sequence)}>{example.description}</a>
+      <li key={example.description} className="mr-2">
+        <a className="custom-link" style={{color: linkColor}} onClick={() => this.exampleSequence('>' + example.description + '\n' + example.sequence)}>{example.descriptionNote ? <>{example.descriptionNote} (<small>{example.description}</small>)</> : example.description}</a>
       </li>)
   }
 
