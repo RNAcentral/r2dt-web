@@ -39,27 +39,33 @@ class SearchForm extends React.Component {
     const state = store.getState();
     const userInput = state.sequence.split("\n");
     const isDotBracket = /[.()]/;
+    let fastaHeader, sequence, dotBracket
+
+    if (/^>/.test(userInput[0])) {
+      fastaHeader = userInput[0];
+      if (userInput[2] && isDotBracket.test(userInput[2])) {
+        sequence = userInput[1].replace(/\s+/g, "");
+        dotBracket = userInput[2].replace(/\s+/g, "");
+      } else {
+        sequence = userInput.slice(1).join("");
+      }
+    } else {
+      fastaHeader = '>description';
+      sequence = state.sequence.replace(/\s+/g, "");
+    }
 
     if (/^r2dt/.test(state.sequence)){
       store.dispatch(actionCreators.fetchStatus(state.sequence))
-    } else if (/^[>]/.test(userInput[0]) && isDotBracket.test(userInput[2])){
-      const fastaHeader = userInput[0];
-      const sequence = userInput[1].replace(/\s+/g, "");
-      const dotBracket = userInput[2].replace(/\s+/g, "");
-
+    } else if (sequence.length < 4 || sequence.length > 8000) {
+      store.dispatch(actionCreators.invalidSequence());
+    } else if (dotBracket){
       if (sequence.length !== dotBracket.length) {
         store.dispatch(actionCreators.invalidDotBracket());
-      } else if (sequence.length < 40 || sequence.length > 8000) {
-        store.dispatch(actionCreators.invalidSequence());
       } else {
         store.dispatch(actionCreators.onSubmit(fastaHeader + '\n' + sequence + '\n' + dotBracket, false, true));
       }
-    } else if (state.sequence.length < 40 || state.sequence.length > 8000) {
-      store.dispatch(actionCreators.invalidSequence());
-    } else if (/^[>]/.test(state.sequence)) {
-      store.dispatch(actionCreators.onSubmit(state.sequence));
     } else {
-      store.dispatch(actionCreators.onSubmit('>description' + '\n' + state.sequence.replace(/\s+/g, "")));
+      store.dispatch(actionCreators.onSubmit(fastaHeader + '\n' + sequence));
     }
   }
 
@@ -141,7 +147,7 @@ class SearchForm extends React.Component {
             <div className="row">
               <div className="col-12 col-sm-9">
                 <div className="alert alert-warning">
-                  {this.props.sequence.length < 40 ? "The sequence cannot be shorter than 40 nucleotides" : "The sequence cannot be longer than 8000 nucleotides"}
+                  Please check your sequence, it cannot be shorter than 4 or longer than 8000 nucleotides
                 </div>
               </div>
             </div>
