@@ -2,13 +2,10 @@
 
 This is an embeddable component that you can include into your website to visualise RNA secondary structures.
 
-This plugin is written in React/Redux. It is bundled as a Web Component, so it should not clash with your website's 
-javascript or CSS.
-
 ## How to use
 
 To use the latest stable version without worrying about updates, use the component's javascript package available at 
-Github:
+GitHub:
 
 `<script type="text/javascript" src="https://rnacentral.github.io/r2dt-web/dist/r2dt-web.js"></script>`
 
@@ -71,7 +68,7 @@ For a minimal example, see [urs-example.html](./urs-example.html).
 
 ## Installation
 
-Download this package directly from Github.
+Download this package directly from GitHub.
 
 `git clone https://github.com/RNAcentral/r2dt-web.git`
 
@@ -104,6 +101,19 @@ Parameters that you can use to customise some elements of this embeddable compon
 
 ## Developer details
 
+When integrating the r2dt-web component into your webpage, please be aware that its styles might conflict 
+with the existing styles of your page. To prevent such CSS conflicts and ensure proper isolation of the 
+component's styles, you can add the following lines to your webpage's CSS file:
+
+```
+r2dt-web {
+    all: initial;
+}
+```
+
+This will reset all inherited styles for the r2dt-web component, minimizing the chances of unintended 
+style interference.
+
 ### Local development
 
 1. `npm install`
@@ -116,10 +126,8 @@ Parameters that you can use to customise some elements of this embeddable compon
 
 ### Notes
 
-This embed is implemented as a Web Component, wrapping a piece of code in React/Redux.
-
-Being a Web Component, it isolates CSS styles from the main page to avoid clash of styles with it.
-The CSS styles and fonts are bundled into the javascript inline via Webpack 3 build system, see webpack.config.js file. 
+This embed is implemented as a Web Component, wrapping a piece of code in React/Redux. 
+The CSS styles and fonts are bundled into the javascript inline via Webpack build system, see webpack.config.js file. 
 Upon load of r2dt-web.js, the component registers itself in the custom elements registry.
 
 Web Components accept input parameters as strings. That means that we have to parse parameters in Web Component 
