@@ -70,6 +70,15 @@ body {
   font-family: monospace;
 }
 
+.beta::after {
+  content: "BETA";
+  vertical-align: top;
+  font-size: 12px;
+  background: yellow;
+  border-radius: 4px;
+  padding: 2px 4px;
+}
+
 /* Advanced search */
 
 // Close Button
