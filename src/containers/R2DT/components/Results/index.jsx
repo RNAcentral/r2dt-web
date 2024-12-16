@@ -274,7 +274,8 @@ class Results extends React.Component {
                         <button className="btn btn-outline-secondary dropdown-toggle" style={{fontSize: fixCss}} type="button" id="editDropdownButton" onClick={this.toggleEditDropdown}><span className="btn-icon"><FaEdit size="1.2em"/></span> Edit image</button>
                         <ul className="dropdown-menu" style={{fontSize: fixCss}} id="editDropdownMenu" ref={this.editMenuRef}>
                           <li><a className="dropdown-item" href={routes.rnaCanvas(this.props.jobId)} target="_blank">Edit in RNAcanvas</a></li>
-                          <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank">Edit in XRNA</a></li>
+                          <li><a className="dropdown-item" href={routes.xRNA(this.props.jobId)} target="_blank">Edit in XRNA-React</a></li>
+                          <li><a className="dropdown-item beta" href={routes.canvasCode(this.props.jobId)} target="_blank">Edit in RNAcanvas Code </a></li>
                         </ul>
                       </div>
                     </>
