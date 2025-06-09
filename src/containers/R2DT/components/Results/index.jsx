@@ -231,7 +231,7 @@ class Results extends React.Component {
             <div className="row" key={`error-div`}>
               <div className="col-12 col-sm-9">
                 <div className="alert alert-danger">
-                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
+                  There was an error 1234. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                 </div>
               </div>
             </div>
@@ -333,7 +333,7 @@ class Results extends React.Component {
                 <span><strong>Dot-bracket notation</strong></span>
                 {
                   this.props.notation === "error" ? <div className="alert alert-danger">
-                    There was an error loading the dot-bracket notation. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
+                    There was an error loading the dot-bracket notation 4567. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                   </div> : <pre className="mt-1 notation">
                     <span className="notation-font">{this.props.notation}</span>
                   </pre>
