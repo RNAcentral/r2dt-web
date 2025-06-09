@@ -181,7 +181,7 @@ class SearchForm extends React.Component {
             <div className="row">
               <div className="col-12 col-sm-9">
                 <div className="alert alert-danger">
-                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
+                  There was an error 456. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                 </div>
               </div>
             </div>
