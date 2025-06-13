@@ -72,6 +72,7 @@ class SearchForm extends React.Component {
     const hideRnacentral = this.props.customStyle && this.props.customStyle.hideRnacentral && this.props.customStyle.hideRnacentral === "true" ? "none" : "initial";
     const linkColor = this.props.customStyle && this.props.customStyle.linkColor ? this.props.customStyle.linkColor : "#337ab7";
     const firebaseStatus = this.props.firebaseStatus;
+    console.log('DEBUGGING FROM R2DT COMPONENT')
     return (
       <div className="rna">
         {
@@ -175,7 +176,7 @@ class SearchForm extends React.Component {
             <div className="row">
               <div className="col-12 col-sm-9">
                 <div className="alert alert-danger">
-                  There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
+                  There was an error with status: {this.props.status}. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.
                 </div>
               </div>
             </div>
