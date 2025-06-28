@@ -16,6 +16,15 @@ export const widgetStyles = `
   background-color: #fff;
 }
 
+.mt-1 {
+  margin-top: 0.25rem !important;
+}
+
+.mt-2 {
+  margin-top: 0.5rem !important;
+}
+
+/* svg-pan-zoom */
 .svg-container {
   flex: 1;
   display: flex;
@@ -58,8 +67,38 @@ export const widgetStyles = `
   background-color: #f0f0f0;
 }
 
+/* error/loading message */
 .r2dt-message {
   padding: 1em;
   color: #666;
+}
+
+/* legend */
+.list-unstyled {
+  padding-left: 0;
+  list-style: none;
+}
+
+.traveler-magenta {
+  background-color: rgb(255, 0, 255);
+}
+
+.traveler-green {
+  background-color: rgb(44, 162, 95);
+}
+
+.traveler-blue {
+  background-color: rgb(43, 140, 190);
+}
+
+.traveler-black {
+  background-color: rgb(0, 0, 0);
+}
+
+.traveler-key {
+  height: 20px;
+  width: 20px;
+  float: left;
+  margin-right: 8px;
 }
 `;

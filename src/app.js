@@ -1,4 +1,5 @@
 import svgPanZoom from 'svg-pan-zoom';
+import { r2dtLegend } from './legend.js';
 import { widgetStyles } from './styles.js';
 
 class R2DTWidget extends HTMLElement {
@@ -99,6 +100,11 @@ class R2DTWidget extends HTMLElement {
         controls.appendChild(resetBtn);
         controls.appendChild(zoomOutBtn);
         container.appendChild(controls);
+
+        // Add legend
+        const legendContainer = document.createElement('div');
+        legendContainer.innerHTML = r2dtLegend;
+        container.appendChild(legendContainer);
 
         this.shadowRoot.appendChild(container);
 
