@@ -1,0 +1,65 @@
+export const widgetStyles = `
+:host {
+  display: block;
+  width: 100%;
+  height: 100vh;
+  box-sizing: border-box;
+  font-family: sans-serif;
+}
+
+.viewer-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background-color: #fff;
+}
+
+.svg-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.svg-container svg {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  background: white;
+}
+
+.zoom-controls {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 10;
+}
+
+.zoom-controls button {
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 32px;
+  height: 32px;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.zoom-controls button:hover {
+  background-color: #f0f0f0;
+}
+
+.r2dt-message {
+  padding: 1em;
+  color: #666;
+}
+`;
