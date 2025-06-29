@@ -42,7 +42,7 @@ export const widgetStyles = `
 
 .zoom-controls {
   position: absolute;
-  top: 10px;
+  top: 25px;
   left: 10px;
   display: flex;
   flex-direction: column;
@@ -77,6 +77,32 @@ export const widgetStyles = `
 .list-unstyled {
   padding-left: 0;
   list-style: none;
+}
+
+.legend-container {
+  position: absolute;
+  padding: 0 10px;
+  z-index: 5;
+}
+
+.legend-topRight {
+  top: 10px;
+  right: 10px;
+}
+
+.legend-topLeft {
+  top: 10px;
+  left: 50px;
+}
+
+.legend-bottomRight {
+  bottom: 10px;
+  right: 10px;
+}
+
+.legend-bottomLeft {
+  bottom: 10px;
+  left: 10px;
 }
 
 .traveler-magenta {

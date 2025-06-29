@@ -17,6 +17,7 @@ class R2DTWidget extends HTMLElement {
             this.renderError('URS attribute is required');
             return;
         }
+        this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
         this.loadRnaData(urs);
     }
 
@@ -103,11 +104,17 @@ class R2DTWidget extends HTMLElement {
 
         // Add legend
         const legendContainer = document.createElement('div');
+        legendContainer.classList.add('legend-container');
+        legendContainer.classList.add(`legend-${this.legendPosition}`);
         legendContainer.innerHTML = r2dtLegend;
-        container.appendChild(legendContainer);
+        
+        if (this.legendPosition.startsWith('top')) {
+            container.insertBefore(legendContainer, container.firstChild);
+        } else {
+            container.appendChild(legendContainer);
+        }
 
         this.shadowRoot.appendChild(container);
-
         this.zoomInBtn = zoomInBtn;
         this.zoomOutBtn = zoomOutBtn;
         this.resetBtn = resetBtn;
