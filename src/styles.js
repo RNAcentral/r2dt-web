@@ -24,6 +24,50 @@ export const widgetStyles = `
   margin-top: 0.5rem !important;
 }
 
+/*  button */
+.btn-group {
+  display: inline-flex;
+  vertical-align: middle;
+}
+
+.btn {
+  display: inline-block;
+  color: #212529;
+  text-align: center;
+  text-decoration: none;
+  vertical-align: middle;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid transparent;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  transition: color 0.15s ease-in-out,
+              background-color 0.15s ease-in-out,
+              border-color 0.15s ease-in-out,
+              box-shadow 0.15s ease-in-out;
+}
+
+.btn-outline-secondary {
+  color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn-outline-secondary:hover {
+  color: #fff;
+  background-color: #6c757d;
+  border-color: #6c757d;
+}
+
+.btn + .btn {
+  margin-left: -1px; /* join buttons together */
+}
+
+.btn:focus {
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
+}
+
 /* svg-pan-zoom */
 .svg-container {
   flex: 1;

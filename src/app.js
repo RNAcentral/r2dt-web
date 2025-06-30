@@ -1,4 +1,5 @@
 import svgPanZoom from 'svg-pan-zoom';
+import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
 import { widgetStyles } from './styles.js';
 
@@ -81,7 +82,7 @@ class R2DTWidget extends HTMLElement {
         svgWrapper.appendChild(svg);
         container.appendChild(svgWrapper);
 
-        // Zoom Controls
+        // Zoom
         const controls = document.createElement('div');
         controls.classList.add('zoom-controls');
 
@@ -102,7 +103,11 @@ class R2DTWidget extends HTMLElement {
         controls.appendChild(zoomOutBtn);
         container.appendChild(controls);
 
-        // Add legend
+        // Buttons
+        const buttonPanel = createButtonPanel(() => this.shadowRoot.querySelector('svg'));
+        container.appendChild(buttonPanel);
+
+        // Legend
         const legendContainer = document.createElement('div');
         legendContainer.classList.add('legend-container');
         legendContainer.classList.add(`legend-${this.legendPosition}`);
