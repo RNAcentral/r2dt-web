@@ -136,8 +136,8 @@ class R2DTWidget extends HTMLElement {
             controlIconsEnabled: false,
             fit: true,
             center: true,
-            minZoom: 0.1,
-            maxZoom: 20
+            minZoom: 0.25,
+            maxZoom: 10
         });
 
         this.zoomInBtn?.addEventListener('click', () => this.panZoomInstance.zoomIn());
