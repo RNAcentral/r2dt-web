@@ -36,6 +36,7 @@
     "webpack-dev-server": "^4.15.1"
   },
   "dependencies": {
+    "save-svg-as-png": "^1.4.17",
     "svg-pan-zoom": "^3.6.2"
   }
 }
