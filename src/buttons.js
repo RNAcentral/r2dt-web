@@ -2,6 +2,9 @@
  This file contains the buttons displayed at the top of the widget
 */
 
+import { saveSvgAsPng } from 'save-svg-as-png';
+
+
 // Export function to create a toggle colours button
 export function createToggleColoursButton(getSvgElement) {
     const btn = document.createElement('button');
@@ -66,8 +69,70 @@ export function createToggleNumbersButton(getSvgElement) {
     return btn;
 }
 
+// Export function to create a download dropdown button
+export function createDownloadDropdown(getSvgElement, fileName) {
+    const dropdown = document.createElement('div');
+    dropdown.classList.add('dropdown');
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.classList.add('btn', 'btn-outline-secondary', 'dropdown-toggle');
+    toggleBtn.textContent = 'Download';
+    toggleBtn.title = 'Download secondary structure';
+
+    const menu = document.createElement('div');
+    menu.classList.add('dropdown-menu');
+
+    // Download as SVG
+    const svgItem = document.createElement('button');
+    svgItem.classList.add('dropdown-item');
+    svgItem.textContent = 'SVG';
+    svgItem.onclick = () => {
+        const svg = getSvgElement();
+        if (!svg) return;
+        const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `${fileName}.svg`;
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+        URL.revokeObjectURL(url);
+    };
+
+    // Download as PNG
+    const pngItem = document.createElement('button');
+    pngItem.classList.add('dropdown-item');
+    pngItem.textContent = 'PNG';
+    pngItem.onclick = () => {
+        const svg = getSvgElement();
+        if (!svg) return;
+        saveSvgAsPng(svg, `${fileName}.png`, {backgroundColor: 'white', scale: 3});
+    };
+
+    menu.appendChild(svgItem);
+    menu.appendChild(pngItem);
+    dropdown.appendChild(toggleBtn);
+    dropdown.appendChild(menu);
+
+    // Toggle menu visibility
+    toggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('show');
+    };
+
+    // Close dropdown if clicking outside
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.remove('show');
+        }
+    });
+
+    return dropdown;
+}
+
 // Export function to create a panel with all buttons
-export function createButtonPanel(getSvgElement) {
+export function createButtonPanel(getSvgElement, fileName) {
     const panel = document.createElement('div');
     panel.classList.add('btn-group');
     panel.style.position = 'absolute';
@@ -78,6 +143,7 @@ export function createButtonPanel(getSvgElement) {
 
     panel.appendChild(createToggleColoursButton(getSvgElement));
     panel.appendChild(createToggleNumbersButton(getSvgElement));
+    panel.appendChild(createDownloadDropdown(getSvgElement, fileName));
 
     return panel;
 }
