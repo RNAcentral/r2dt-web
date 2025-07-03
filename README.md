@@ -13,6 +13,19 @@ identifier (URS), for example:
 
 Click [here](https://rnacentral.org/help#how-to-find-rnacentral-id) to see how you can find an RNAcentral identifier for an RNA sequence.
 
+## Attributes/parameters
+
+This component accepts a number of attributes. You pass them as html attributes and their values are strings 
+(this is a requirement of Web Components):
+
+#### layout
+
+Parameters that you can use to customise some elements of this embeddable component
+
+| parameter         | description                                                           |
+|-------------------|-----------------------------------------------------------------------|
+| legend            | Legend position. Can be topRight, topLeft, bottomRight and bottomLeft |
+
 ### Local development
 
 1. `npm install`
