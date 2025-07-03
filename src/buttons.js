@@ -136,7 +136,6 @@ export function createButtonPanel(getSvgElement, fileName) {
     const panel = document.createElement('div');
     panel.classList.add('btn-group');
     panel.style.position = 'absolute';
-    panel.style.top = '10px';
     panel.style.left = '50%';
     panel.style.transform = 'translateX(-50%)';
     panel.style.zIndex = '10';
