@@ -75,6 +75,14 @@ export const widgetStyles = `
   box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
 }
 
+.btn-copy-message {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  margin-top: 5px;
+  color: green;
+}
+
 /* dropdown */
 .dropdown {
   position: relative;

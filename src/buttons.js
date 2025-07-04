@@ -71,16 +71,36 @@ export function createToggleNumbersButton(getSvgElement) {
 
 // Export function to create a copy dot-bracket notation button
 export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
+    const divDotBracket = document.createElement('div');
+    divDotBracket.style.position = 'relative';
+    divDotBracket.style.display = 'inline-block';
+
     const btn = document.createElement('button');
     btn.classList.add('btn', 'btn-outline-secondary');
     btn.textContent = 'Copy dot-bracket notation';
     btn.title = 'Copy dot-bracket notation';
 
-    btn.addEventListener('click', () => {
-        navigator.clipboard.writeText(dotBracketNotation);
+    const message = document.createElement('span');
+    message.classList.add('btn-copy-message');
+    message.textContent = 'Copied!';
+    message.style.display = 'none';
+
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(dotBracketNotation);
+            message.style.display = 'inline';
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 2000);
+        } catch (err) {
+            console.error('Copy failed:', err);
+        }
     });
 
-    return btn;
+    divDotBracket.appendChild(btn);
+    divDotBracket.appendChild(message);
+
+    return divDotBracket;
 }
 
 // Export function to create a download dropdown button
