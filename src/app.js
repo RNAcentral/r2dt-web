@@ -108,7 +108,8 @@ class R2DTWidget extends HTMLElement {
         // Buttons
         const buttonPanel = createButtonPanel(
             () => this.shadowRoot.querySelector('svg'),
-            this.getAttribute('urs') || 'secondary-structure'
+            this.getAttribute('urs') || 'secondary-structure',
+            this.dotBracketNotation || ''
         );
         container.appendChild(buttonPanel);
 
