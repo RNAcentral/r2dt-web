@@ -9,6 +9,7 @@ class R2DTWidget extends HTMLElement {
         this.attachShadow({ mode: 'open' });
         this.apiDomain = 'https://rnacentral.org/api/v1/rna';
         this.panZoomInstance = null;
+        this.dotBracketNotation = null;
         this.injectStyles();
     }
 
@@ -41,6 +42,7 @@ class R2DTWidget extends HTMLElement {
             const data = await response.json();
             const layout = data?.data?.layout;
             if (!layout) throw new Error('Invalid SVG layout');
+            this.dotBracketNotation = data?.data?.secondary_structure;
             this.renderSvg(layout);
             await this.initPanZoom();
         } catch (e) {
@@ -122,7 +124,27 @@ class R2DTWidget extends HTMLElement {
             container.appendChild(legendContainer);
         }
 
-        this.shadowRoot.appendChild(container);
+        // Dot-bracket notation
+        const outerWrapper = document.createElement('div');
+        outerWrapper.classList.add('outer-scroll-wrapper');
+        outerWrapper.appendChild(container);
+
+        if (this.dotBracketNotation) {
+            const notationWrapper = document.createElement('div');
+            notationWrapper.classList.add('dot-bracket-notation');
+
+            const heading = document.createElement('strong');
+            heading.textContent = 'Dot-bracket notation';
+
+            const notation = document.createElement('pre');
+            notation.textContent = this.dotBracketNotation;
+
+            notationWrapper.appendChild(heading);
+            notationWrapper.appendChild(notation);
+            outerWrapper.appendChild(notationWrapper);
+        }
+
+        this.shadowRoot.appendChild(outerWrapper);
         this.zoomInBtn = zoomInBtn;
         this.zoomOutBtn = zoomOutBtn;
         this.resetBtn = resetBtn;
