@@ -69,6 +69,20 @@ export function createToggleNumbersButton(getSvgElement) {
     return btn;
 }
 
+// Export function to create a copy dot-bracket notation button
+export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
+    const btn = document.createElement('button');
+    btn.classList.add('btn', 'btn-outline-secondary');
+    btn.textContent = 'Copy dot-bracket notation';
+    btn.title = 'Copy dot-bracket notation';
+
+    btn.addEventListener('click', () => {
+        navigator.clipboard.writeText(dotBracketNotation);
+    });
+
+    return btn;
+}
+
 // Export function to create a download dropdown button
 export function createDownloadDropdown(getSvgElement, fileName) {
     const dropdown = document.createElement('div');
@@ -132,7 +146,7 @@ export function createDownloadDropdown(getSvgElement, fileName) {
 }
 
 // Export function to create a panel with all buttons
-export function createButtonPanel(getSvgElement, fileName) {
+export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
     const panel = document.createElement('div');
     panel.classList.add('btn-group');
     panel.style.position = 'absolute';
@@ -142,6 +156,7 @@ export function createButtonPanel(getSvgElement, fileName) {
 
     panel.appendChild(createToggleColoursButton(getSvgElement));
     panel.appendChild(createToggleNumbersButton(getSvgElement));
+    panel.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
     panel.appendChild(createDownloadDropdown(getSvgElement, fileName));
 
     return panel;
