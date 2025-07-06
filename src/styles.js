@@ -213,7 +213,9 @@ export const widgetStyles = `
 
 .legend-container {
   position: absolute;
-  z-index: 5;
+  z-index: 100;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 4px;
 }
 
 .legend-topRight {
