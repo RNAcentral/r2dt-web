@@ -167,17 +167,28 @@ export function createDownloadDropdown(getSvgElement, fileName) {
 
 // Export function to create a panel with all buttons
 export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
-    const panel = document.createElement('div');
-    panel.classList.add('btn-group');
-    panel.style.position = 'absolute';
-    panel.style.left = '50%';
-    panel.style.transform = 'translateX(-50%)';
-    panel.style.zIndex = '10';
+    const panelWrapper = document.createElement('div');
 
-    panel.appendChild(createToggleColoursButton(getSvgElement));
-    panel.appendChild(createToggleNumbersButton(getSvgElement));
-    panel.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
-    panel.appendChild(createDownloadDropdown(getSvgElement, fileName));
+    // Hamburger button
+    const toggleBtn = document.createElement('button');
+    toggleBtn.classList.add('btn', 'btn-outline-secondary', 'menu-toggle');
+    toggleBtn.innerHTML = '&#9776;'; // Hamburger icon
+    toggleBtn.title = 'Menu';
 
-    return panel;
+    const btnGroup = document.createElement('div');
+    btnGroup.classList.add('button-panel');
+
+    // Append buttons
+    btnGroup.appendChild(createToggleColoursButton(getSvgElement));
+    btnGroup.appendChild(createToggleNumbersButton(getSvgElement));
+    btnGroup.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
+    btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName));
+
+    toggleBtn.addEventListener('click', () => {
+        btnGroup.classList.toggle('show-buttons');
+    });
+
+    panelWrapper.appendChild(toggleBtn);
+    panelWrapper.appendChild(btnGroup);
+    return panelWrapper;
 }

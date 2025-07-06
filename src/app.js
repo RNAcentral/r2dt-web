@@ -78,13 +78,15 @@ class R2DTWidget extends HTMLElement {
         const container = document.createElement('div');
         container.classList.add('viewer-container');
 
-        const svgWrapper = document.createElement('div');
-        svgWrapper.classList.add('svg-container');
+        // Button panel
+        const buttonPanel = createButtonPanel(
+            () => this.shadowRoot.querySelector('svg'),
+            this.getAttribute('urs') || 'secondary-structure',
+            this.dotBracketNotation || ''
+        );
+        container.appendChild(buttonPanel);
 
-        svgWrapper.appendChild(svg);
-        container.appendChild(svgWrapper);
-
-        // Zoom
+        // Zoom controls
         const controls = document.createElement('div');
         controls.classList.add('zoom-controls');
 
@@ -105,20 +107,17 @@ class R2DTWidget extends HTMLElement {
         controls.appendChild(zoomOutBtn);
         container.appendChild(controls);
 
-        // Buttons
-        const buttonPanel = createButtonPanel(
-            () => this.shadowRoot.querySelector('svg'),
-            this.getAttribute('urs') || 'secondary-structure',
-            this.dotBracketNotation || ''
-        );
-        container.appendChild(buttonPanel);
+        const svgWrapper = document.createElement('div');
+        svgWrapper.classList.add('svg-container');
+        svgWrapper.appendChild(svg);
+        container.appendChild(svgWrapper);
 
         // Legend
         const legendContainer = document.createElement('div');
         legendContainer.classList.add('legend-container');
         legendContainer.classList.add(`legend-${this.legendPosition}`);
         legendContainer.innerHTML = r2dtLegend;
-        
+
         if (this.legendPosition.startsWith('top')) {
             container.insertBefore(legendContainer, container.firstChild);
         } else {

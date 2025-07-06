@@ -2,7 +2,8 @@ export const widgetStyles = `
 :host {
   display: block;
   width: 100%;
-  height: 100vh;
+  min-height: 100vh;
+  overflow: auto;
   box-sizing: border-box;
   font-family: sans-serif;
 }
@@ -12,7 +13,6 @@ export const widgetStyles = `
   overflow-y: auto;
   display: flex;
   flex-direction: column;
-  padding: 10px;
 }
 
 .viewer-container {
@@ -21,6 +21,7 @@ export const widgetStyles = `
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  position: relative;
 }
 
 .mt-1 {
@@ -32,9 +33,9 @@ export const widgetStyles = `
 }
 
 /*  button */
-.btn-group {
+.button-panel {
   display: inline-flex;
-  vertical-align: middle;
+  flex-wrap: nowrap;
 }
 
 .btn {
@@ -81,6 +82,23 @@ export const widgetStyles = `
   left: 0;
   margin-top: 5px;
   color: green;
+}
+
+/* hamburger button (hidden by default on non-mobile devices) */
+.menu-toggle {
+  display: none;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  font-size: 18px;
+  padding: 4px 8px;
+  cursor: pointer;
+  border-radius: 4px;
+  width: 40px;
+  height: 40px;
+  line-height: 1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  width: 32px;
+  height: 32px;
 }
 
 /* dropdown */
@@ -133,6 +151,7 @@ export const widgetStyles = `
   background-color: transparent;
   border: 0;
   cursor: pointer;
+  text-decoration: none;
 }
 
 .dropdown-item:hover, .dropdown-item:focus {
@@ -156,7 +175,7 @@ export const widgetStyles = `
 
 .zoom-controls {
   position: absolute;
-  top: 25px;
+  top: 60px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -203,7 +222,7 @@ export const widgetStyles = `
 }
 
 .legend-topLeft {
-  top: 10px;
+  top: 45px;
   left: 50px;
 }
 
@@ -248,7 +267,7 @@ export const widgetStyles = `
   max-height: 150px;
   overflow-x: hidden;
   overflow-y: auto;
-  marginBottom: 1rem;
+  margin-bottom: 1rem;
 }
 
 .dot-bracket-notation pre {
@@ -263,4 +282,45 @@ export const widgetStyles = `
   font-family: sans-serif;
 }
 
+/* mobile behavior */
+@media (max-width: 768px) {
+  .menu-toggle {
+    display: inline-block;
+  }
+
+  .button-panel {
+    display: none;
+    position: absolute;
+    top: 0;
+    left: 40px;
+    flex-direction: column;
+    border: 1px solid rgba(0,0,0,0.15);
+    border-radius: 0.25rem;
+    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+  }
+
+  .button-panel.show-buttons {
+    display: flex;
+  }
+
+  .button-panel .btn {
+    border: none;
+    text-align: left;
+    width: 100%;
+    color: #212529;
+    box-shadow: none;
+  }
+
+  .button-panel .btn:hover {
+    background-color: #f0f0f0;
+  }
+
+  .zoom-controls {
+    top: 40px;
+  }
+
+  .legend-topLeft {
+    top: -15px;
+  }
+}
 `;
