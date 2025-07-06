@@ -318,6 +318,12 @@ export const widgetStyles = `
     background-color: #f0f0f0;
   }
 
+  .btn-copy-message {
+    top: -1px;
+    left: 220px;
+    color: green;
+  }
+
   .zoom-controls {
     top: 40px;
   }
