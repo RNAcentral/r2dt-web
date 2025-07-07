@@ -38,6 +38,16 @@ export const widgetStyles = `
   flex-wrap: nowrap;
 }
 
+.button-panel > .dropdown {
+  display: inline-block;
+}
+
+.button-panel > .btn + .dropdown,
+.button-panel > .dropdown + .btn,
+.button-panel > .dropdown + .dropdown {
+  margin-left: -1px;
+}
+
 .btn {
   display: inline-block;
   color: #212529;
