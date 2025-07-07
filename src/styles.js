@@ -224,6 +224,41 @@ export const widgetStyles = `
   z-index: 100;
   background-color: rgba(255, 255, 255, 0.9);
   border-radius: 4px;
+  padding: 10px;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.legend-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.legend-header strong {
+  margin: 0;
+}
+
+.legend-toggle-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.2em;
+  padding: 0;
+  line-height: 1;
+  color: #333;
+}
+
+.arrow-icon {
+  display: inline-block;
+  transition: transform 0.2s ease-in-out;
+}
+
+.arrow-icon.rotated {
+  transform: rotate(-180deg); /* Rotate up when content is hidden */
+}
+
+.legend-content.hidden {
+  display: none;
 }
 
 .legend-topRight {
@@ -232,7 +267,7 @@ export const widgetStyles = `
 }
 
 .legend-topLeft {
-  top: 45px;
+  top: 60px;
   left: 50px;
 }
 
@@ -332,7 +367,11 @@ export const widgetStyles = `
   }
 
   .legend-topLeft {
-    top: -15px;
+    top: 1px;
+  }
+
+  .legend-topRight {
+    top: 1px;
   }
 }
 `;

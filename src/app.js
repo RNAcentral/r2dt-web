@@ -124,6 +124,20 @@ class R2DTWidget extends HTMLElement {
             container.appendChild(legendContainer);
         }
 
+        // Add toggle functionality to the legend
+        const legendToggleBtn = legendContainer.querySelector('.legend-toggle-btn');
+        const legendContent = legendContainer.querySelector('.legend-content');
+        const arrowIcon = legendContainer.querySelector('.arrow-icon');
+
+        if (legendToggleBtn && legendContent && arrowIcon) {
+            legendToggleBtn.addEventListener('click', () => {
+                const isExpanded = legendToggleBtn.getAttribute('aria-expanded') === 'true';
+                legendToggleBtn.setAttribute('aria-expanded', String(!isExpanded));
+                legendContent.classList.toggle('hidden', isExpanded);
+                arrowIcon.classList.toggle('rotated', isExpanded);
+            });
+        }
+
         // Dot-bracket notation
         const outerWrapper = document.createElement('div');
         outerWrapper.classList.add('outer-scroll-wrapper');
