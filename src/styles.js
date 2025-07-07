@@ -242,7 +242,6 @@ export const widgetStyles = `
   background: none;
   border: none;
   cursor: pointer;
-  font-size: 1.2em;
   padding: 0;
   line-height: 1;
   color: #333;
@@ -306,7 +305,6 @@ export const widgetStyles = `
 /* dot bracket notation */
 .dot-bracket-notation {
   padding: 1rem;
-  font-family: monospace;
   white-space: pre-wrap;
   background: #f5f5f5;
   max-height: 150px;
@@ -324,7 +322,6 @@ export const widgetStyles = `
 .dot-bracket-notation strong {
   display: block;
   margin-bottom: 0.5rem;
-  font-family: sans-serif;
 }
 
 /* mobile behavior */
