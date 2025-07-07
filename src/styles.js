@@ -76,14 +76,6 @@ export const widgetStyles = `
   box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
 }
 
-.btn-copy-message {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  margin-top: 5px;
-  color: green;
-}
-
 /* hamburger button (hidden by default on non-mobile devices) */
 .menu-toggle {
   display: none;
@@ -316,12 +308,6 @@ export const widgetStyles = `
 
   .button-panel .btn:hover {
     background-color: #f0f0f0;
-  }
-
-  .btn-copy-message {
-    top: -1px;
-    left: 220px;
-    color: green;
   }
 
   .zoom-controls {
