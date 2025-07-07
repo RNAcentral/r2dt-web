@@ -48,6 +48,12 @@ export const widgetStyles = `
   margin-left: -1px;
 }
 
+.button-panel .btn:focus,
+.button-panel .dropdown-toggle:focus {
+  outline: none;
+  box-shadow: none;
+}
+
 .btn {
   display: inline-block;
   color: #212529;
