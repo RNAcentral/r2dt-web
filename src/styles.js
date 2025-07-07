@@ -308,6 +308,7 @@ export const widgetStyles = `
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+    min-width: 220px;
   }
 
   .button-panel.show-buttons {
