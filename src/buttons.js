@@ -71,36 +71,34 @@ export function createToggleNumbersButton(getSvgElement) {
 
 // Export function to create a copy dot-bracket notation button
 export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
-    const divDotBracket = document.createElement('div');
-    divDotBracket.style.position = 'relative';
-    divDotBracket.style.display = 'inline-block';
+  const btn = document.createElement('button');
+  btn.classList.add('btn', 'btn-outline-secondary');
+  btn.textContent = 'Copy dot-bracket notation';
+  btn.title = 'Copy dot-bracket notation';
 
-    const btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-outline-secondary');
-    btn.textContent = 'Copy dot-bracket notation';
-    btn.title = 'Copy dot-bracket notation';
+  // Wait for DOM to render, then fix width
+  requestAnimationFrame(() => {
+    btn.style.minWidth = btn.offsetWidth + 'px';
+  });
 
-    const message = document.createElement('span');
-    message.classList.add('btn-copy-message');
-    message.textContent = 'Copied!';
-    message.style.display = 'none';
+  btn.addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText(dotBracketNotation);
 
-    btn.addEventListener('click', async () => {
-        try {
-            await navigator.clipboard.writeText(dotBracketNotation);
-            message.style.display = 'inline';
-            setTimeout(() => {
-                message.style.display = 'none';
-            }, 2000);
-        } catch (err) {
-            console.error('Copy failed:', err);
-        }
-    });
+      const originalText = btn.textContent;
+      btn.textContent = 'Copied!';
+      btn.disabled = true;
 
-    divDotBracket.appendChild(btn);
-    divDotBracket.appendChild(message);
+      setTimeout(() => {
+        btn.textContent = originalText;
+        btn.disabled = false;
+      }, 2000);
+    } catch (err) {
+      console.error('Copy failed:', err);
+    }
+  });
 
-    return divDotBracket;
+  return btn;
 }
 
 // Export function to create a download dropdown button
