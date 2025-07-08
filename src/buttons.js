@@ -8,7 +8,7 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 // Export function to create a toggle colours button
 export function createToggleColoursButton(getSvgElement) {
     const btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-outline-secondary');
+    btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
     btn.textContent = 'Toggle colours';
     btn.title = 'Toggle nucleotide colour';
 
@@ -42,7 +42,7 @@ export function createToggleColoursButton(getSvgElement) {
 // Export function to create a toggle numbers button
 export function createToggleNumbersButton(getSvgElement) {
     const btn = document.createElement('button');
-    btn.classList.add('btn', 'btn-outline-secondary');
+    btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
     btn.textContent = 'Toggle numbers';
     btn.title = 'Show/Hide sequence numbers';
 
@@ -72,7 +72,7 @@ export function createToggleNumbersButton(getSvgElement) {
 // Export function to create a copy dot-bracket notation button
 export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
   const btn = document.createElement('button');
-  btn.classList.add('btn', 'btn-outline-secondary');
+  btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
   btn.textContent = 'Copy dot-bracket notation';
   btn.title = 'Copy dot-bracket notation';
 
@@ -104,19 +104,19 @@ export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNota
 // Export function to create a download dropdown button
 export function createDownloadDropdown(getSvgElement, fileName) {
     const dropdown = document.createElement('div');
-    dropdown.classList.add('dropdown');
+    dropdown.classList.add('r2dt-dropdown');
 
     const toggleBtn = document.createElement('button');
-    toggleBtn.classList.add('btn', 'btn-outline-secondary', 'dropdown-toggle');
+    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
     toggleBtn.textContent = 'Download';
     toggleBtn.title = 'Download secondary structure';
 
     const menu = document.createElement('div');
-    menu.classList.add('dropdown-menu');
+    menu.classList.add('r2dt-dropdown-menu');
 
     // Download as SVG
     const svgItem = document.createElement('button');
-    svgItem.classList.add('dropdown-item');
+    svgItem.classList.add('r2dt-dropdown-item');
     svgItem.textContent = 'SVG';
     svgItem.onclick = () => {
         const svg = getSvgElement();
@@ -134,7 +134,7 @@ export function createDownloadDropdown(getSvgElement, fileName) {
 
     // Download as PNG
     const pngItem = document.createElement('button');
-    pngItem.classList.add('dropdown-item');
+    pngItem.classList.add('r2dt-dropdown-item');
     pngItem.textContent = 'PNG';
     pngItem.onclick = () => {
         const svg = getSvgElement();
@@ -150,13 +150,13 @@ export function createDownloadDropdown(getSvgElement, fileName) {
     // Toggle menu visibility
     toggleBtn.onclick = (e) => {
         e.stopPropagation();
-        menu.classList.toggle('show');
+        menu.classList.toggle('r2dt-show');
     };
 
     // Close dropdown if clicking outside
     document.addEventListener('click', (e) => {
         if (!dropdown.contains(e.target)) {
-            menu.classList.remove('show');
+            menu.classList.remove('r2dt-show');
         }
     });
 
@@ -169,12 +169,12 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
 
     // Hamburger button
     const toggleBtn = document.createElement('button');
-    toggleBtn.classList.add('btn', 'btn-outline-secondary', 'menu-toggle');
+    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-menu-toggle');
     toggleBtn.innerHTML = '&#9776;'; // Hamburger icon
     toggleBtn.title = 'Menu';
 
     const btnGroup = document.createElement('div');
-    btnGroup.classList.add('button-panel');
+    btnGroup.classList.add('r2dt-button-panel');
 
     // Append buttons
     btnGroup.appendChild(createToggleColoursButton(getSvgElement));
@@ -183,7 +183,7 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
     btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName));
 
     toggleBtn.addEventListener('click', () => {
-        btnGroup.classList.toggle('show-buttons');
+        btnGroup.classList.toggle('r2dt-show-buttons');
     });
 
     panelWrapper.appendChild(toggleBtn);

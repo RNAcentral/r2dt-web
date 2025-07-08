@@ -76,7 +76,7 @@ class R2DTWidget extends HTMLElement {
         this.injectStyles();
 
         const container = document.createElement('div');
-        container.classList.add('viewer-container');
+        container.classList.add('r2dt-viewer-container');
 
         // Button panel
         const buttonPanel = createButtonPanel(
@@ -88,7 +88,7 @@ class R2DTWidget extends HTMLElement {
 
         // Zoom controls
         const controls = document.createElement('div');
-        controls.classList.add('zoom-controls');
+        controls.classList.add('r2dt-zoom-controls');
 
         const zoomInBtn = document.createElement('button');
         zoomInBtn.textContent = '+';
@@ -108,14 +108,14 @@ class R2DTWidget extends HTMLElement {
         container.appendChild(controls);
 
         const svgWrapper = document.createElement('div');
-        svgWrapper.classList.add('svg-container');
+        svgWrapper.classList.add('r2dt-svg-container');
         svgWrapper.appendChild(svg);
         container.appendChild(svgWrapper);
 
         // Legend
         const legendContainer = document.createElement('div');
-        legendContainer.classList.add('legend-container');
-        legendContainer.classList.add(`legend-${this.legendPosition}`);
+        legendContainer.classList.add('r2dt-legend-container');
+        legendContainer.classList.add(`r2dt-legend-${this.legendPosition}`);
         legendContainer.innerHTML = r2dtLegend;
 
         if (this.legendPosition.startsWith('top')) {
@@ -125,27 +125,27 @@ class R2DTWidget extends HTMLElement {
         }
 
         // Add toggle functionality to the legend
-        const legendToggleBtn = legendContainer.querySelector('.legend-toggle-btn');
-        const legendContent = legendContainer.querySelector('.legend-content');
-        const arrowIcon = legendContainer.querySelector('.arrow-icon');
+        const legendToggleBtn = legendContainer.querySelector('.r2dt-legend-toggle-btn');
+        const legendContent = legendContainer.querySelector('.r2dt-legend-content');
+        const arrowIcon = legendContainer.querySelector('.r2dt-arrow-icon');
 
         if (legendToggleBtn && legendContent && arrowIcon) {
             legendToggleBtn.addEventListener('click', () => {
                 const isExpanded = legendToggleBtn.getAttribute('aria-expanded') === 'true';
                 legendToggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-                legendContent.classList.toggle('hidden', isExpanded);
-                arrowIcon.classList.toggle('rotated', isExpanded);
+                legendContent.classList.toggle('r2dt-hidden', isExpanded);
+                arrowIcon.classList.toggle('r2dt-rotated', isExpanded);
             });
         }
 
         // Dot-bracket notation
         const outerWrapper = document.createElement('div');
-        outerWrapper.classList.add('outer-scroll-wrapper');
+        outerWrapper.classList.add('r2dt-outer-scroll-wrapper');
         outerWrapper.appendChild(container);
 
         if (this.dotBracketNotation) {
             const notationWrapper = document.createElement('div');
-            notationWrapper.classList.add('dot-bracket-notation');
+            notationWrapper.classList.add('r2dt-dot-bracket-notation');
 
             const heading = document.createElement('strong');
             heading.textContent = 'Dot-bracket notation';
