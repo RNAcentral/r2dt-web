@@ -330,6 +330,11 @@ export const widgetStyles = `
     display: inline-block;
   }
 
+  .menu-toggle:focus {
+    outline: none;
+    box-shadow: none;
+  }
+
   .button-panel {
     display: none;
     position: absolute;
