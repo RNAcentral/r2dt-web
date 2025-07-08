@@ -304,7 +304,7 @@ export const widgetStyles = `
 
 /* dot bracket notation */
 .dot-bracket-notation {
-  padding: 1rem;
+  padding: 10px;
   white-space: pre-wrap;
   background: #f5f5f5;
   max-height: 150px;
