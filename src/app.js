@@ -10,7 +10,6 @@ class R2DTWidget extends HTMLElement {
         this.apiDomain = 'https://rnacentral.org/api/v1/rna';
         this.panZoomInstance = null;
         this.dotBracketNotation = null;
-        this.injectStyles();
     }
 
     connectedCallback() {
