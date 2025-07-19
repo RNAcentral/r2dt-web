@@ -19,8 +19,32 @@ class R2DTWidget extends HTMLElement {
             // If no URS is provided, show the search field
             this.injectStyles();
             const container = document.createElement('div');
-            container.innerHTML = r2dtSearch;
+            
+            // Get examples from the examples attribute
+            let examples = [];
+            try {
+                const examplesAttr = this.getAttribute('examples');
+                if (examplesAttr) {
+                    examples = JSON.parse(examplesAttr);
+                }
+            } catch (e) {
+                console.error('Error parsing examples:', e);
+            }
+            
+            container.innerHTML = r2dtSearch(examples);
             this.shadowRoot.appendChild(container);
+            
+            // Show sequence
+            container.querySelectorAll('.r2dt-example').forEach(example => {
+                example.addEventListener('click', () => {
+                    const sequence = example.getAttribute('data-sequence');
+                    const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
+                    if (textarea && sequence) {
+                        textarea.value = sequence;
+                    }
+                });
+            });
+            
             return;
         }
         this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
