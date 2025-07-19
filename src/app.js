@@ -1,6 +1,7 @@
 import svgPanZoom from 'svg-pan-zoom';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
+import { r2dtSearch } from './search.js';
 import { widgetStyles } from './styles.js';
 
 class R2DTWidget extends HTMLElement {
@@ -15,7 +16,11 @@ class R2DTWidget extends HTMLElement {
     connectedCallback() {
         const urs = this.getAttribute('urs');
         if (!urs) {
-            this.renderError('URS attribute is required');
+            // If no URS is provided, show the search field
+            this.injectStyles();
+            const container = document.createElement('div');
+            container.innerHTML = r2dtSearch;
+            this.shadowRoot.appendChild(container);
             return;
         }
         this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
