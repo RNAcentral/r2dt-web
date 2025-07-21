@@ -1,4 +1,5 @@
 import svgPanZoom from 'svg-pan-zoom';
+import * as actions from './actions.js';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
 import { r2dtSearch } from './search.js';
@@ -9,6 +10,8 @@ class R2DTWidget extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.apiDomain = 'https://rnacentral.org/api/v1/rna';
+        this.ebiServer =  'https://www.ebi.ac.uk/Tools/services/rest/r2dt';
+        this.jobId = null;
         this.panZoomInstance = null;
         this.dotBracketNotation = null;
     }
@@ -41,6 +44,7 @@ class R2DTWidget extends HTMLElement {
                     const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
                     if (textarea && sequence) {
                         textarea.value = sequence;
+                        actions.onSubmit(this.ebiServer, sequence);
                     }
                 });
             });
