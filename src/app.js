@@ -42,7 +42,7 @@ class R2DTWidget extends HTMLElement {
             container.innerHTML = r2dtSearch(examples);
             this.shadowRoot.appendChild(container);
             
-            // Show sequence
+            // Submit example sequence
             container.querySelectorAll('.r2dt-example').forEach(example => {
                 example.addEventListener('click', async () => {
                     const fastaHeader = example.getAttribute('data-description');
@@ -50,31 +50,28 @@ class R2DTWidget extends HTMLElement {
                     const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
 
                     if (fastaHeader && sequence && textarea) {
-                        const submitSequence = '>' + fastaHeader + '\n' + sequence;
-                        textarea.value = submitSequence;
-                        this.showSpinner();
-
-                        try {
-                            // Submit sequence and render the returned SVG
-                            const svgContent = await actions.onSubmit(this.ebiServer, submitSequence);
-                            if (svgContent === 'NOT_FOUND') {
-                                this.renderError('Job not found. The results might have expired. If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>');
-                                return;
-                            } else if (svgContent === 'ERROR' || svgContent === 'FAILURE') {
-                                this.renderError('There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.');
-                                return;
-                            }
-                            this.svgContent = svgContent;
-                            this.renderSvg(svgContent);
-                            await this.initPanZoom();
-                        } catch (error) {
-                            this.renderError(error.message);
-                        } finally {
-                            this.hideSpinner();
-                        }
+                        const fullSequence = '>' + fastaHeader + '\n' + sequence;
+                        textarea.value = fullSequence;
+                        await this.submitSequence(fullSequence);
                     }
                 });
             });
+
+            // Submit text field sequence
+            const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
+            if (runBtn) {
+                runBtn.addEventListener('click', async () => {
+                    const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
+                    const sequence = textarea?.value?.trim();
+
+                    if (!sequence) {
+                        this.renderError('Please enter a sequence in FASTA format.');
+                        return;
+                    }
+
+                    await this.submitSequence(sequence);
+                });
+            }
             
             return;
         }
@@ -89,6 +86,29 @@ class R2DTWidget extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = widgetStyles;
         this.shadowRoot.appendChild(style);
+    }
+
+    async submitSequence(sequence) {
+        try {
+            this.showSpinner();
+            const svgContent = await actions.onSubmit(this.ebiServer, sequence);
+
+            if (svgContent === 'NOT_FOUND') {
+                this.renderError('Job not found. The results might have expired.');
+                return;
+            } else if (svgContent === 'ERROR' || svgContent === 'FAILURE') {
+                this.renderError('There was an error with the submission.');
+                return;
+            }
+
+            this.svgContent = svgContent;
+            this.renderSvg(svgContent);
+            await this.initPanZoom();
+        } catch (error) {
+            this.renderError(error.message);
+        } finally {
+            this.hideSpinner();
+        }
     }
 
     showSpinner() {
