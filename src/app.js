@@ -10,11 +10,11 @@ class R2DTWidget extends HTMLElement {
         super();
         this.attachShadow({ mode: 'open' });
         this.apiDomain = 'https://rnacentral.org/api/v1/rna';
+        this.dotBracketNotation = null;
         this.ebiServer =  'https://www.ebi.ac.uk/Tools/services/rest/r2dt';
         this.jobId = null;
         this.svgContent = null;
         this.panZoomInstance = null;
-        this.dotBracketNotation = null;
     }
 
     connectedCallback() {
@@ -52,6 +52,7 @@ class R2DTWidget extends HTMLElement {
                     if (fastaHeader && sequence && textarea) {
                         const submitSequence = '>' + fastaHeader + '\n' + sequence;
                         textarea.value = submitSequence;
+                        this.showSpinner();
 
                         try {
                             // Submit sequence and render the returned SVG
@@ -68,6 +69,8 @@ class R2DTWidget extends HTMLElement {
                             await this.initPanZoom();
                         } catch (error) {
                             this.renderError(error.message);
+                        } finally {
+                            this.hideSpinner();
                         }
                     }
                 });
@@ -86,6 +89,29 @@ class R2DTWidget extends HTMLElement {
         const style = document.createElement('style');
         style.textContent = widgetStyles;
         this.shadowRoot.appendChild(style);
+    }
+
+    showSpinner() {
+        const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
+        const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
+        if (runBtn) {
+            runBtn.disabled = true;
+            runBtn.innerHTML = `
+                <span class="r2dt-spinner" role="status" aria-hidden="true"></span>
+                Running...
+            `;
+        }
+        if (clearBtn) { clearBtn.disabled = true; }
+    }
+
+    hideSpinner() {
+        const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
+        const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
+        if (runBtn) {
+            runBtn.disabled = false;
+            runBtn.textContent = 'Run';
+        }
+        if (clearBtn) { clearBtn.disabled = false; }
     }
 
     async loadRnaData(urs) {

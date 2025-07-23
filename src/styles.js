@@ -97,6 +97,31 @@ export const widgetStyles = `
   background-color: #5a6268;
 }
 
+.r2dt-search-btn:disabled,
+.r2dt-clear-btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.r2dt-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: r2dt-spin 0.6s linear infinite;
+  vertical-align: text-bottom;
+  margin-right: 6px;
+}
+
+@keyframes r2dt-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
 @media (max-width: 768px) {
   .r2dt-button-group {
     flex-direction: column;
