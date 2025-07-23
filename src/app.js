@@ -12,13 +12,18 @@ class R2DTWidget extends HTMLElement {
         this.apiDomain = 'https://rnacentral.org/api/v1/rna';
         this.ebiServer =  'https://www.ebi.ac.uk/Tools/services/rest/r2dt';
         this.jobId = null;
+        this.svgContent = null;
         this.panZoomInstance = null;
         this.dotBracketNotation = null;
     }
 
     connectedCallback() {
+        this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
         const urs = this.getAttribute('urs');
-        if (!urs) {
+
+        if (urs) {
+            this.loadRnaData(urs);
+        } else {
             // If no URS is provided, show the search field
             this.injectStyles();
             const container = document.createElement('div');
@@ -39,20 +44,37 @@ class R2DTWidget extends HTMLElement {
             
             // Show sequence
             container.querySelectorAll('.r2dt-example').forEach(example => {
-                example.addEventListener('click', () => {
+                example.addEventListener('click', async () => {
+                    const fastaHeader = example.getAttribute('data-description');
                     const sequence = example.getAttribute('data-sequence');
                     const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
-                    if (textarea && sequence) {
-                        textarea.value = sequence;
-                        actions.onSubmit(this.ebiServer, sequence);
+
+                    if (fastaHeader && sequence && textarea) {
+                        const submitSequence = '>' + fastaHeader + '\n' + sequence;
+                        textarea.value = submitSequence;
+
+                        try {
+                            // Submit sequence and render the returned SVG
+                            const svgContent = await actions.onSubmit(this.ebiServer, submitSequence);
+                            if (svgContent === 'NOT_FOUND') {
+                                this.renderError('Job not found. The results might have expired. If you think this is an error, please let us know by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>');
+                                return;
+                            } else if (svgContent === 'ERROR' || svgContent === 'FAILURE') {
+                                this.renderError('There was an error. Let us know if the problem persists by raising an issue on <a href="https://github.com/RNAcentral/r2dt-web/issues" target="_blank">GitHub</a>.');
+                                return;
+                            }
+                            this.svgContent = svgContent;
+                            this.renderSvg(svgContent);
+                            await this.initPanZoom();
+                        } catch (error) {
+                            this.renderError(error.message);
+                        }
                     }
                 });
             });
             
             return;
         }
-        this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
-        this.loadRnaData(urs);
     }
 
     disconnectedCallback() {
@@ -77,9 +99,9 @@ class R2DTWidget extends HTMLElement {
             this.dotBracketNotation = data?.data?.secondary_structure;
             this.renderSvg(layout);
             await this.initPanZoom();
-        } catch (e) {
-            console.error(e);
-            this.renderError(e.message);
+        } catch (error) {
+            console.error(error);
+            this.renderError(error.message);
         }
     }
 
