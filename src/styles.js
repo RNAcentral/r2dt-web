@@ -331,6 +331,23 @@ export const widgetStyles = `
   color: #666;
 }
 
+.r2dt-alert-container {
+  margin-top: 12px;
+}
+
+.r2dt-alert {
+  padding: 10px 15px;
+  border-radius: 4px;
+  margin-top: 10px;
+  font-size: 0.95rem;
+}
+
+.r2dt-alert-danger {
+  color: #842029;
+  background-color: #f8d7da;
+  border: 1px solid #f5c2c7;
+}
+
 /* legend */
 .r2dt-list-unstyled {
   padding-left: 0;
