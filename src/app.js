@@ -38,10 +38,14 @@ class R2DTWidget extends HTMLElement {
             } catch (e) {
                 console.error('Error parsing examples:', e);
             }
-            
+
             container.innerHTML = r2dtSearch(examples);
             this.shadowRoot.appendChild(container);
-            
+
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'r2dt-alert-container';
+            container.appendChild(alertContainer);
+
             // Submit example sequence
             container.querySelectorAll('.r2dt-example').forEach(example => {
                 example.addEventListener('click', async () => {
@@ -57,25 +61,9 @@ class R2DTWidget extends HTMLElement {
                 });
             });
 
-            // Submit text field sequence
             const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
-            if (runBtn) {
-                runBtn.addEventListener('click', async () => {
-                    const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
-                    const sequence = textarea?.value?.trim();
-
-                    if (!sequence) {
-                        this.renderError('Please enter a sequence in FASTA format.');
-                        return;
-                    }
-
-                    await this.submitSequence(sequence);
-                });
-            }
-
-            // Enable/disable run and clear buttons
-            const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
             const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
+            const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
 
             const toggleButtons = () => {
                 const hasText = textarea?.value.trim().length > 0;
@@ -85,21 +73,59 @@ class R2DTWidget extends HTMLElement {
 
             if (textarea) {
                 textarea.addEventListener('input', toggleButtons);
+                this.clearError();
                 toggleButtons();
+            }
+
+            // Submit text field sequence
+            if (runBtn) {
+                runBtn.addEventListener('click', async () => {
+                    const result = this.validateFasta(textarea.value);
+                    if (!result.valid) {
+                        this.renderError(result.error);
+                        return;
+                    }
+                    await this.submitSequence(textarea.value);
+                });
             }
 
             // Clear text field
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
-                    if (textarea) {
-                        textarea.value = '';
-                        toggleButtons();
-                    }
+                    textarea.value = '';
+                    this.clearError();
+                    toggleButtons();
                 });
             }
-
-            return;
         }
+    }
+
+    validateFasta(text) {
+        const lines = text.trim().split('\n');
+
+        if (lines.length < 2) {
+            return {
+                valid: false,
+                error: 'FASTA format requires a header and at least one sequence line.',
+            };
+        }
+
+        if (!lines[0].startsWith('>')) {
+            return {
+                valid: false,
+                error: 'FASTA header must start with ">".',
+            };
+        }
+
+        const sequence = lines.slice(1).join('').toUpperCase();
+        if (!/^[ACGTUWSMKRYBDHVN]+$/.test(sequence)) {
+            return {
+                valid: false,
+                error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive).',
+            };
+        }
+
+        return { valid: true };
     }
 
     disconnectedCallback() {
@@ -115,6 +141,7 @@ class R2DTWidget extends HTMLElement {
 
     async submitSequence(sequence) {
         try {
+            this.clearError();
             this.showSpinner();
             const svgContent = await actions.onSubmit(this.ebiServer, sequence);
 
@@ -333,12 +360,21 @@ class R2DTWidget extends HTMLElement {
     }
 
     renderError(message) {
-        this.shadowRoot.innerHTML = '';
-        this.injectStyles();
-        const div = document.createElement('div');
-        div.className = 'r2dt-message';
-        div.textContent = `Error: ${message}`;
-        this.shadowRoot.appendChild(div);
+        const alertContainer = this.shadowRoot.querySelector('.r2dt-alert-container');
+        if (alertContainer) {
+            alertContainer.innerHTML = `
+                <div class="r2dt-alert r2dt-alert-danger" role="alert">
+                    ${message}
+                </div>
+            `;
+        }
+    }
+
+    clearError() {
+        const alertContainer = this.shadowRoot.querySelector('.r2dt-alert-container');
+        if (alertContainer) {
+            alertContainer.innerHTML = '';
+        }
     }
 }
 
