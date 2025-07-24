@@ -72,7 +72,32 @@ class R2DTWidget extends HTMLElement {
                     await this.submitSequence(sequence);
                 });
             }
-            
+
+            // Enable/disable run and clear buttons
+            const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
+            const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
+
+            const toggleButtons = () => {
+                const hasText = textarea?.value.trim().length > 0;
+                if (runBtn) runBtn.disabled = !hasText;
+                if (clearBtn) clearBtn.disabled = !hasText;
+            };
+
+            if (textarea) {
+                textarea.addEventListener('input', toggleButtons);
+                toggleButtons();
+            }
+
+            // Clear text field
+            if (clearBtn) {
+                clearBtn.addEventListener('click', () => {
+                    if (textarea) {
+                        textarea.value = '';
+                        toggleButtons();
+                    }
+                });
+            }
+
             return;
         }
     }
