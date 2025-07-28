@@ -2,7 +2,14 @@ import svgPanZoom from 'svg-pan-zoom';
 import * as actions from './actions.js';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
-import { r2dtSearch } from './search.js';
+import {
+    clearError,
+    hideSpinner,
+    r2dtSearch,
+    renderError,
+    showSpinner,
+    validateFasta
+} from './search.js';
 import { widgetStyles } from './styles.js';
 
 class R2DTWidget extends HTMLElement {
@@ -27,7 +34,7 @@ class R2DTWidget extends HTMLElement {
             // If no URS is provided, show the search field
             this.injectStyles();
             const container = document.createElement('div');
-            
+
             // Get examples from the examples attribute
             let examples = [];
             try {
@@ -73,16 +80,16 @@ class R2DTWidget extends HTMLElement {
 
             if (textarea) {
                 textarea.addEventListener('input', toggleButtons);
-                this.clearError();
+                clearError(this.shadowRoot);
                 toggleButtons();
             }
 
             // Submit text field sequence
             if (runBtn) {
                 runBtn.addEventListener('click', async () => {
-                    const result = this.validateFasta(textarea.value);
+                    const result = validateFasta(textarea.value);
                     if (!result.valid) {
-                        this.renderError(result.error);
+                        renderError(this.shadowRoot, result.error);
                         return;
                     }
                     await this.submitSequence(textarea.value);
@@ -93,39 +100,11 @@ class R2DTWidget extends HTMLElement {
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     textarea.value = '';
-                    this.clearError();
+                    clearError(this.shadowRoot);
                     toggleButtons();
                 });
             }
         }
-    }
-
-    validateFasta(text) {
-        const lines = text.trim().split('\n');
-
-        if (lines.length < 2) {
-            return {
-                valid: false,
-                error: 'FASTA format requires a header and at least one sequence line.',
-            };
-        }
-
-        if (!lines[0].startsWith('>')) {
-            return {
-                valid: false,
-                error: 'FASTA header must start with ">".',
-            };
-        }
-
-        const sequence = lines.slice(1).join('').toUpperCase();
-        if (!/^[ACGTUWSMKRYBDHVN]+$/.test(sequence)) {
-            return {
-                valid: false,
-                error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive).',
-            };
-        }
-
-        return { valid: true };
     }
 
     disconnectedCallback() {
@@ -141,15 +120,15 @@ class R2DTWidget extends HTMLElement {
 
     async submitSequence(sequence) {
         try {
-            this.clearError();
-            this.showSpinner();
+            clearError(this.shadowRoot);
+            showSpinner(this.shadowRoot);
             const svgContent = await actions.onSubmit(this.ebiServer, sequence);
 
             if (svgContent === 'NOT_FOUND') {
-                this.renderError('Job not found. The results might have expired.');
+                renderError(this.shadowRoot, 'Job not found. The results might have expired.');
                 return;
             } else if (svgContent === 'ERROR' || svgContent === 'FAILURE') {
-                this.renderError('There was an error with the submission.');
+                renderError(this.shadowRoot, 'There was an error with the submission.');
                 return;
             }
 
@@ -157,33 +136,10 @@ class R2DTWidget extends HTMLElement {
             this.renderSvg(svgContent);
             await this.initPanZoom();
         } catch (error) {
-            this.renderError(error.message);
+            renderError(this.shadowRoot, error.message);
         } finally {
-            this.hideSpinner();
+            hideSpinner(this.shadowRoot);
         }
-    }
-
-    showSpinner() {
-        const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
-        const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
-        if (runBtn) {
-            runBtn.disabled = true;
-            runBtn.innerHTML = `
-                <span class="r2dt-spinner" role="status" aria-hidden="true"></span>
-                Running...
-            `;
-        }
-        if (clearBtn) { clearBtn.disabled = true; }
-    }
-
-    hideSpinner() {
-        const runBtn = this.shadowRoot.querySelector('.r2dt-search-btn');
-        const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
-        if (runBtn) {
-            runBtn.disabled = false;
-            runBtn.textContent = 'Run';
-        }
-        if (clearBtn) { clearBtn.disabled = false; }
     }
 
     async loadRnaData(urs) {
@@ -199,7 +155,7 @@ class R2DTWidget extends HTMLElement {
             await this.initPanZoom();
         } catch (error) {
             console.error(error);
-            this.renderError(error.message);
+            renderError(this.shadowRoot, error.message);
         }
     }
 
@@ -209,7 +165,7 @@ class R2DTWidget extends HTMLElement {
         const svg = doc.querySelector('svg');
 
         if (!svg) {
-            this.renderError('No SVG found');
+            renderError(this.shadowRoot, 'No SVG found');
             return;
         }
 
@@ -357,24 +313,6 @@ class R2DTWidget extends HTMLElement {
         div.className = 'r2dt-message';
         div.textContent = 'Loading secondary structure...';
         this.shadowRoot.appendChild(div);
-    }
-
-    renderError(message) {
-        const alertContainer = this.shadowRoot.querySelector('.r2dt-alert-container');
-        if (alertContainer) {
-            alertContainer.innerHTML = `
-                <div class="r2dt-alert r2dt-alert-danger" role="alert">
-                    ${message}
-                </div>
-            `;
-        }
-    }
-
-    clearError() {
-        const alertContainer = this.shadowRoot.querySelector('.r2dt-alert-container');
-        if (alertContainer) {
-            alertContainer.innerHTML = '';
-        }
     }
 }
 
