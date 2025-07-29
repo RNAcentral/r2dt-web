@@ -25,14 +25,19 @@ class R2DTWidget extends HTMLElement {
     }
 
     connectedCallback() {
+        // Add styles
+        const style = document.createElement('style');
+        style.textContent = widgetStyles;
+        this.shadowRoot.appendChild(style);
+
+        // Get attributes
         this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
         const urs = this.getAttribute('urs');
 
         if (urs) {
-            this.loadRnaData(urs);
+            this.submitUrs(urs);
         } else {
             // If no URS is provided, show the search field
-            this.injectStyles();
             const container = document.createElement('div');
 
             // Get examples from the examples attribute
@@ -112,12 +117,6 @@ class R2DTWidget extends HTMLElement {
         if (this.panZoomInstance) this.panZoomInstance.destroy();
     }
 
-    injectStyles() {
-        const style = document.createElement('style');
-        style.textContent = widgetStyles;
-        this.shadowRoot.appendChild(style);
-    }
-
     async submitSequence(sequence) {
         try {
             clearError(this.shadowRoot);
@@ -144,20 +143,32 @@ class R2DTWidget extends HTMLElement {
         }
     }
 
-    async loadRnaData(urs) {
-        this.renderLoading();
+    async submitUrs(urs) {
         try {
+            // Add loading message
+            const div = document.createElement('div');
+            div.className = 'r2dt-message';
+            div.textContent = 'Loading secondary structure...';
+            this.shadowRoot.appendChild(div);
+
+            // Fetch secondary structure
             const response = await fetch(`${this.apiDomain}/${urs}/2d`);
             if (!response.ok) throw new Error(`Error ${response.status}`);
             const data = await response.json();
             const layout = data?.data?.layout;
             if (!layout) throw new Error('Invalid SVG layout');
             this.dotBracketNotation = data?.data?.secondary_structure;
+
+            // Render SVG
             this.renderSvg(layout);
             await this.initPanZoom();
         } catch (error) {
             console.error(error);
             renderError(this.shadowRoot, error.message);
+        } finally {
+            // Remove loading message
+            const message = this.shadowRoot.querySelector('.r2dt-message');
+            if (message) message.remove();
         }
     }
 
@@ -306,15 +317,6 @@ class R2DTWidget extends HTMLElement {
         };
 
         window.addEventListener('resize', this.handleResize);
-    }
-
-    renderLoading() {
-        this.shadowRoot.innerHTML = '';
-        this.injectStyles();
-        const div = document.createElement('div');
-        div.className = 'r2dt-message';
-        div.textContent = 'Loading secondary structure...';
-        this.shadowRoot.appendChild(div);
     }
 }
 
