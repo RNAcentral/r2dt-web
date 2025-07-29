@@ -121,6 +121,8 @@ class R2DTWidget extends HTMLElement {
     async submitSequence(sequence) {
         try {
             clearError(this.shadowRoot);
+            const oldViewer = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
+            if (oldViewer) oldViewer.remove();
             showSpinner(this.shadowRoot);
             const svgContent = await actions.onSubmit(this.ebiServer, sequence);
 
@@ -180,8 +182,8 @@ class R2DTWidget extends HTMLElement {
         svg.setAttribute('preserveAspectRatio', 'xMidYMid meet');
 
         // Clear previous content
-        this.shadowRoot.innerHTML = '';
-        this.injectStyles();
+        const previousSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
+        if (previousSvg) previousSvg.remove();
 
         const container = document.createElement('div');
         container.classList.add('r2dt-viewer-container');
