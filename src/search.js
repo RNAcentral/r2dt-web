@@ -29,6 +29,7 @@ export const validateFasta = (text) => {
 export const showSpinner = (shadowRoot) => {
     const runBtn = shadowRoot.querySelector('.r2dt-search-btn');
     const clearBtn = shadowRoot.querySelector('.r2dt-clear-btn');
+    const searchInput = shadowRoot.querySelector('.r2dt-search-input');
     if (runBtn) {
         runBtn.disabled = true;
         runBtn.innerHTML = `
@@ -37,16 +38,19 @@ export const showSpinner = (shadowRoot) => {
         `;
     }
     if (clearBtn) { clearBtn.disabled = true; }
+    if (searchInput) { searchInput.disabled = true; }
 };
 
 export const hideSpinner = (shadowRoot) => {
     const runBtn = shadowRoot.querySelector('.r2dt-search-btn');
     const clearBtn = shadowRoot.querySelector('.r2dt-clear-btn');
+    const searchInput = shadowRoot.querySelector('.r2dt-search-input');
     if (runBtn) {
         runBtn.disabled = false;
         runBtn.textContent = 'Run';
     }
     if (clearBtn) { clearBtn.disabled = false; }
+    if (searchInput) { searchInput.disabled = false; }
 };
 
 export const renderError = (shadowRoot, message) => {
