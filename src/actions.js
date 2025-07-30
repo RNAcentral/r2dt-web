@@ -37,7 +37,7 @@ export async function fetchStatus(ebiServer, jobId) {
                 getFasta(ebiServer, jobId),
                 getSvg(ebiServer, jobId)
             ]);
-            return { fasta: fastaData, svg: svgData };
+            return { fasta: fastaData, jobId: jobId, svg: svgData };
         } else if (data === 'NOT_FOUND') {
              return 'NOT_FOUND';
         } else if (data === 'FAILURE') {

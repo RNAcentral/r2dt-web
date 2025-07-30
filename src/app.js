@@ -22,6 +22,7 @@ class R2DTWidget extends HTMLElement {
         this.jobId = null;
         this.svgContent = null;
         this.panZoomInstance = null;
+        this.urs = null;
     }
 
     connectedCallback() {
@@ -36,6 +37,7 @@ class R2DTWidget extends HTMLElement {
 
         if (urs) {
             this.submitUrs(urs);
+            this.urs = urs;
         } else {
             // If no URS is provided, show the search field
             const container = document.createElement('div');
@@ -133,6 +135,7 @@ class R2DTWidget extends HTMLElement {
                 return;
             }
 
+            this.jobId = ebiResponse.jobId;
             this.svgContent = ebiResponse.svg;
             this.dotBracketNotation = ebiResponse.fasta;
             this.renderSvg(ebiResponse.svg);
@@ -203,8 +206,25 @@ class R2DTWidget extends HTMLElement {
         // Button panel
         const buttonPanel = createButtonPanel(
             () => this.shadowRoot.querySelector('svg'),
-            this.getAttribute('urs') || 'secondary-structure',
-            this.dotBracketNotation || ''
+            this.urs || this.jobId,
+            this.dotBracketNotation || '',
+            this.jobId ? [
+                {
+                    label: 'JSON',
+                    url: `${this.ebiServer}/result/${this.jobId}/json`,
+                    filename: `${this.jobId}.json`
+                },
+                {
+                    label: 'SVG annotated',
+                    url: `${this.ebiServer}/result/${this.jobId}/svg_annotated`,
+                    filename: `${this.jobId}_annotated.svg`
+                },
+                {
+                    label: 'Thumbnail',
+                    url: `${this.ebiServer}/result/${this.jobId}/thumbnail`,
+                    filename: `${this.jobId}_thumbnail.svg`
+                }
+            ] : []
         );
         container.appendChild(buttonPanel);
 
