@@ -1,4 +1,3 @@
-
 export async function onSubmit(ebiServer, sequence) {
     const body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=`;
     try {
@@ -34,7 +33,11 @@ export async function fetchStatus(ebiServer, jobId) {
             await new Promise(r => setTimeout(r, 2000));
             return await fetchStatus(ebiServer, jobId);
         } else if (data === 'FINISHED') {
-            return await getSvg(ebiServer, jobId);
+            const [fastaData, svgData] = await Promise.all([
+                getFasta(ebiServer, jobId),
+                getSvg(ebiServer, jobId)
+            ]);
+            return { fasta: fastaData, svg: svgData };
         } else if (data === 'NOT_FOUND') {
              return 'NOT_FOUND';
         } else if (data === 'FAILURE') {
@@ -59,6 +62,24 @@ export async function getSvg(ebiServer, jobId) {
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.text();
         return data;
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getFasta(ebiServer, jobId) {
+    try {
+        const response = await fetch(`${ebiServer}/result/${jobId}/fasta`, {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/plain',
+            },
+        });
+        if (!response.ok) throw new Error(`Error ${response.status}`);
+        const data = await response.text();
+        const lines = (data.match(/[^\r\n]+/g)) || [];
+        return lines[2] || '';
     } catch (error) {
         console.error(error);
         throw error;

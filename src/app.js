@@ -123,18 +123,19 @@ class R2DTWidget extends HTMLElement {
             const oldViewer = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
             if (oldViewer) oldViewer.remove();
             showSpinner(this.shadowRoot);
-            const svgContent = await actions.onSubmit(this.ebiServer, sequence);
+            const ebiResponse = await actions.onSubmit(this.ebiServer, sequence);
 
-            if (svgContent === 'NOT_FOUND') {
+            if (ebiResponse === 'NOT_FOUND') {
                 renderError(this.shadowRoot, 'Job not found. The results might have expired.');
                 return;
-            } else if (svgContent === 'ERROR' || svgContent === 'FAILURE') {
+            } else if (ebiResponse === 'ERROR' || ebiResponse === 'FAILURE') {
                 renderError(this.shadowRoot, 'There was an error with the submission.');
                 return;
             }
 
-            this.svgContent = svgContent;
-            this.renderSvg(svgContent);
+            this.svgContent = ebiResponse.svg;
+            this.dotBracketNotation = ebiResponse.fasta;
+            this.renderSvg(ebiResponse.svg);
             await this.initPanZoom();
         } catch (error) {
             renderError(this.shadowRoot, error.message);
