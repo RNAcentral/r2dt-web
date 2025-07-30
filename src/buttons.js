@@ -71,38 +71,38 @@ export function createToggleNumbersButton(getSvgElement) {
 
 // Export function to create a copy dot-bracket notation button
 export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
-  const btn = document.createElement('button');
-  btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
-  btn.textContent = 'Copy dot-bracket notation';
-  btn.title = 'Copy dot-bracket notation';
+    const btn = document.createElement('button');
+    btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
+    btn.textContent = 'Copy dot-bracket notation';
+    btn.title = 'Copy dot-bracket notation';
 
-  // Wait for DOM to render, then fix width
-  requestAnimationFrame(() => {
-    btn.style.minWidth = btn.offsetWidth + 'px';
-  });
+    // Wait for DOM to render, then fix width
+    requestAnimationFrame(() => {
+        btn.style.minWidth = btn.offsetWidth + 'px';
+    });
 
-  btn.addEventListener('click', async () => {
-    try {
-      await navigator.clipboard.writeText(dotBracketNotation);
+    btn.addEventListener('click', async () => {
+        try {
+            await navigator.clipboard.writeText(dotBracketNotation);
 
-      const originalText = btn.textContent;
-      btn.textContent = 'Copied!';
-      btn.disabled = true;
+            const originalText = btn.textContent;
+            btn.textContent = 'Copied!';
+            btn.disabled = true;
 
-      setTimeout(() => {
-        btn.textContent = originalText;
-        btn.disabled = false;
-      }, 2000);
-    } catch (err) {
-      console.error('Copy failed:', err);
-    }
-  });
+            setTimeout(() => {
+                btn.textContent = originalText;
+                btn.disabled = false;
+            }, 2000);
+        } catch (err) {
+            console.error('Copy failed:', err);
+        }
+    });
 
-  return btn;
+    return btn;
 }
 
 // Export function to create a download dropdown button
-export function createDownloadDropdown(getSvgElement, fileName) {
+export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) {
     const dropdown = document.createElement('div');
     dropdown.classList.add('r2dt-dropdown');
 
@@ -131,6 +131,7 @@ export function createDownloadDropdown(getSvgElement, fileName) {
         document.body.removeChild(a);
         URL.revokeObjectURL(url);
     };
+    menu.appendChild(svgItem);
 
     // Download as PNG
     const pngItem = document.createElement('button');
@@ -141,9 +142,19 @@ export function createDownloadDropdown(getSvgElement, fileName) {
         if (!svg) return;
         saveSvgAsPng(svg, `${fileName}.png`, {backgroundColor: 'white', scale: 3});
     };
-
-    menu.appendChild(svgItem);
     menu.appendChild(pngItem);
+
+    // Extra download items (JSON, annotated SVG, thumbnail)
+    extraDownloads.forEach(({ label, url, filename }) => {
+        const item = document.createElement('button');
+        item.classList.add('r2dt-dropdown-item');
+        item.textContent = label;
+        item.addEventListener('click', () => {
+            downloadFile(url, filename);
+        });
+        menu.appendChild(item);
+    });
+
     dropdown.appendChild(toggleBtn);
     dropdown.appendChild(menu);
 
@@ -164,7 +175,7 @@ export function createDownloadDropdown(getSvgElement, fileName) {
 }
 
 // Export function to create a panel with all buttons
-export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
+export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, extraDownloads) {
     const panelWrapper = document.createElement('div');
 
     // Hamburger button
@@ -180,7 +191,7 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
     btnGroup.appendChild(createToggleColoursButton(getSvgElement));
     btnGroup.appendChild(createToggleNumbersButton(getSvgElement));
     btnGroup.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
-    btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName));
+    btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName, extraDownloads));
 
     toggleBtn.addEventListener('click', () => {
         btnGroup.classList.toggle('r2dt-show-buttons');
@@ -189,4 +200,26 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation) {
     panelWrapper.appendChild(toggleBtn);
     panelWrapper.appendChild(btnGroup);
     return panelWrapper;
+}
+
+// Helper function to download a file
+function downloadFile(url, filename) {
+    fetch(url, { mode: 'cors' })
+    .then(response => {
+        if (!response.ok) throw new Error(`Failed to fetch ${filename}`);
+        return response.blob();
+    })
+    .then(blob => {
+        const link = document.createElement('a');
+        const objectUrl = URL.createObjectURL(blob);
+        link.href = objectUrl;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(objectUrl);
+    })
+    .catch(error => {
+        console.error(`Error downloading ${filename}:`, error);
+    });
 }
