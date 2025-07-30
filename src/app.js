@@ -109,6 +109,8 @@ class R2DTWidget extends HTMLElement {
                     textarea.value = '';
                     clearError(this.shadowRoot);
                     toggleButtons();
+                    const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
+                    if (currentSvg) currentSvg.remove();
                 });
             }
         }
