@@ -271,7 +271,7 @@ export const widgetStyles = `
   width: 100%;
   padding: 0.25rem 1.5rem;
   clear: both;
-  font-weight: 400;
+  font-size: 0.95rem;
   color: #212529;
   text-align: inherit;
   white-space: nowrap;
