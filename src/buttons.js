@@ -101,6 +101,49 @@ export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNota
     return btn;
 }
 
+// Export function to create an edit dropdown button
+export function createEditDropdown(editingOptions) {
+    const dropdown = document.createElement('div');
+    dropdown.classList.add('r2dt-dropdown');
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
+    toggleBtn.textContent = 'Edit image';
+    toggleBtn.title = 'Edit secondary structure';
+
+    const menu = document.createElement('div');
+    menu.classList.add('r2dt-dropdown-menu');
+
+    // Show editing options
+    editingOptions.forEach(({ label, url }) => {
+        const item = document.createElement('button');
+        item.classList.add('r2dt-dropdown-item');
+        item.textContent = label;
+        item.addEventListener('click', () => {
+            window.open(url, '_blank', 'noopener,noreferrer');
+        });
+        menu.appendChild(item);
+    });
+
+    dropdown.appendChild(toggleBtn);
+    dropdown.appendChild(menu);
+
+    // Toggle menu visibility
+    toggleBtn.onclick = (e) => {
+        e.stopPropagation();
+        menu.classList.toggle('r2dt-show');
+    };
+
+    // Close dropdown if clicking outside
+    document.addEventListener('click', (e) => {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.remove('r2dt-show');
+        }
+    });
+
+    return dropdown;
+}
+
 // Export function to create a download dropdown button
 export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) {
     const dropdown = document.createElement('div');
@@ -175,7 +218,7 @@ export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) 
 }
 
 // Export function to create a panel with all buttons
-export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, extraDownloads) {
+export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, extraDownloads, editingOptions) {
     const panelWrapper = document.createElement('div');
 
     // Hamburger button
@@ -191,6 +234,7 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, e
     btnGroup.appendChild(createToggleColoursButton(getSvgElement));
     btnGroup.appendChild(createToggleNumbersButton(getSvgElement));
     btnGroup.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
+    if (editingOptions.length) btnGroup.appendChild(createEditDropdown(editingOptions));
     btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName, extraDownloads));
 
     toggleBtn.addEventListener('click', () => {
