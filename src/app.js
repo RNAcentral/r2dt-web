@@ -225,6 +225,20 @@ class R2DTWidget extends HTMLElement {
                     url: routes.fetchThumbnail(this.jobId),
                     filename: `${this.jobId}_thumbnail.svg`
                 }
+            ] : [],
+            this.jobId ? [
+                {
+                    label: 'Edit in RNAcanvas',
+                    url: routes.rnaCanvas(this.jobId),
+                },
+                {
+                    label: 'Edit in XRNA-React',
+                    url: routes.xRNA(this.jobId),
+                },
+                {
+                    label: 'Edit in RNAcanvas Code',
+                    url: routes.canvasCode(this.jobId),
+                }
             ] : []
         );
         container.appendChild(buttonPanel);
