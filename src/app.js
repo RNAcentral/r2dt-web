@@ -2,6 +2,7 @@ import svgPanZoom from 'svg-pan-zoom';
 import * as actions from './actions.js';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
+import routes from './routes';
 import {
     clearError,
     hideSpinner,
@@ -16,9 +17,7 @@ class R2DTWidget extends HTMLElement {
     constructor() {
         super();
         this.attachShadow({ mode: 'open' });
-        this.apiDomain = 'https://rnacentral.org/api/v1/rna';
         this.dotBracketNotation = null;
-        this.ebiServer =  'https://www.ebi.ac.uk/Tools/services/rest/r2dt';
         this.jobId = null;
         this.svgContent = null;
         this.panZoomInstance = null;
@@ -36,8 +35,8 @@ class R2DTWidget extends HTMLElement {
         const urs = this.getAttribute('urs');
 
         if (urs) {
-            this.submitUrs(urs);
             this.urs = urs;
+            this.submitUrs(urs);
         } else {
             // If no URS is provided, show the search field
             const container = document.createElement('div');
@@ -127,7 +126,7 @@ class R2DTWidget extends HTMLElement {
             const oldViewer = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
             if (oldViewer) oldViewer.remove();
             showSpinner(this.shadowRoot);
-            const ebiResponse = await actions.onSubmit(this.ebiServer, sequence);
+            const ebiResponse = await actions.onSubmit(sequence);
 
             if (ebiResponse === 'NOT_FOUND') {
                 renderError(this.shadowRoot, 'Job not found. The results might have expired.');
@@ -158,7 +157,7 @@ class R2DTWidget extends HTMLElement {
             this.shadowRoot.appendChild(div);
 
             // Fetch secondary structure
-            const response = await fetch(`${this.apiDomain}/${urs}/2d`);
+            const response = await fetch(routes.fetchUrs(this.urs));
             if (!response.ok) throw new Error(`Error ${response.status}`);
             const data = await response.json();
             const layout = data?.data?.layout;
@@ -213,17 +212,17 @@ class R2DTWidget extends HTMLElement {
             this.jobId ? [
                 {
                     label: 'JSON',
-                    url: `${this.ebiServer}/result/${this.jobId}/json`,
+                    url: routes.fetchJson(this.jobId),
                     filename: `${this.jobId}.json`
                 },
                 {
                     label: 'SVG annotated',
-                    url: `${this.ebiServer}/result/${this.jobId}/svg_annotated`,
+                    url: routes.fetchSvgAnnotated(this.jobId),
                     filename: `${this.jobId}_annotated.svg`
                 },
                 {
                     label: 'Thumbnail',
-                    url: `${this.ebiServer}/result/${this.jobId}/thumbnail`,
+                    url: routes.fetchThumbnail(this.jobId),
                     filename: `${this.jobId}_thumbnail.svg`
                 }
             ] : []
