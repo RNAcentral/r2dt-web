@@ -1,5 +1,7 @@
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
+const webpack = require('webpack');
+const dotenv = require('dotenv').config({ path: __dirname + '/.env' });
 
 module.exports = (env, argv) => {
     const isProduction = argv.mode === 'production';
@@ -26,6 +28,10 @@ module.exports = (env, argv) => {
             ]
         },
         plugins: [
+            // Read environment variable
+            new webpack.DefinePlugin({
+                'process.env.BRANCH': JSON.stringify(process.env.BRANCH || 'prod')
+            }),
             // Use index.html for development (not included in production build)
             ...(!isProduction ? [
                 new HtmlWebpackPlugin({
