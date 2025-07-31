@@ -1,7 +1,9 @@
-export async function onSubmit(ebiServer, sequence) {
+import routes from './routes';
+
+export async function onSubmit(sequence) {
     const body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=`;
     try {
-        const response = await fetch(`${ebiServer}/run`, {
+        const response = await fetch(routes.submitJob(), {
             method: 'POST',
             headers: {
                 'Accept': 'text/plain',
@@ -11,16 +13,16 @@ export async function onSubmit(ebiServer, sequence) {
         });
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const jobId = await response.text();
-        return await fetchStatus(ebiServer, jobId);
+        return await fetchStatus(jobId);
     } catch (error) {
         console.error(error);
         throw error;
     }
 }
 
-export async function fetchStatus(ebiServer, jobId) {
+export async function fetchStatus(jobId) {
     try {
-        const response = await fetch(`${ebiServer}/status/${jobId}`, {
+        const response = await fetch(routes.jobStatus(jobId), {
             method: 'GET',
             headers: {
                 'Accept': 'text/plain',
@@ -31,11 +33,11 @@ export async function fetchStatus(ebiServer, jobId) {
 
         if (data === 'RUNNING' || data === 'QUEUED') {
             await new Promise(r => setTimeout(r, 2000));
-            return await fetchStatus(ebiServer, jobId);
+            return await fetchStatus(jobId);
         } else if (data === 'FINISHED') {
             const [fastaData, svgData] = await Promise.all([
-                getFasta(ebiServer, jobId),
-                getSvg(ebiServer, jobId)
+                getFasta(jobId),
+                getSvg(jobId)
             ]);
             return { fasta: fastaData, jobId: jobId, svg: svgData };
         } else if (data === 'NOT_FOUND') {
@@ -51,9 +53,9 @@ export async function fetchStatus(ebiServer, jobId) {
     }
 }
 
-export async function getSvg(ebiServer, jobId) {
+export async function getSvg(jobId) {
     try {
-        const response = await fetch(`${ebiServer}/result/${jobId}/svg`, {
+        const response = await fetch(routes.fetchSvg(jobId), {
             method: 'GET',
             headers: {
                 'Accept': 'text/plain',
@@ -68,9 +70,9 @@ export async function getSvg(ebiServer, jobId) {
     }
 }
 
-export async function getFasta(ebiServer, jobId) {
+export async function getFasta(jobId) {
     try {
-        const response = await fetch(`${ebiServer}/result/${jobId}/fasta`, {
+        const response = await fetch(routes.fetchFasta(jobId), {
             method: 'GET',
             headers: {
                 'Accept': 'text/plain',
