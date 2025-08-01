@@ -35,11 +35,12 @@ export async function fetchStatus(jobId) {
             await new Promise(r => setTimeout(r, 2000));
             return await fetchStatus(jobId);
         } else if (data === 'FINISHED') {
-            const [fastaData, svgData] = await Promise.all([
+            const [fastaData, svgData, tsvData] = await Promise.all([
                 getFasta(jobId),
-                getSvg(jobId)
+                getSvg(jobId),
+                getTsv(jobId),
             ]);
-            return { fasta: fastaData, jobId: jobId, svg: svgData };
+            return { fasta: fastaData, jobId: jobId, svg: svgData, tsv: tsvData };
         } else if (data === 'NOT_FOUND') {
              return 'NOT_FOUND';
         } else if (data === 'FAILURE') {
@@ -81,7 +82,27 @@ export async function getFasta(jobId) {
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.text();
         const lines = (data.match(/[^\r\n]+/g)) || [];
-        return lines[2] || '';
+        return lines[2] || '';  // Dot-bracket notation
+    } catch (error) {
+        console.error(error);
+        throw error;
+    }
+}
+
+export async function getTsv(jobId) {
+    try {
+        const response = await fetch(routes.fetchTsv(jobId), {
+            method: 'GET',
+            headers: {
+                'Accept': 'text/plain',
+            },
+        });
+        if (!response.ok) throw new Error(`Error ${response.status}`);
+        const data = await response.text();
+        const lines = (data.match(/[^\t]+/g));
+        const template = lines[1];
+        const source = lines[2].trimEnd();
+        return { template: template, source: source };
     } catch (error) {
         console.error(error);
         throw error;
