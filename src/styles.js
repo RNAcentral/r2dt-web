@@ -151,7 +151,24 @@ export const widgetStyles = `
   position: relative;
 }
 
+/* sentence about source and template */
+.r2dt-source-template-text {
+  color: #6c757d;
+  font-size: 1rem;
+}
+
+.r2dt-source-template-text a {
+  cursor: pointer;
+  color: #337ab7;
+  text-decoration: none;
+}
+
 /*  button */
+.r2dt-panel-wrapper {
+  position: absolute;
+  top: 40px;
+}
+
 .r2dt-button-panel {
   display: inline-flex;
   flex-wrap: nowrap;
@@ -301,7 +318,7 @@ export const widgetStyles = `
 
 .r2dt-zoom-controls {
   position: absolute;
-  top: 60px;
+  top: 90px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -500,7 +517,7 @@ export const widgetStyles = `
   }
 
   .r2dt-zoom-controls {
-    top: 40px;
+    top: 80px;
   }
 
   .r2dt-legend-topLeft {
