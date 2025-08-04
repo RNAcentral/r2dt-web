@@ -375,6 +375,7 @@ export const widgetStyles = `
 .r2dt-source-template-text {
   display: block;
   font-size: 1rem;
+  line-height: 1.5;
 }
 
 .r2dt-source-template-text a {
