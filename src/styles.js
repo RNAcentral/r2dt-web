@@ -352,6 +352,7 @@ export const widgetStyles = `
 .r2dt-list-unstyled {
   padding-left: 0;
   list-style: none;
+  margin-bottom: 0;
 }
 
 .r2dt-legend-container {
