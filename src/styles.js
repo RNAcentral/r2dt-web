@@ -151,24 +151,7 @@ export const widgetStyles = `
   position: relative;
 }
 
-/* sentence about source and template */
-.r2dt-source-template-text {
-  color: #6c757d;
-  font-size: 1rem;
-}
-
-.r2dt-source-template-text a {
-  cursor: pointer;
-  color: #337ab7;
-  text-decoration: none;
-}
-
 /*  button */
-.r2dt-panel-wrapper {
-  position: absolute;
-  top: 40px;
-}
-
 .r2dt-button-panel {
   display: inline-flex;
   flex-wrap: nowrap;
@@ -318,7 +301,7 @@ export const widgetStyles = `
 
 .r2dt-zoom-controls {
   position: absolute;
-  top: 90px;
+  top: 60px;
   display: flex;
   flex-direction: column;
   gap: 6px;
@@ -374,38 +357,68 @@ export const widgetStyles = `
 .r2dt-legend-container {
   position: absolute;
   z-index: 100;
-  background-color: rgba(255, 255, 255, 0.9);
-  border-radius: 4px;
-  padding: 10px;
+  background-color: #ffffff;
+  border-radius: 0.25rem;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+  width: 100%;
+  max-width: 400px;
+  font-size: 0.95rem;
+  border: none;
 }
 
 .r2dt-legend-header {
+  font-size: 1rem;
+  font-weight: bold;
+}
+
+.r2dt-source-template-text {
+  display: block;
+  font-size: 1rem;
+}
+
+.r2dt-source-template-text a {
+  cursor: pointer;
+  color: #337ab7;
+  text-decoration: none;
+}
+
+.r2dt-source-template-text a:hover {
+  text-decoration: underline;
+}
+
+.r2dt-legend-toggle-btn {
+  width: 100%;
+  text-align: left;
+  background-color: #f8f9fa;
+  padding: 12px 16px;
+  font-weight: 600;
+  font-size: 1rem;
+  color: #212529;
+  border: none;
+  border-radius: 0.25rem 0.25rem 0 0;
+  cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.r2dt-legend-header strong {
-  margin: 0;
-}
-
-.r2dt-legend-toggle-btn {
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-  line-height: 1;
-  color: #333;
+.r2dt-legend-toggle-btn:focus {
+  outline: none;
+  background-color: #e9ecef;
 }
 
 .r2dt-arrow-icon {
-  display: inline-block;
+//  display: inline-block;
   transition: transform 0.2s ease-in-out;
 }
 
 .r2dt-arrow-icon.r2dt-rotated {
   transform: rotate(-180deg); /* Rotate up when content is hidden */
+}
+
+.r2dt-legend-content {
+  padding: 12px 16px;
+  border-top: 1px solid #dee2e6;
 }
 
 .r2dt-legend-content.r2dt-hidden {
@@ -517,7 +530,7 @@ export const widgetStyles = `
   }
 
   .r2dt-zoom-controls {
-    top: 80px;
+    top: 40px;
   }
 
   .r2dt-legend-topLeft {
