@@ -174,7 +174,8 @@ export const widgetStyles = `
 }
 
 .r2dt-btn {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   color: #212529;
   text-align: center;
   text-decoration: none;
@@ -209,6 +210,18 @@ export const widgetStyles = `
 .r2dt-btn:focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
+}
+
+.r2dt-svg-icon {
+  width: 16px;
+  height: 16px;
+  fill: #6c757d;
+  flex-shrink: 0;
+  margin-right: 4px;
+}
+
+.r2dt-btn:hover .r2dt-svg-icon {
+  fill: #fff;
 }
 
 /* hamburger button (hidden by default on non-mobile devices) */
@@ -410,7 +423,6 @@ export const widgetStyles = `
 }
 
 .r2dt-arrow-icon {
-//  display: inline-block;
   transition: transform 0.2s ease-in-out;
 }
 
@@ -512,7 +524,7 @@ export const widgetStyles = `
     background-color: rgba(255, 255, 255, 0.9);
     border-radius: 0.25rem;
     box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
-    min-width: 220px;
+    min-width: 240px;
   }
 
   .r2dt-button-panel.r2dt-show-buttons {
@@ -529,6 +541,10 @@ export const widgetStyles = `
 
   .r2dt-button-panel .r2dt-btn:hover {
     background-color: #f0f0f0;
+  }
+
+  .r2dt-btn:hover .r2dt-svg-icon {
+    fill: #6c757d;
   }
 
   .r2dt-zoom-controls {
