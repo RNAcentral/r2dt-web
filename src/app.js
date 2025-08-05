@@ -224,7 +224,7 @@ class R2DTWidget extends HTMLElement {
 
         // Button panel
         const buttonPanel = createButtonPanel(
-            () => this.shadowRoot.querySelector('svg'),
+            () => this.shadowRoot.querySelector('.r2dt-svg-container > svg'),
             this.urs || this.jobId,
             this.dotBracketNotation || '',
             this.jobId ? [
@@ -342,7 +342,7 @@ class R2DTWidget extends HTMLElement {
     async initPanZoom() {
         await new Promise(r => requestAnimationFrame(() => setTimeout(r, 0)));
 
-        const svg = this.shadowRoot.querySelector('svg');
+        const svg = this.shadowRoot.querySelector('.r2dt-svg-container > svg');
         if (!svg) return;
 
         this.panZoomInstance = svgPanZoom(svg, {
