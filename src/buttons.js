@@ -9,8 +9,12 @@ import { saveSvgAsPng } from 'save-svg-as-png';
 export function createToggleColoursButton(getSvgElement) {
     const btn = document.createElement('button');
     btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
-    btn.textContent = 'Toggle colours';
     btn.title = 'Toggle nucleotide colour';
+
+    const icon = createIcon('M480-80q-82 0-155-31.5t-127.5-86Q143-252 111.5-325T80-480q0-83 32.5-156t88-127Q256-817 330-848.5T488-880q80 0 151 27.5t124.5 76q53.5 48.5 85 115T880-518q0 115-70 176.5T640-280h-74q-9 0-12.5 5t-3.5 11q0 12 15 34.5t15 51.5q0 50-27.5 74T480-80Zm0-400Zm-220 40q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120-160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm200 0q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17Zm120 160q26 0 43-17t17-43q0-26-17-43t-43-17q-26 0-43 17t-17 43q0 26 17 43t43 17ZM480-160q9 0 14.5-5t5.5-13q0-14-15-33t-15-57q0-42 29-67t71-25h70q66 0 113-38.5T800-518q0-121-92.5-201.5T488-800q-136 0-232 93t-96 227q0 133 93.5 226.5T480-160Z');
+    const label = document.createTextNode('Toggle colours');
+    btn.appendChild(icon);
+    btn.appendChild(label);
 
     let svgColor = true;
     const colourOn = ['green', 'red', 'blue'];
@@ -43,8 +47,12 @@ export function createToggleColoursButton(getSvgElement) {
 export function createToggleNumbersButton(getSvgElement) {
     const btn = document.createElement('button');
     btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
-    btn.textContent = 'Toggle numbers';
     btn.title = 'Show/Hide sequence numbers';
+
+    const icon = createIcon('M280-240q-100 0-170-70T40-480q0-100 70-170t170-70h400q100 0 170 70t70 170q0 100-70 170t-170 70H280Zm0-80h400q66 0 113-47t47-113q0-66-47-113t-113-47H280q-66 0-113 47t-47 113q0 66 47 113t113 47Zm0-40q50 0 85-35t35-85q0-50-35-85t-85-35q-50 0-85 35t-35 85q0 50 35 85t85 35Zm200-120Z');
+    const label = document.createTextNode('Toggle numbers');
+    btn.appendChild(icon);
+    btn.appendChild(label);
 
     let numbersVisible = true;
 
@@ -73,8 +81,12 @@ export function createToggleNumbersButton(getSvgElement) {
 export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation) {
     const btn = document.createElement('button');
     btn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary');
-    btn.textContent = 'Copy dot-bracket notation';
     btn.title = 'Copy dot-bracket notation';
+
+    const icon = createIcon('M360-240q-33 0-56.5-23.5T280-320v-480q0-33 23.5-56.5T360-880h360q33 0 56.5 23.5T800-800v480q0 33-23.5 56.5T720-240H360Zm0-80h360v-480H360v480ZM200-80q-33 0-56.5-23.5T120-160v-560h80v560h440v80H200Zm160-240v-480 480Z');
+    const label = document.createTextNode('Copy dot-bracket notation');
+    btn.appendChild(icon);
+    btn.appendChild(label);
 
     // Wait for DOM to render, then fix width
     requestAnimationFrame(() => {
@@ -108,8 +120,12 @@ export function createEditDropdown(editingOptions) {
 
     const toggleBtn = document.createElement('button');
     toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
-    toggleBtn.textContent = 'Edit image';
     toggleBtn.title = 'Edit secondary structure';
+
+    const icon = createIcon('M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z');
+    const label = document.createTextNode('Edit image');
+    toggleBtn.appendChild(icon);
+    toggleBtn.appendChild(label);
 
     const menu = document.createElement('div');
     menu.classList.add('r2dt-dropdown-menu');
@@ -151,8 +167,12 @@ export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) 
 
     const toggleBtn = document.createElement('button');
     toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
-    toggleBtn.textContent = 'Download';
     toggleBtn.title = 'Download secondary structure';
+
+    const icon = createIcon('M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z');
+    const label = document.createTextNode('Download');
+    toggleBtn.appendChild(icon);
+    toggleBtn.appendChild(label);
 
     const menu = document.createElement('div');
     menu.classList.add('r2dt-dropdown-menu');
@@ -267,4 +287,18 @@ function downloadFile(url, filename) {
     .catch(error => {
         console.error(`Error downloading ${filename}:`, error);
     });
+}
+
+// Helper function to create an SVG icon
+function createIcon(pathD) {
+    const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('xmlns', 'http://www.w3.org/2000/svg');
+    svg.classList.add('r2dt-svg-icon');
+    svg.setAttribute('viewBox', '0 -960 960 960');
+
+    const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    path.setAttribute('d', pathD);
+
+    svg.appendChild(path);
+    return svg;
 }
