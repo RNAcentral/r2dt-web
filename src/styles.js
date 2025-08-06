@@ -498,6 +498,12 @@ export const widgetStyles = `
   margin-bottom: 0.5rem;
 }
 
+@media (max-width: 815px) {
+  .r2dt-btn {
+    padding: 0.375rem;
+  }
+}
+
 /* mobile behavior */
 @media (max-width: 768px) {
   .r2dt-menu-toggle {
