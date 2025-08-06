@@ -122,18 +122,6 @@ export const widgetStyles = `
   }
 }
 
-@media (max-width: 768px) {
-  .r2dt-button-group {
-    flex-direction: column;
-  }
-
-  .r2dt-search-footer {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 10px;
-  }
-}
-
 /* results */
 .r2dt-outer-scroll-wrapper {
   min-height: 100vh;
@@ -498,6 +486,7 @@ export const widgetStyles = `
   margin-bottom: 0.5rem;
 }
 
+/* prevent button text from wrapping at 815px */
 @media (max-width: 815px) {
   .r2dt-btn {
     padding: 0.375rem;
@@ -506,6 +495,16 @@ export const widgetStyles = `
 
 /* mobile behavior */
 @media (max-width: 768px) {
+  .r2dt-button-group {
+    flex-direction: column;
+  }
+
+  .r2dt-search-footer {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
   .r2dt-menu-toggle {
     display: inline-block;
   }
