@@ -405,7 +405,7 @@ export const widgetStyles = `
   width: 100%;
   text-align: left;
   background-color: #f8f9fa;
-  padding: 12px 16px;
+  padding: 12px 10px;
   font-weight: 600;
   font-size: 1rem;
   color: #212529;
@@ -431,7 +431,7 @@ export const widgetStyles = `
 }
 
 .r2dt-legend-content {
-  padding: 12px 16px;
+  padding: 12px 10px;
   border-top: 1px solid #dee2e6;
 }
 
