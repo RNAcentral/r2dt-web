@@ -241,7 +241,6 @@ export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) 
 // Export function to create a panel with all buttons
 export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, extraDownloads, editingOptions) {
     const panelWrapper = document.createElement('div');
-    panelWrapper.classList.add('r2dt-panel-wrapper');
 
     // Hamburger button
     const toggleBtn = document.createElement('button');
