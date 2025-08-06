@@ -92,13 +92,15 @@ class R2DTWidget extends HTMLElement {
                 toggleButtons();
             }
 
-            // Submit text field sequence
+            // Submit text field sequence or R2DT job ID
             if (runBtn) {
                 runBtn.addEventListener('click', async () => {
-                    const result = validateFasta(textarea.value);
-                    if (!result.valid) {
-                        renderError(this.shadowRoot, result.error);
-                        return;
+                    if (!/^r2dt/.test(textarea.value)) {
+                        const result = validateFasta(textarea.value);
+                        if (!result.valid) {
+                            renderError(this.shadowRoot, result.error);
+                            return;
+                        }
                     }
                     await this.submitSequence(textarea.value);
                 });
@@ -128,7 +130,15 @@ class R2DTWidget extends HTMLElement {
             const oldViewer = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
             if (oldViewer) oldViewer.remove();
             showSpinner(this.shadowRoot);
-            const ebiResponse = await actions.onSubmit(sequence);
+
+            let ebiResponse;
+            if (/^r2dt/.test(sequence)) {
+                // Use R2DT job ID to fetch data
+                ebiResponse = await actions.fetchStatus(sequence);
+            } else {
+                // Submit new sequence
+                ebiResponse = await actions.onSubmit(sequence);
+            }
 
             if (ebiResponse === 'NOT_FOUND') {
                 renderError(this.shadowRoot, 'Job not found. The results might have expired.');
