@@ -404,7 +404,7 @@ export const widgetStyles = `
 .r2dt-legend-toggle-btn {
   width: 100%;
   text-align: left;
-  background-color: #f8f9fa;
+  background-color: #f5f5f5;
   padding: 12px 10px;
   font-weight: 600;
   font-size: 1rem;
@@ -415,11 +415,6 @@ export const widgetStyles = `
   display: flex;
   justify-content: space-between;
   align-items: center;
-}
-
-.r2dt-legend-toggle-btn:focus {
-  outline: none;
-  background-color: #e9ecef;
 }
 
 .r2dt-arrow-icon {
