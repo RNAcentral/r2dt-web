@@ -40,7 +40,14 @@ export async function fetchStatus(jobId) {
                 getSvg(jobId),
                 getTsv(jobId),
             ]);
-            return { fasta: fastaData, jobId: jobId, svg: svgData, tsv: tsvData };
+            return {
+                dotBracketNotation: fastaData.dotBracketNotation,
+                fastaHeader: fastaData.fastaHeader,
+                jobId: jobId,
+                sequence: fastaData.sequence,
+                svg: svgData,
+                tsv: tsvData
+            };
         } else if (data === 'NOT_FOUND') {
              return 'NOT_FOUND';
         } else if (data === 'FAILURE') {
@@ -82,7 +89,10 @@ export async function getFasta(jobId) {
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.text();
         const lines = (data.match(/[^\r\n]+/g)) || [];
-        return lines[2] || '';  // Dot-bracket notation
+        const fastaHeader = lines[0] || '';
+        const sequence = lines[1] || '';
+        const dotBracketNotation = lines[2] || '';
+        return { fastaHeader: fastaHeader, sequence: sequence, dotBracketNotation: dotBracketNotation };
     } catch (error) {
         console.error(error);
         throw error;

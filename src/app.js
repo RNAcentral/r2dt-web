@@ -140,6 +140,12 @@ class R2DTWidget extends HTMLElement {
                 ebiResponse = await actions.onSubmit(sequence);
             }
 
+            if (/^r2dt/.test(sequence) && ebiResponse.sequence) {
+                // Replace job ID with fasta header + sequence
+                const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
+                textarea.value = ebiResponse.fastaHeader + '\n' + ebiResponse.sequence;
+            }
+
             if (ebiResponse === 'NOT_FOUND') {
                 renderError(this.shadowRoot, 'Job not found. The results might have expired.');
                 return;
@@ -148,7 +154,7 @@ class R2DTWidget extends HTMLElement {
                 return;
             }
 
-            this.dotBracketNotation = ebiResponse.fasta;
+            this.dotBracketNotation = ebiResponse.dotBracketNotation;
             this.jobId = ebiResponse.jobId;
             this.source = ebiResponse.tsv.source;
             this.svgContent = ebiResponse.svg;
