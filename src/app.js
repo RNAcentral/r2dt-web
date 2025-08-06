@@ -20,7 +20,6 @@ class R2DTWidget extends HTMLElement {
         this.dotBracketNotation = null;
         this.jobId = null;
         this.source = null;
-        this.svgContent = null;
         this.template = null;
         this.panZoomInstance = null;
         this.urs = null;
@@ -157,7 +156,6 @@ class R2DTWidget extends HTMLElement {
             this.dotBracketNotation = ebiResponse.dotBracketNotation;
             this.jobId = ebiResponse.jobId;
             this.source = ebiResponse.tsv.source;
-            this.svgContent = ebiResponse.svg;
             this.template = ebiResponse.tsv.template;
             this.renderSvg(ebiResponse.svg);
             await this.initPanZoom();
