@@ -108,7 +108,7 @@ class R2DTWidget extends HTMLElement {
                 });
             }
 
-            // Clear text field
+            // Clear text field and advanced search options
             if (clearBtn) {
                 clearBtn.addEventListener('click', () => {
                     textarea.value = '';
@@ -116,6 +116,25 @@ class R2DTWidget extends HTMLElement {
                     toggleButtons();
                     const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
                     if (currentSvg) currentSvg.remove();
+
+                    const templateSelect = this.shadowRoot.querySelector('#r2dt-template-select');
+                    const templateAutocomplete = this.shadowRoot.querySelector('#r2dt-template-autocomplete');
+                    const foldingCheckbox = this.shadowRoot.querySelector('#r2dt-folding-checkbox');
+                    const foldingSelect = this.shadowRoot.querySelector('#r2dt-folding-select');
+                    const advancedContainer = this.shadowRoot.querySelector('.r2dt-advanced-container');
+                    const advancedLink = this.shadowRoot.querySelector('.r2dt-advanced-link');
+
+                    if (templateSelect) templateSelect.value = '';
+                    if (templateAutocomplete) templateAutocomplete.value = '';
+                    if (foldingCheckbox) {
+                        foldingCheckbox.checked = false;
+                        foldingSelect.classList.add('r2dt-hidden');
+                    }
+                    if (foldingSelect) foldingSelect.value = '';
+                    if (advancedContainer) {
+                        advancedContainer.classList.add('r2dt-hidden');
+                        advancedLink.textContent = 'Show advanced';
+                    }
                 });
             }
         }
