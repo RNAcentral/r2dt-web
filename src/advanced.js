@@ -40,10 +40,10 @@ export const setupAdvancedSearch = (shadowRoot) => {
                                 <label><input type="checkbox" id="r2dt-folding-checkbox"> Constrained folding</label>
                             </div>
                             <select id="r2dt-folding-select" class="r2dt-folding-select r2dt-hidden">
-                                <option value="auto">Auto</option>
-                                <option value="full">Full molecule</option>
-                                <option value="insertions">Insertions only</option>
-                                <option value="all">All constraints enforced</option>
+                                <option value>Auto</option>
+                                <option value="full_molecule">Full molecule</option>
+                                <option value="insertions_only">Insertions only</option>
+                                <option value="all_constraints_enforced">All constraints enforced</option>
                             </select>
                         </div>
                     </div>
