@@ -20,6 +20,24 @@ export const widgetStyles = `
   margin-right: 0.5rem !important;
 }
 
+.r2dt-mb-2 {
+  margin-bottom: 0.5rem !important;
+}
+
+.r2dt-d-none {
+  display: none !important;
+}
+
+.r2dt-link {
+  cursor: pointer;
+  color: #337ab7;
+  text-decoration: none;
+}
+
+.r2dt-link:hover {
+  text-decoration: underline;
+}
+
 /* search input */
 .r2dt-search-container {
   display: flex;
@@ -45,6 +63,20 @@ export const widgetStyles = `
 .r2dt-search-input:focus {
   outline: none;
   border-color: #80bdff;
+}
+
+.r2dt-advanced-link {
+  position: absolute;
+  right: 15px;
+  bottom: 15px;
+  font-size: 0.95rem;
+  color: #337ab7;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.r2dt-advanced-link:hover {
+  text-decoration: underline;
 }
 
 .r2dt-search-examples {
@@ -120,6 +152,86 @@ export const widgetStyles = `
   to {
     transform: rotate(360deg);
   }
+}
+
+/* advanced search */
+.r2dt-advanced-container {
+  margin: 1rem 0;
+}
+
+.r2dt-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: #fff;
+  background-clip: border-box;
+  border: 1px solid rgba(0, 0, 0, 0.125);
+  border-radius: 0.25rem;
+}
+
+.r2dt-card-header {
+  padding: 0.75rem 1.25rem;
+  margin-bottom: 0;
+  background-color: rgba(0, 0, 0, 0.03);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.r2dt-card-body {
+  flex: 1 1 auto;
+  padding: 1rem 1rem;
+}
+
+.r2dt-card-title {
+  margin-bottom: 0.75rem;
+}
+
+.r2dt-card-footer {
+  padding-top: 0.75rem;
+}
+
+.r2dt-template-select,
+.r2dt-template-autocomplete,
+.r2dt-folding-select {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 0.5rem;
+  font-size: 1rem;
+  border-radius: 4px;
+  border: 1px solid #ced4da;
+  background-color: #fff;
+}
+
+.r2dt-advanced-row {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.r2dt-advanced-row .r2dt-card {
+  flex: 1 1 0;
+  min-width: 350px;
+}
+
+.r2dt-autocomplete-list {
+  position: absolute;
+  background: white;
+  border: 1px solid #ccc;
+  z-index: 1000;
+  max-height: 200px;
+  overflow-y: auto;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.r2dt-autocomplete-item {
+  padding: 0.5rem;
+  cursor: pointer;
+}
+
+.r2dt-autocomplete-item:hover {
+  background-color: #f8f9fa;
 }
 
 /* results */
@@ -418,8 +530,8 @@ export const widgetStyles = `
   border-top: 1px solid #dee2e6;
 }
 
-.r2dt-legend-content.r2dt-hidden {
-  display: none;
+.r2dt-hidden {
+  display: none !important;
 }
 
 .r2dt-legend-topRight {
