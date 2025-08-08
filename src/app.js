@@ -12,6 +12,8 @@ import {
     validateFasta
 } from './search.js';
 import { widgetStyles } from './styles.js';
+import { setupAdvancedSearch } from './advanced.js';
+import { templates } from './templates.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -55,6 +57,7 @@ class R2DTWidget extends HTMLElement {
 
             container.innerHTML = r2dtSearch(examples);
             this.shadowRoot.appendChild(container);
+            setupAdvancedSearch(this.shadowRoot);
 
             const alertContainer = document.createElement('div');
             alertContainer.className = 'r2dt-alert-container';
@@ -135,8 +138,41 @@ class R2DTWidget extends HTMLElement {
                 // Use R2DT job ID to fetch data
                 ebiResponse = await actions.fetchStatus(sequence);
             } else {
+                // Submit new sequence. First check if the sequence contains dot-bracket notation
+                const checkDotBracket = /[.()]/;
+                const sequenceWithDotBracket = checkDotBracket.test(sequence);
+
+                // Then fetch the selected template and folding option in the advanced search
+                const selectedTemplateMode = this.shadowRoot.querySelector('input[name="template-mode"]:checked')?.value;
+                const constrainedFoldingEnabled = this.shadowRoot.querySelector('#r2dt-folding-checkbox')?.checked || false;
+                let template = '';
+                let foldingOption = '';
+
+                if (!sequenceWithDotBracket) {
+                    if (selectedTemplateMode === 'browse') {
+                        template = this.shadowRoot.querySelector('#r2dt-template-select')?.value || '';
+                    } else if (selectedTemplateMode === 'type') {
+                        const selectedLabel = this.shadowRoot.querySelector('#r2dt-template-autocomplete')?.value.trim() || '';
+                        const match = templates.find(item => item.label === selectedLabel);
+                        template = match?.model_id || '';
+                    }
+
+                    if (constrainedFoldingEnabled) {
+                        foldingOption = this.shadowRoot.querySelector('#r2dt-folding-select')?.value || '';
+                    }
+                }
+
+                // Create the body to submit via post request
+                let body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=${template}`;
+
+                if (!sequenceWithDotBracket && constrainedFoldingEnabled && foldingOption.length > 0) {
+                    body += `&constraint=${constrainedFoldingEnabled}&fold_type=${foldingOption}`;
+                } else if (!sequenceWithDotBracket && constrainedFoldingEnabled) {
+                    body += `&constraint=${constrainedFoldingEnabled}`;
+                }
+
                 // Submit new sequence
-                ebiResponse = await actions.onSubmit(sequence);
+                ebiResponse = await actions.onSubmit(body);
             }
 
             if (/^r2dt/.test(sequence) && ebiResponse.sequence) {
