@@ -1,7 +1,6 @@
 import routes from './routes';
 
-export async function onSubmit(sequence) {
-    const body = `email=rnacentral%40gmail.com&sequence=${sequence}&template_id=`;
+export async function onSubmit(body) {
     try {
         const response = await fetch(routes.submitJob(), {
             method: 'POST',
