@@ -15,11 +15,18 @@ export const validateFasta = (text) => {
         };
     }
 
-    const sequence = lines.slice(1).join('').toUpperCase();
-    if (!/^[ACGTUWSMKRYBDHVN]+$/.test(sequence)) {
+    if (!/^[ACGTUWSMKRYBDHVN]+$/.test(lines[1].toUpperCase())) {
         return {
             valid: false,
             error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive).',
+        };
+    }
+
+    const isDotBracket = /[.()]/;
+    if (lines[2] && isDotBracket.test(lines[2]) && lines[2].length !== lines[1].length) {
+        return {
+            valid: false,
+            error: 'The secondary structure in dot-bracket notation must be the same length as the fasta sequence',
         };
     }
 
