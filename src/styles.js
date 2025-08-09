@@ -57,7 +57,7 @@ export const widgetStyles = `
 .r2dt-search-input {
   width: 100%;
   min-height: 200px;
-  padding: 10px;
+  padding: 10px 10px 10px 10px;
   border: 1px solid #ced4da;
   border-radius: 4px;
   resize: vertical;
@@ -159,10 +159,6 @@ export const widgetStyles = `
 }
 
 /* advanced search */
-.r2dt-advanced-container {
-  margin: 1rem 0;
-}
-
 .r2dt-card {
   position: relative;
   display: flex;
@@ -178,7 +174,7 @@ export const widgetStyles = `
 .r2dt-card-header {
   padding: 0.75rem 1.25rem;
   margin-bottom: 0;
-  background-color: rgba(0, 0, 0, 0.03);
+  background-color: #f5f5f5;
   border-bottom: 1px solid rgba(0, 0, 0, 0.125);
 }
 
