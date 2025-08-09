@@ -1,6 +1,6 @@
 import { templates } from './templates.js';
 
-export const setupAdvancedSearch = (shadowRoot) => {
+export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
     const advancedContainer = document.createElement('div');
     advancedContainer.classList.add('r2dt-advanced-container', 'r2dt-hidden');
 
@@ -56,7 +56,12 @@ export const setupAdvancedSearch = (shadowRoot) => {
         </div>
     `;
 
-    shadowRoot.appendChild(advancedContainer);
+    // Insert advanced search container
+    if (insertionPoint) {
+        insertionPoint.insertAdjacentElement('afterend', advancedContainer);
+    } else {
+        shadowRoot.appendChild(advancedContainer);
+    }
 
     const autocompleteInput = shadowRoot.querySelector('#r2dt-template-autocomplete');
     const autocompleteList = shadowRoot.querySelector('#r2dt-autocomplete-list');
