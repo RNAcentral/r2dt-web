@@ -45,6 +45,10 @@ export const widgetStyles = `
   gap: 10px;
 }
 
+.r2dt-search-insertion-point {
+  position: relative;
+}
+
 .r2dt-search-footer {
   display: flex;
   align-items: center;
