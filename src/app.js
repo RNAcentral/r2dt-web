@@ -57,7 +57,8 @@ class R2DTWidget extends HTMLElement {
 
             container.innerHTML = r2dtSearch(examples);
             this.shadowRoot.appendChild(container);
-            setupAdvancedSearch(this.shadowRoot);
+            const insertionPoint = container.querySelector('.r2dt-search-insertion-point');
+            setupAdvancedSearch(this.shadowRoot, insertionPoint);
 
             const alertContainer = document.createElement('div');
             alertContainer.className = 'r2dt-alert-container';
