@@ -80,7 +80,7 @@ export const clearError = (shadowRoot) => {
 
 export const r2dtSearch = (examples = []) => `
     <div class="r2dt-search-container">
-        <div style="position: relative;">
+        <div class="r2dt-search-insertion-point">
             <textarea class="r2dt-search-input" placeholder="Enter RNA/DNA sequence or job ID (FASTA format with optional description). Include secondary structure in dot-bracket notation, if available"></textarea>
             <span class="r2dt-advanced-link">Show advanced</span>
         </div>
