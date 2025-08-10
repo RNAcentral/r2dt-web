@@ -5,52 +5,41 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
     advancedContainer.classList.add('r2dt-advanced-container', 'r2dt-hidden');
 
     advancedContainer.innerHTML = `
-        <div class="r2dt-card">
-            <div class="r2dt-card-header">
-                <strong>Advanced options</strong>
-            </div>
-            <div class="r2dt-card-body">
-                <div class="r2dt-advanced-row">
-                    <div class="r2dt-card">
-                        <div class="r2dt-card-header">
-                            Select a template. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#template" target="_blank">Learn more →</a>
-                        </div>
-                        <div class="r2dt-card-body">
-                            <div class="r2dt-mb-2">
-                                <label><input type="radio" name="template-mode" value="browse" checked> Browse all templates</label>
-                                <label><input type="radio" name="template-mode" value="type"> Type to find a template</label>
-                            </div>
-
-                            <select id="r2dt-template-select" class="r2dt-template-select">
-                                <option value="">Select a template</option>
-                                ${templates.map(t => `<option value="${t.model_id}">${t.label}</option>`).join('')}
-                            </select>
-
-                            <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." list="r2dt-template-datalist" />
-                            <div id="r2dt-autocomplete-list" class="r2dt-autocomplete-list r2dt-hidden"></div>
-                        </div>
-                    </div>
-
-                    <div class="r2dt-card">
-                        <div class="r2dt-card-header">
-                            Enable constrained folding. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#constrained_folding" target="_blank">Learn more →</a>
-                        </div>
-                        <div class="r2dt-card-body">
-                            <div class="r2dt-mb-2">
-                                <label><input type="checkbox" id="r2dt-folding-checkbox"> Constrained folding</label>
-                            </div>
-                            <select id="r2dt-folding-select" class="r2dt-folding-select r2dt-hidden">
-                                <option value>Auto</option>
-                                <option value="full_molecule">Full molecule</option>
-                                <option value="insertions_only">Insertions only</option>
-                                <option value="all_constraints_enforced">All constraints enforced</option>
-                            </select>
-                        </div>
-                    </div>
+        <div class="r2dt-advanced-row">
+            <div class="r2dt-card">
+                <div class="r2dt-card-header">
+                    Select a template. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#template" target="_blank">Learn more →</a>
                 </div>
+                <div class="r2dt-card-body">
+                    <div class="r2dt-mb-2">
+                        <label><input type="radio" name="template-mode" value="browse" checked> Browse all templates</label>
+                        <label><input type="radio" name="template-mode" value="type"> Type to find a template</label>
+                    </div>
 
-                <div class="r2dt-card-footer">
-                    <span>See the <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure" target="_blank">documentation</a> for details or read the <a class="r2dt-link" href="https://www.nature.com/articles/s41467-021-23555-5" target="_blank">R2DT paper</a> in Nature Communications</span>
+                    <select id="r2dt-template-select" class="r2dt-template-select">
+                        <option value="">Select a template</option>
+                        ${templates.map(t => `<option value="${t.model_id}">${t.label}</option>`).join('')}
+                    </select>
+
+                    <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." list="r2dt-template-datalist" />
+                    <div id="r2dt-autocomplete-list" class="r2dt-autocomplete-list r2dt-hidden"></div>
+                </div>
+            </div>
+
+            <div class="r2dt-card">
+                <div class="r2dt-card-header">
+                    Enable constrained folding. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#constrained_folding" target="_blank">Learn more →</a>
+                </div>
+                <div class="r2dt-card-body">
+                    <div class="r2dt-mb-2">
+                        <label><input type="checkbox" id="r2dt-folding-checkbox"> Constrained folding</label>
+                    </div>
+                    <select id="r2dt-folding-select" class="r2dt-folding-select r2dt-hidden">
+                        <option value>Auto</option>
+                        <option value="full_molecule">Full molecule</option>
+                        <option value="insertions_only">Insertions only</option>
+                        <option value="all_constraints_enforced">All constraints enforced</option>
+                    </select>
                 </div>
             </div>
         </div>
