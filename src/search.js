@@ -37,6 +37,8 @@ export const showSpinner = (shadowRoot) => {
     const runBtn = shadowRoot.querySelector('.r2dt-search-btn');
     const clearBtn = shadowRoot.querySelector('.r2dt-clear-btn');
     const searchInput = shadowRoot.querySelector('.r2dt-search-input');
+    const advancedLink = shadowRoot.querySelector('.r2dt-advanced-link');
+
     if (runBtn) {
         runBtn.disabled = true;
         runBtn.innerHTML = `
@@ -46,18 +48,22 @@ export const showSpinner = (shadowRoot) => {
     }
     if (clearBtn) { clearBtn.disabled = true; }
     if (searchInput) { searchInput.disabled = true; }
+    if (advancedLink) { advancedLink.classList.add('r2dt-hidden'); }
 };
 
 export const hideSpinner = (shadowRoot) => {
     const runBtn = shadowRoot.querySelector('.r2dt-search-btn');
     const clearBtn = shadowRoot.querySelector('.r2dt-clear-btn');
     const searchInput = shadowRoot.querySelector('.r2dt-search-input');
+    const advancedLink = shadowRoot.querySelector('.r2dt-advanced-link');
+
     if (runBtn) {
         runBtn.disabled = false;
         runBtn.textContent = 'Run';
     }
     if (clearBtn) { clearBtn.disabled = false; }
     if (searchInput) { searchInput.disabled = false; }
+    if (advancedLink) { advancedLink.classList.remove('r2dt-hidden'); }
 };
 
 export const renderError = (shadowRoot, message) => {
