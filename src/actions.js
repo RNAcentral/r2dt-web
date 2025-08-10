@@ -117,3 +117,27 @@ export async function getTsv(jobId) {
         throw error;
     }
 }
+
+export async function fetchSvgFromUrl(url) {
+    try {
+        const response = await fetch(url, { method: 'GET' });
+        if (!response.ok) throw new Error(`Error ${response.status}`);
+        const data = await response.text();
+
+        if (data.startsWith('<svg')) {
+            return {
+                dotBracketNotation: '',
+                fastaHeader: '',
+                jobId: '',
+                sequence: '',
+                svg: data,
+                tsv: {source: '', template: ''}
+            };
+        } else {
+            return 'NO_SVG';
+        }
+    } catch (error) {
+        console.error(error);
+        return 'NO_SVG';
+    }
+}

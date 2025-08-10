@@ -98,14 +98,15 @@ class R2DTWidget extends HTMLElement {
             // Submit text field sequence or R2DT job ID
             if (runBtn) {
                 runBtn.addEventListener('click', async () => {
-                    if (!/^r2dt/.test(textarea.value)) {
-                        const result = validateFasta(textarea.value);
+                    const textInput = textarea.value.trim();
+                    if (!/^r2dt/.test(textInput) && !/^http/.test(textInput)) {
+                        const result = validateFasta(textInput);
                         if (!result.valid) {
                             renderError(this.shadowRoot, result.error);
                             return;
                         }
                     }
-                    await this.submitSequence(textarea.value);
+                    await this.submitSequence(textInput);
                 });
             }
 
@@ -155,7 +156,10 @@ class R2DTWidget extends HTMLElement {
             showSpinner(this.shadowRoot);
 
             let ebiResponse;
-            if (/^r2dt/.test(sequence)) {
+            if (/^http/.test(sequence)) {
+                // Fetch SVG from URL
+                ebiResponse = await actions.fetchSvgFromUrl(sequence);
+            } else if (/^r2dt/.test(sequence)) {
                 // Use R2DT job ID to fetch data
                 ebiResponse = await actions.fetchStatus(sequence);
             } else {
@@ -207,6 +211,9 @@ class R2DTWidget extends HTMLElement {
                 return;
             } else if (ebiResponse === 'ERROR' || ebiResponse === 'FAILURE') {
                 renderError(this.shadowRoot, 'There was an error with the submission.');
+                return;
+            } else if (ebiResponse === 'NO_SVG') {
+                renderError(this.shadowRoot, 'The provided URL does not return an SVG.');
                 return;
             }
 
