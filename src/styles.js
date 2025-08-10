@@ -190,10 +190,6 @@ export const widgetStyles = `
   margin-bottom: 0.75rem;
 }
 
-.r2dt-card-footer {
-  padding-top: 0.75rem;
-}
-
 .r2dt-template-select,
 .r2dt-template-autocomplete,
 .r2dt-folding-select {
