@@ -57,7 +57,7 @@ export const widgetStyles = `
 .r2dt-search-input {
   width: 100%;
   min-height: 200px;
-  padding: 10px 10px 10px 10px;
+  padding: 10px;
   border: 1px solid #ced4da;
   border-radius: 4px;
   resize: vertical;
@@ -71,12 +71,15 @@ export const widgetStyles = `
 
 .r2dt-advanced-link {
   position: absolute;
-  right: 15px;
-  bottom: 15px;
+  right: 10px;
+  bottom: 5px;
   font-size: 0.95rem;
   color: #337ab7;
   text-decoration: none;
   cursor: pointer;
+  background-color: #fff;
+  padding: 10px;
+  border-radius: 4px;
 }
 
 .r2dt-advanced-link:hover {
