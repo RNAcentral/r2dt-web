@@ -136,6 +136,7 @@ class R2DTWidget extends HTMLElement {
                         advancedContainer.classList.add('r2dt-hidden');
                         advancedLink.textContent = 'Show advanced';
                     }
+                    window.removeEventListener('resize', this.handleResize);
                 });
             }
         }
@@ -435,8 +436,12 @@ class R2DTWidget extends HTMLElement {
             clearTimeout(this.resizeTimer);
             this.resizeTimer = setTimeout(() => {
                 this.panZoomInstance.resize();
-                this.panZoomInstance.fit();
-                this.panZoomInstance.center();
+                try {
+                    this.panZoomInstance.fit();
+                    this.panZoomInstance.center();
+                } catch (error) {
+                    console.warn('PanZoom fit/center failed:', error);
+                }
             }, 250);
         };
 
