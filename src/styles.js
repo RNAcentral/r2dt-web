@@ -5,7 +5,8 @@ export const widgetStyles = `
   min-height: 100vh;
   overflow: auto;
   box-sizing: border-box;
-  font-family: sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
 }
 
 .r2dt-mt-1 {
@@ -328,7 +329,7 @@ export const widgetStyles = `
   display: none;
   background-color: #fff;
   border: 1px solid #ccc;
-  font-size: 18px;
+  font-size: 1.125rem;
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 4px;
@@ -423,7 +424,7 @@ export const widgetStyles = `
 .r2dt-zoom-controls button {
   background-color: #fff;
   border: 1px solid #ccc;
-  font-size: 18px;
+  font-size: 1.125rem;
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 4px;
@@ -451,7 +452,6 @@ export const widgetStyles = `
   padding: 10px 15px;
   border-radius: 4px;
   margin-top: 10px;
-  font-size: 0.95rem;
 }
 
 .r2dt-alert-danger {
@@ -475,7 +475,6 @@ export const widgetStyles = `
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   width: 100%;
   max-width: 400px;
-  font-size: 0.95rem;
   border: none;
 }
 
@@ -486,7 +485,6 @@ export const widgetStyles = `
 
 .r2dt-source-template-text {
   display: block;
-  font-size: 1rem;
   line-height: 1.5;
 }
 
@@ -505,8 +503,6 @@ export const widgetStyles = `
   text-align: left;
   background-color: #f5f5f5;
   padding: 12px 10px;
-  font-weight: 600;
-  font-size: 1rem;
   color: #212529;
   border: none;
   border-radius: 0.25rem 0.25rem 0 0;
