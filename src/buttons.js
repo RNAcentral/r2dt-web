@@ -254,7 +254,7 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, e
     // Append buttons
     btnGroup.appendChild(createToggleColoursButton(getSvgElement));
     btnGroup.appendChild(createToggleNumbersButton(getSvgElement));
-    btnGroup.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
+    if (dotBracketNotation) btnGroup.appendChild(createCopyDotBracketNotationButton(getSvgElement, dotBracketNotation));
     if (editingOptions.length) btnGroup.appendChild(createEditDropdown(editingOptions));
     btnGroup.appendChild(createDownloadDropdown(getSvgElement, fileName, extraDownloads));
 
