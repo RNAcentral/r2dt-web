@@ -2,6 +2,7 @@ import svgPanZoom from 'svg-pan-zoom';
 import * as actions from './actions.js';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
+import { r2dtDotBracket } from './dotBracket.js';
 import routes from './routes';
 import {
     clearError,
@@ -399,15 +400,7 @@ class R2DTWidget extends HTMLElement {
         if (this.dotBracketNotation) {
             const notationWrapper = document.createElement('div');
             notationWrapper.classList.add('r2dt-dot-bracket-notation');
-
-            const heading = document.createElement('strong');
-            heading.textContent = 'Dot-bracket notation';
-
-            const notation = document.createElement('pre');
-            notation.textContent = this.dotBracketNotation;
-
-            notationWrapper.appendChild(heading);
-            notationWrapper.appendChild(notation);
+            notationWrapper.innerHTML = r2dtDotBracket(this.dotBracketNotation);
             outerWrapper.appendChild(notationWrapper);
         }
 
