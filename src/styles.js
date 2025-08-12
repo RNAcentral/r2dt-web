@@ -529,8 +529,8 @@ export const widgetStyles = `
 }
 
 .r2dt-legend-topRight {
-  top: 10px;
-  right: 10px;
+  top: 2px;
+  right: 2px;
 }
 
 .r2dt-legend-topLeft {
@@ -540,7 +540,7 @@ export const widgetStyles = `
 
 .r2dt-legend-bottomRight {
   bottom: 10px;
-  right: 10px;
+  right: 2px;
 }
 
 .r2dt-legend-bottomLeft {
