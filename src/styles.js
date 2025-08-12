@@ -170,25 +170,23 @@ export const widgetStyles = `
   min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
-  background-clip: border-box;
-  border: 1px solid rgba(0, 0, 0, 0.125);
+  border: none;
   border-radius: 0.25rem;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
 .r2dt-card-header {
-  padding: 0.75rem 1.25rem;
+  padding: 12px 10px;
+  color: #212529;
   margin-bottom: 0;
   background-color: #f5f5f5;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border: none;
+  border-radius: 0.25rem 0.25rem 0 0;
 }
 
 .r2dt-card-body {
-  flex: 1 1 auto;
-  padding: 1rem 1rem;
-}
-
-.r2dt-card-title {
-  margin-bottom: 0.75rem;
+  padding: 12px 10px;
+  border-top: 1px solid #dee2e6;
 }
 
 .r2dt-template-select,
@@ -207,6 +205,7 @@ export const widgetStyles = `
   display: flex;
   gap: 20px;
   flex-wrap: wrap;
+  padding: 2px;
 }
 
 .r2dt-advanced-row .r2dt-card {
@@ -573,24 +572,14 @@ export const widgetStyles = `
 
 /* dot bracket notation */
 .r2dt-dot-bracket-notation {
-  padding: 10px;
-  white-space: pre-wrap;
-  background: #f5f5f5;
-  max-height: 150px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  padding: 2px;
   margin-bottom: 1rem;
 }
 
-.r2dt-dot-bracket-notation pre {
-  margin: 0;
-  white-space: pre-wrap;
-  word-break: break-word;
-}
-
-.r2dt-dot-bracket-notation strong {
-  display: block;
-  margin-bottom: 0.5rem;
+.r2dt-dot-bracket-notation .r2dt-card-body {
+  max-height: 150px;
+  overflow-y: auto;
+  letter-spacing: 1px;
 }
 
 /* prevent button text from wrapping at 815px */
