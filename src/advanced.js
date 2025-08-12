@@ -8,7 +8,7 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         <div class="r2dt-advanced-row">
             <div class="r2dt-card">
                 <div class="r2dt-card-header">
-                    Select a template. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#template" target="_blank">Learn more →</a>
+                    <strong>Select a template.</strong> <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#template" target="_blank">Learn more →</a>
                 </div>
                 <div class="r2dt-card-body">
                     <div class="r2dt-mb-2">
@@ -28,7 +28,7 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
 
             <div class="r2dt-card">
                 <div class="r2dt-card-header">
-                    Enable constrained folding. <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#constrained_folding" target="_blank">Learn more →</a>
+                    <strong>Enable constrained folding.</strong> <a class="r2dt-link" href="https://rnacentral.org/help/secondary-structure#constrained_folding" target="_blank">Learn more →</a>
                 </div>
                 <div class="r2dt-card-body">
                     <div class="r2dt-mb-2">
