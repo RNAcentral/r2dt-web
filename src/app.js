@@ -251,8 +251,11 @@ class R2DTWidget extends HTMLElement {
             this.renderSvg(layout);
             await this.initPanZoom();
         } catch (error) {
+            const alertContainer = document.createElement('div');
+            alertContainer.className = 'r2dt-alert-container';
+            this.shadowRoot.appendChild(alertContainer);
             console.error(error);
-            renderError(this.shadowRoot, error.message);
+            renderError(this.shadowRoot, "Secondary structure not found.");
         } finally {
             // Remove loading message
             const message = this.shadowRoot.querySelector('.r2dt-message');
