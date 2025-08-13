@@ -15,6 +15,7 @@ import {
 import { widgetStyles } from './styles.js';
 import { setupAdvancedSearch } from './advanced.js';
 import { templates } from './templates.js';
+import { alertContainer, showMessage, hideMessage } from './utils.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -63,10 +64,7 @@ class R2DTWidget extends HTMLElement {
             this.shadowRoot.appendChild(container);
             const insertionPoint = container.querySelector('.r2dt-search-insertion-point');
             setupAdvancedSearch(this.shadowRoot, insertionPoint);
-
-            const alertContainer = document.createElement('div');
-            alertContainer.className = 'r2dt-alert-container';
-            container.appendChild(alertContainer);
+            alertContainer(container);
 
             // Submit example sequence
             container.querySelectorAll('.r2dt-example').forEach(example => {
@@ -236,11 +234,7 @@ class R2DTWidget extends HTMLElement {
 
     async submitUrs(urs) {
         try {
-            // Add loading message
-            const div = document.createElement('div');
-            div.className = 'r2dt-message';
-            div.textContent = 'Loading secondary structure...';
-            this.shadowRoot.appendChild(div);
+            showMessage(this.shadowRoot, 'Loading secondary structure...');
 
             // Fetch secondary structure
             const response = await fetch(routes.fetchUrs(this.urs));
@@ -254,45 +248,33 @@ class R2DTWidget extends HTMLElement {
             this.renderSvg(layout);
             await this.initPanZoom();
         } catch (error) {
-            const alertContainer = document.createElement('div');
-            alertContainer.className = 'r2dt-alert-container';
-            this.shadowRoot.appendChild(alertContainer);
             console.error(error);
+            alertContainer(this.shadowRoot);
             renderError(this.shadowRoot, "Secondary structure not found.");
         } finally {
-            // Remove loading message
-            const message = this.shadowRoot.querySelector('.r2dt-message');
-            if (message) message.remove();
+            hideMessage(this.shadowRoot);
         }
     }
 
     async submitUrl(url) {
         try {
-            // Add loading message
-            const div = document.createElement('div');
-            div.className = 'r2dt-message';
-            div.textContent = 'Loading secondary structure...';
-            this.shadowRoot.appendChild(div);
+            showMessage(this.shadowRoot, 'Loading secondary structure...');
 
             // Fetch SVG from URL
             const response = await actions.fetchSvgFromUrl(url);
-            if (response === 'NO_SVG'){
-                const alertContainer = document.createElement('div');
-                alertContainer.className = 'r2dt-alert-container';
-                this.shadowRoot.appendChild(alertContainer);
+            if (response === 'NO_SVG') {
+                alertContainer(this.shadowRoot);
                 renderError(this.shadowRoot, "The provided URL does not return an SVG.");
             } else {
                 this.renderSvg(response.svg);
                 await this.initPanZoom();
             }
-        }
-        catch (error) {
+        } catch (error) {
             console.error(error);
+            alertContainer(this.shadowRoot);
             renderError(this.shadowRoot, "Secondary structure not found.");
         } finally {
-            // Remove loading message
-            const message = this.shadowRoot.querySelector('.r2dt-message');
-            if (message) message.remove();
+            hideMessage(this.shadowRoot);
         }
     }
 
