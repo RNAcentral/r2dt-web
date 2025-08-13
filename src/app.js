@@ -37,12 +37,15 @@ class R2DTWidget extends HTMLElement {
         // Get attributes
         this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
         const urs = this.getAttribute('urs');
+        const url = this.getAttribute('url');
 
         if (urs) {
             this.urs = urs;
             this.submitUrs(urs);
+        } else if (url) {
+            this.submitUrl(url);
         } else {
-            // If no URS is provided, show the search field
+            // Show text search field
             const container = document.createElement('div');
 
             // Get examples from the examples attribute
@@ -96,7 +99,7 @@ class R2DTWidget extends HTMLElement {
                 toggleButtons();
             }
 
-            // Submit text field sequence or R2DT job ID
+            // Submit sequence, R2DT job ID or URL
             if (runBtn) {
                 runBtn.addEventListener('click', async () => {
                     const textInput = textarea.value.trim();
@@ -254,6 +257,36 @@ class R2DTWidget extends HTMLElement {
             const alertContainer = document.createElement('div');
             alertContainer.className = 'r2dt-alert-container';
             this.shadowRoot.appendChild(alertContainer);
+            console.error(error);
+            renderError(this.shadowRoot, "Secondary structure not found.");
+        } finally {
+            // Remove loading message
+            const message = this.shadowRoot.querySelector('.r2dt-message');
+            if (message) message.remove();
+        }
+    }
+
+    async submitUrl(url) {
+        try {
+            // Add loading message
+            const div = document.createElement('div');
+            div.className = 'r2dt-message';
+            div.textContent = 'Loading secondary structure...';
+            this.shadowRoot.appendChild(div);
+
+            // Fetch SVG from URL
+            const response = await actions.fetchSvgFromUrl(url);
+            if (response === 'NO_SVG'){
+                const alertContainer = document.createElement('div');
+                alertContainer.className = 'r2dt-alert-container';
+                this.shadowRoot.appendChild(alertContainer);
+                renderError(this.shadowRoot, "The provided URL does not return an SVG.");
+            } else {
+                this.renderSvg(response.svg);
+                await this.initPanZoom();
+            }
+        }
+        catch (error) {
             console.error(error);
             renderError(this.shadowRoot, "Secondary structure not found.");
         } finally {
