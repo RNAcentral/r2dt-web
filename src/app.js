@@ -296,20 +296,6 @@ class R2DTWidget extends HTMLElement {
         }
     }
 
-    sourceLink(source) {
-        const sourceLowerCase = source?.toLowerCase?.();
-        if (sourceLowerCase === 'crw') {
-            return `<a href="https://crw2-comparative-rna-web.org/" target="_blank">CRW</a>`;
-        } else if (sourceLowerCase === 'rfam') {
-            return `<a href="https://rfam.org/" target="_blank">Rfam</a>`;
-        } else if (sourceLowerCase === 'ribovision') {
-            return `<a href="http://apollo.chemistry.gatech.edu/RiboVision/" target="_blank">RiboVision</a>`;
-        } else if (sourceLowerCase === 'gtrnadb') {
-            return `<a href="http://gtrnadb.ucsc.edu/" target="_blank">GtRNAdb</a>`;
-        }
-        return source || '';
-    }
-
     renderSvg(svgContent) {
         const parser = new DOMParser();
         const doc = parser.parseFromString(svgContent, 'image/svg+xml');
