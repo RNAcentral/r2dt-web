@@ -93,9 +93,12 @@ export const r2dtSearch = (examples = []) => `
         <div class="r2dt-search-footer">
             <div class="r2dt-search-examples">
                 ${examples.length ? '<span class="r2dt-text-muted r2dt-mr-2">Examples: </span>' : ''}
-                ${examples.map(example =>
-                    `<span class="r2dt-example" data-description="${example.description}" data-sequence="${example.sequence}">${example.description}</span>`
-                ).join('')}
+                ${examples.map(example => {
+                    const displayText = example.descriptionNote
+                        ? `${example.descriptionNote} (${example.description})`
+                        : example.description;
+                    return `<span class="r2dt-example" data-description="${example.description}" data-sequence="${example.sequence}">${displayText}</span>`;
+                }).join('')}
             </div>
             <div class="r2dt-button-group">
                 <button class="r2dt-search-btn">Run</button>
