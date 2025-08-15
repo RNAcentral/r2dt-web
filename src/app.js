@@ -306,6 +306,9 @@ class R2DTWidget extends HTMLElement {
         container.classList.add('r2dt-viewer-container');
 
         // Button panel
+        const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
+        const checkDotBracket = /[.()]/;
+        const sequenceWithDotBracket = checkDotBracket.test(textarea.value);
         const buttonPanel = createButtonPanel(
             () => this.shadowRoot.querySelector('.r2dt-svg-container > svg'),
             this.urs || this.jobId,
@@ -316,11 +319,11 @@ class R2DTWidget extends HTMLElement {
                     url: routes.fetchJson(this.jobId),
                     filename: `${this.jobId}.json`
                 },
-                {
+                ...(!sequenceWithDotBracket ? [{
                     label: 'SVG annotated',
                     url: routes.fetchSvgAnnotated(this.jobId),
                     filename: `${this.jobId}_annotated.svg`
-                },
+                }] : []),
                 {
                     label: 'Thumbnail',
                     url: routes.fetchThumbnail(this.jobId),
