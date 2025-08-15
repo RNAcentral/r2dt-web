@@ -116,126 +116,52 @@ export function createCopyDotBracketNotationButton(getSvgElement, dotBracketNota
 
 // Export function to create an edit dropdown button
 export function createEditDropdown(editingOptions) {
-    const dropdown = document.createElement('div');
-    dropdown.classList.add('r2dt-dropdown');
+    const iconPath = 'M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z';
 
-    const toggleBtn = document.createElement('button');
-    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
-    toggleBtn.title = 'Edit secondary structure';
+    const menuItems = editingOptions.map(({ label, url }) => ({
+        text: label,
+        onClick: () => window.open(url, '_blank', 'noopener,noreferrer')
+    }));
 
-    const icon = createIcon('M200-120q-33 0-56.5-23.5T120-200v-560q0-33 23.5-56.5T200-840h357l-80 80H200v560h560v-278l80-80v358q0 33-23.5 56.5T760-120H200Zm280-360ZM360-360v-170l367-367q12-12 27-18t30-6q16 0 30.5 6t26.5 18l56 57q11 12 17 26.5t6 29.5q0 15-5.5 29.5T897-728L530-360H360Zm481-424-56-56 56 56ZM440-440h56l232-232-28-28-29-28-231 231v57Zm260-260-29-28 29 28 28 28-28-28Z');
-    const label = document.createTextNode('Edit image');
-    toggleBtn.appendChild(icon);
-    toggleBtn.appendChild(label);
-
-    const menu = document.createElement('div');
-    menu.classList.add('r2dt-dropdown-menu');
-
-    // Show editing options
-    editingOptions.forEach(({ label, url }) => {
-        const item = document.createElement('button');
-        item.classList.add('r2dt-dropdown-item');
-        item.textContent = label;
-        item.addEventListener('click', () => {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        });
-        menu.appendChild(item);
-    });
-
-    dropdown.appendChild(toggleBtn);
-    dropdown.appendChild(menu);
-
-    // Toggle menu visibility
-    toggleBtn.onclick = (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('r2dt-show');
-    };
-
-    // Close dropdown if clicking outside
-    document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-            menu.classList.remove('r2dt-show');
-        }
-    });
-
-    return dropdown;
+    return createDropdown('Edit image', iconPath, menuItems);
 }
 
 // Export function to create a download dropdown button
 export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) {
-    const dropdown = document.createElement('div');
-    dropdown.classList.add('r2dt-dropdown');
+    const iconPath = 'M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z';
 
-    const toggleBtn = document.createElement('button');
-    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
-    toggleBtn.title = 'Download secondary structure';
+    const menuItems = [
+        {
+            text: 'SVG',
+            onClick: () => {
+                const svg = getSvgElement();
+                if (!svg) return;
+                const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = `${fileName}.svg`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            }
+        },
+        {
+            text: 'PNG',
+            onClick: () => {
+                const svg = getSvgElement();
+                if (!svg) return;
+                saveSvgAsPng(svg, `${fileName}.png`, { backgroundColor: 'white', scale: 3 });
+            }
+        },
+        ...extraDownloads.map(({ label, url, filename }) => ({
+            text: label,
+            onClick: () => downloadFile(url, filename)
+        }))
+    ];
 
-    const icon = createIcon('M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z');
-    const label = document.createTextNode('Download');
-    toggleBtn.appendChild(icon);
-    toggleBtn.appendChild(label);
-
-    const menu = document.createElement('div');
-    menu.classList.add('r2dt-dropdown-menu');
-
-    // Download as SVG
-    const svgItem = document.createElement('button');
-    svgItem.classList.add('r2dt-dropdown-item');
-    svgItem.textContent = 'SVG';
-    svgItem.onclick = () => {
-        const svg = getSvgElement();
-        if (!svg) return;
-        const blob = new Blob([svg.outerHTML], { type: 'image/svg+xml;charset=utf-8' });
-        const url = URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = `${fileName}.svg`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    };
-    menu.appendChild(svgItem);
-
-    // Download as PNG
-    const pngItem = document.createElement('button');
-    pngItem.classList.add('r2dt-dropdown-item');
-    pngItem.textContent = 'PNG';
-    pngItem.onclick = () => {
-        const svg = getSvgElement();
-        if (!svg) return;
-        saveSvgAsPng(svg, `${fileName}.png`, {backgroundColor: 'white', scale: 3});
-    };
-    menu.appendChild(pngItem);
-
-    // Extra download items (JSON, annotated SVG, thumbnail)
-    extraDownloads.forEach(({ label, url, filename }) => {
-        const item = document.createElement('button');
-        item.classList.add('r2dt-dropdown-item');
-        item.textContent = label;
-        item.addEventListener('click', () => {
-            downloadFile(url, filename);
-        });
-        menu.appendChild(item);
-    });
-
-    dropdown.appendChild(toggleBtn);
-    dropdown.appendChild(menu);
-
-    // Toggle menu visibility
-    toggleBtn.onclick = (e) => {
-        e.stopPropagation();
-        menu.classList.toggle('r2dt-show');
-    };
-
-    // Close dropdown if clicking outside
-    document.addEventListener('click', (e) => {
-        if (!dropdown.contains(e.target)) {
-            menu.classList.remove('r2dt-show');
-        }
-    });
-
-    return dropdown;
+    return createDropdown('Download', iconPath, menuItems);
 }
 
 // Export function to create a panel with all buttons
@@ -265,6 +191,48 @@ export function createButtonPanel(getSvgElement, fileName, dotBracketNotation, e
     panelWrapper.appendChild(toggleBtn);
     panelWrapper.appendChild(btnGroup);
     return panelWrapper;
+}
+
+// Helper function to create a dropdown
+function createDropdown(label, iconPath, menuItems) {
+    const dropdown = document.createElement('div');
+    dropdown.classList.add('r2dt-dropdown');
+
+    const toggleBtn = document.createElement('button');
+    toggleBtn.classList.add('r2dt-btn', 'r2dt-btn-outline-secondary', 'r2dt-dropdown-toggle');
+    toggleBtn.title = label;
+
+    const icon = createIcon(iconPath);
+    const labelNode = document.createTextNode(label);
+    toggleBtn.appendChild(icon);
+    toggleBtn.appendChild(labelNode);
+
+    const menu = document.createElement('div');
+    menu.classList.add('r2dt-dropdown-menu');
+
+    menuItems.forEach(item => {
+        const btn = document.createElement('button');
+        btn.classList.add('r2dt-dropdown-item');
+        btn.textContent = item.text;
+        btn.addEventListener('click', item.onClick);
+        menu.appendChild(btn);
+    });
+
+    dropdown.appendChild(toggleBtn);
+    dropdown.appendChild(menu);
+
+    toggleBtn.onclick = e => {
+        e.stopPropagation();
+        menu.classList.toggle('r2dt-show');
+    };
+
+    document.addEventListener('click', e => {
+        if (!dropdown.contains(e.target)) {
+            menu.classList.remove('r2dt-show');
+        }
+    });
+
+    return dropdown;
 }
 
 // Helper function to download a file
