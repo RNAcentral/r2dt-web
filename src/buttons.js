@@ -1,5 +1,5 @@
 /*
- This file contains the buttons displayed at the top of the widget
+ This file contains the buttons displayed above the secondary structure
 */
 
 import { saveSvgAsPng } from 'save-svg-as-png';

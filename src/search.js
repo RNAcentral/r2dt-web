@@ -1,3 +1,7 @@
+/*
+ This file contains functions for handling the search form and also to validate the sequence.
+*/
+
 export const validateFasta = (text) => {
     const lines = text.trim().split('\n');
 

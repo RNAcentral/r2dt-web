@@ -1,3 +1,7 @@
+/*
+ This file contains functions for handling the dot-bracket notation
+*/
+
 export function r2dtDotBracket(dotBracketNotation) {
     return `
         <div class="r2dt-card">

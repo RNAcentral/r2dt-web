@@ -1,3 +1,7 @@
+/*
+ This file handles the API requests
+*/
+
 import routes from './routes';
 
 export async function onSubmit(body) {

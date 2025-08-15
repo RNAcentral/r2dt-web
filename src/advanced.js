@@ -1,3 +1,7 @@
+/*
+ This file contains functions for handling the advanced search form
+*/
+
 import { templates } from './templates.js';
 
 export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
