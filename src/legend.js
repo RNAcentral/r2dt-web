@@ -1,3 +1,7 @@
+/*
+ This file contains functions for handling the legend, including the template and source used.
+*/
+
 export function r2dtLegend(template, source) {
     const getSourceLink = (src) => {
         const db = src?.toLowerCase();
