@@ -467,6 +467,8 @@ class R2DTWidget extends HTMLElement {
         const svg = this.shadowRoot.querySelector('.r2dt-svg-container > svg');
         if (!svg) return;
 
+        if (this.handleResize) window.removeEventListener('resize', this.handleResize);
+
         this.panZoomInstance = svgPanZoom(svg, {
             zoomEnabled: true,
             controlIconsEnabled: false,
