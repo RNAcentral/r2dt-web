@@ -349,7 +349,7 @@ class R2DTWidget extends HTMLElement {
         // Button panel
         const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
         const checkDotBracket = /[.()]/;
-        const sequenceWithDotBracket = checkDotBracket.test(textarea.value);
+        const sequenceWithDotBracket = textarea ? checkDotBracket.test(textarea.value) : false;
         const buttonPanel = createButtonPanel(
             () => this.shadowRoot.querySelector('.r2dt-svg-container > svg'),
             this.urs || this.jobId,
