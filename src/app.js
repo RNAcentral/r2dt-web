@@ -40,6 +40,10 @@ class R2DTWidget extends HTMLElement {
         const urs = this.getAttribute('urs');
         const url = this.getAttribute('url');
 
+        // Get query parameters
+        const params = new URLSearchParams(window.location.search);
+        const jobIdInUrl = params.get('jobid');
+
         if (urs) {
             this.urs = urs;
             this.submitUrs(urs);
@@ -85,6 +89,7 @@ class R2DTWidget extends HTMLElement {
             const clearBtn = this.shadowRoot.querySelector('.r2dt-clear-btn');
             const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
 
+            // Disable buttons if text field is empty
             const toggleButtons = () => {
                 const hasText = textarea?.value.trim().length > 0;
                 if (runBtn) runBtn.disabled = !hasText;
@@ -95,6 +100,13 @@ class R2DTWidget extends HTMLElement {
                 textarea.addEventListener('input', toggleButtons);
                 clearError(this.shadowRoot);
                 toggleButtons();
+            }
+
+            if (jobIdInUrl) {
+                // Set text field value and submit R2DT job ID
+                textarea.value = jobIdInUrl;
+                toggleButtons();
+                this.submitSequence(jobIdInUrl);
             }
 
             // Submit sequence, R2DT job ID or URL
@@ -121,6 +133,12 @@ class R2DTWidget extends HTMLElement {
                     const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
                     if (currentSvg) currentSvg.remove();
 
+                    // Remove jobid from URL
+                    const url = new URL(window.location);
+                    url.searchParams.delete('jobid');
+                    window.history.pushState({}, '', url);
+
+                    // Clear advanced search options
                     const templateSelect = this.shadowRoot.querySelector('#r2dt-template-select');
                     const templateAutocomplete = this.shadowRoot.querySelector('#r2dt-template-autocomplete');
                     const foldingCheckbox = this.shadowRoot.querySelector('#r2dt-folding-checkbox');
@@ -142,6 +160,22 @@ class R2DTWidget extends HTMLElement {
                     window.removeEventListener('resize', this.handleResize);
                 });
             }
+
+            // Listen to the popstate event in case the user clicks "back" in the browser
+            window.addEventListener('popstate', () => {
+                const params = new URLSearchParams(window.location.search);
+                const jobIdInUrl = params.get('jobid');
+
+                if (jobIdInUrl) {
+                    textarea.value = jobIdInUrl;
+                    this.submitSequence(jobIdInUrl);
+                } else {
+                    if (textarea) textarea.value = '';
+                    clearError(this.shadowRoot);
+                    const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
+                    if (currentSvg) currentSvg.remove();
+                }
+            });
         }
     }
 
@@ -219,10 +253,20 @@ class R2DTWidget extends HTMLElement {
                 return;
             }
 
+            // Update state
             this.dotBracketNotation = ebiResponse.dotBracketNotation;
             this.jobId = ebiResponse.jobId;
             this.source = ebiResponse.tsv.source;
             this.template = ebiResponse.tsv.template;
+
+            if (this.jobId) {
+                // Update URL
+                const url = new URL(window.location);
+                url.searchParams.set('jobid', this.jobId);
+                window.history.pushState({ jobid: this.jobId }, '', url);
+            }
+
+            // Render SVG
             this.renderSvg(ebiResponse.svg);
             await this.initPanZoom();
         } catch (error) {
