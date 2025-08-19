@@ -15,7 +15,7 @@ import {
 import { widgetStyles } from './styles.js';
 import { setupAdvancedSearch } from './advanced.js';
 import { templates } from './templates.js';
-import { alertContainer, showMessage, hideMessage } from './utils.js';
+import { alertContainer, showMessage, hideMessage, removeJobIdFromUrl } from './utils.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -73,6 +73,7 @@ class R2DTWidget extends HTMLElement {
             // Submit example sequence
             container.querySelectorAll('.r2dt-example').forEach(example => {
                 example.addEventListener('click', async () => {
+                    removeJobIdFromUrl();
                     const fastaHeader = example.getAttribute('data-description');
                     const sequence = example.getAttribute('data-sequence');
                     const textarea = this.shadowRoot.querySelector('.r2dt-search-input');
@@ -112,6 +113,7 @@ class R2DTWidget extends HTMLElement {
             // Submit sequence, R2DT job ID or URL
             if (runBtn) {
                 runBtn.addEventListener('click', async () => {
+                    removeJobIdFromUrl();
                     const textInput = textarea.value.trim();
                     if (!/^r2dt/.test(textInput) && !/^http/.test(textInput)) {
                         const result = validateFasta(textInput);
@@ -130,15 +132,10 @@ class R2DTWidget extends HTMLElement {
                     textarea.value = '';
                     clearError(this.shadowRoot);
                     toggleButtons();
+                    removeJobIdFromUrl();
                     const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
                     if (currentSvg) currentSvg.remove();
 
-                    // Remove jobid from URL
-                    const url = new URL(window.location);
-                    url.searchParams.delete('jobid');
-                    window.history.pushState({}, '', url);
-
-                    // Clear advanced search options
                     const templateSelect = this.shadowRoot.querySelector('#r2dt-template-select');
                     const templateAutocomplete = this.shadowRoot.querySelector('#r2dt-template-autocomplete');
                     const foldingCheckbox = this.shadowRoot.querySelector('#r2dt-folding-checkbox');

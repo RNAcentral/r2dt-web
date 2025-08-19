@@ -22,3 +22,10 @@ export function hideMessage(shadowRoot) {
     const message = shadowRoot.querySelector('.r2dt-message');
     if (message) message.remove();
 }
+
+// Remove job ID from URL
+export function removeJobIdFromUrl() {
+    const url = new URL(window.location);
+    url.searchParams.delete('jobid');
+    window.history.pushState({}, '', url);
+}
