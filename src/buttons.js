@@ -129,6 +129,7 @@ export function createEditDropdown(editingOptions) {
 // Export function to create a download dropdown button
 export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) {
     const iconPath = 'M480-320 280-520l56-58 104 104v-326h80v326l104-104 56 58-200 200ZM240-160q-33 0-56.5-23.5T160-240v-120h80v120h480v-120h80v120q0 33-23.5 56.5T720-160H240Z';
+    let toggleBtnRef;  // ref to main toggle button
 
     const menuItems = [
         {
@@ -157,11 +158,22 @@ export function createDownloadDropdown(getSvgElement, fileName, extraDownloads) 
         },
         ...extraDownloads.map(({ label, url, filename }) => ({
             text: label,
-            onClick: () => downloadFile(url, filename)
+            onClick: async () => {
+                if (!toggleBtnRef) return;
+                try {
+                    setDownloadingState(toggleBtnRef, true, iconPath);
+                    await downloadFile(url, filename);
+                } finally {
+                    setDownloadingState(toggleBtnRef, false, iconPath);
+                }
+            }
         }))
     ];
 
-    return createDropdown('Download', iconPath, menuItems);
+    const dropdown = createDropdown('Download', iconPath, menuItems);
+    toggleBtnRef = dropdown.querySelector('.r2dt-dropdown-toggle');
+
+    return dropdown;
 }
 
 // Export function to create a panel with all buttons
@@ -235,26 +247,46 @@ function createDropdown(label, iconPath, menuItems) {
     return dropdown;
 }
 
+// Helper function to change button text from "Download" to "Downloading"
+function setDownloadingState(toggleBtn, isDownloading, iconPath) {
+    toggleBtn.innerHTML = '';
+
+    if (isDownloading) {
+        // Spinner + text
+        const spinner = document.createElement('span');
+        spinner.classList.add('r2dt-spinner', 'r2dt-spinner-secondary');
+        toggleBtn.appendChild(spinner);
+        toggleBtn.appendChild(document.createTextNode('Downloading'));
+    } else {
+        // Icon + text
+        const icon = createIcon(iconPath);
+        toggleBtn.appendChild(icon);
+        toggleBtn.appendChild(document.createTextNode('Download'));
+    }
+
+    toggleBtn.disabled = isDownloading;
+}
+
 // Helper function to download a file
 function downloadFile(url, filename) {
-    fetch(url, { mode: 'cors' })
-    .then(response => {
-        if (!response.ok) throw new Error(`Failed to fetch ${filename}`);
-        return response.blob();
-    })
-    .then(blob => {
-        const link = document.createElement('a');
-        const objectUrl = URL.createObjectURL(blob);
-        link.href = objectUrl;
-        link.download = filename;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(objectUrl);
-    })
-    .catch(error => {
-        console.error(`Error downloading ${filename}:`, error);
-    });
+    return fetch(url, { mode: 'cors' })
+        .then(response => {
+            if (!response.ok) throw new Error(`Failed to fetch ${filename}`);
+            return response.blob();
+        })
+        .then(blob => {
+            const link = document.createElement('a');
+            const objectUrl = URL.createObjectURL(blob);
+            link.href = objectUrl;
+            link.download = filename;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(objectUrl);
+        })
+        .catch(error => {
+            console.error(`Error downloading ${filename}:`, error);
+        });
 }
 
 // Helper function to create an SVG icon
