@@ -118,6 +118,9 @@ class R2DTWidget extends HTMLElement {
                     if (!/^r2dt/.test(textInput) && !/^http/.test(textInput)) {
                         const result = validateFasta(textInput);
                         if (!result.valid) {
+                            // Remove old SVG if any and render error
+                            const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
+                            if (currentSvg) currentSvg.remove();
                             renderError(this.shadowRoot, result.error);
                             return;
                         }
