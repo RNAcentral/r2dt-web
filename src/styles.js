@@ -157,6 +157,13 @@ export const widgetStyles = `
   margin-right: 6px;
 }
 
+.r2dt-spinner-secondary {
+  width: 0.8rem;
+  height: 0.8rem;
+  border: 2px solid rgba(108, 117, 125, 0.3);
+  border-top-color: #6c757d;
+}
+
 @keyframes r2dt-spin {
   to {
     transform: rotate(360deg);
