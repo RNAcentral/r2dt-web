@@ -5,24 +5,24 @@
 export const validateFasta = (text) => {
     const lines = text.trim().split('\n');
 
-    if (lines.length < 2) {
-        return {
-            valid: false,
-            error: 'FASTA format requires a header and at least one sequence line.',
-        };
-    }
-
     if (!lines[0].startsWith('>')) {
         return {
             valid: false,
-            error: 'FASTA header must start with ">".',
+            error: 'FASTA header must start with ">"',
+        };
+    }
+
+    if (lines.length < 2) {
+        return {
+            valid: false,
+            error: 'FASTA format requires a header and at least one sequence line',
         };
     }
 
     if (!/^[ACGTUWSMKRYBDHVN]+$/.test(lines[1].toUpperCase())) {
         return {
             valid: false,
-            error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive).',
+            error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive)',
         };
     }
 
