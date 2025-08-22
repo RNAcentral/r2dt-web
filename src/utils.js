@@ -27,5 +27,5 @@ export function hideMessage(shadowRoot) {
 export function removeJobIdFromUrl() {
     const url = new URL(window.location);
     url.searchParams.delete('jobid');
-    window.history.pushState({}, '', url);
+    window.history.pushState({}, '', url.toString());
 }
