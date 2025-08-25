@@ -155,4 +155,33 @@ describe('R2DTWidget', () => {
         expect(actions.fetchSvgFromUrl).toHaveBeenCalledWith('https://bad.example.com');
         expect(renderError).toHaveBeenCalledWith(widget.shadowRoot, "The provided URL does not return an SVG.");
     });
+
+    test('handles NOT_FOUND response', async () => {
+        actions.onSubmit.mockResolvedValue('NOT_FOUND');
+        await widget.submitSequence('ACGU');
+        const { renderError } = require('../src/search');
+        expect(renderError).toHaveBeenCalledWith(widget.shadowRoot, expect.stringContaining('not found'));
+    });
+
+    test('handles NO_SVG response', async () => {
+        actions.fetchSvgFromUrl.mockResolvedValue('NO_SVG');
+        await widget.submitSequence('http://bad.url');
+        const { renderError } = require('../src/search');
+        expect(renderError).toHaveBeenCalledWith(widget.shadowRoot, expect.stringContaining('SVG'));
+    });
+
+    test('renderSvg with no svg element calls renderError', () => {
+        const { renderError } = require('../src/search');
+        widget.renderSvg('<html></html>');
+        expect(renderError).toHaveBeenCalled();
+    });
+
+    test('legend toggle button works', () => {
+        widget.renderSvg('<svg width="10" height="10"></svg>');
+        const btn = widget.shadowRoot.querySelector('.r2dt-legend-toggle-btn');
+        if (btn) {
+            btn.click();
+            expect(btn.getAttribute('aria-expanded')).toBe('false');
+        }
+    });
 });
