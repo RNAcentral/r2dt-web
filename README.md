@@ -11,6 +11,8 @@ for this component, for example:
 <r2dt-web/>
 <script type="text/javascript" src="/path/to/r2dt-web.js"></script>
 ```    
+And then the component provides a simple input box where you can paste an RNA/DNA sequence, URL or job ID.
+![Search input](img/search.png)
 
 To use the latest stable version without worrying about updates, use the component's JavaScript package available at 
 GitHub:
@@ -36,6 +38,8 @@ for an RNA sequence.
 <r2dt-web urs="URS0000049E57"></r2dt-web>
 ```
 
+![URS visualisation](img/urs.png)
+
 If neither `url` nor `urs` is provided, the component will display a search field. You can optionally display example 
 sequences using the `examples` attribute.
 
@@ -48,6 +52,8 @@ sequences using the `examples` attribute.
 />
 ```
 
+![Search with examples](img/search-with-examples.png)
+
 ## Installation
 
 Clone this repository from GitHub.
@@ -58,8 +64,6 @@ Now you can add the component's JavaScript bundle (it contains all the styles an
 directly or through an import with Webpack:
 
 `<script type="text/javascript" src="/r2dt-web/dist/r2dt-web.js"></script>`
-
-You will need to run the `git pull` command whenever there are updates.
 
 ## Attributes/parameters
 
