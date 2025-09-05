@@ -482,7 +482,7 @@ export const widgetStyles = `
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   width: 100%;
   max-width: 400px;
-  border: none;
+  border-left: 1px solid #dee2e6;
 }
 
 .r2dt-legend-header {
