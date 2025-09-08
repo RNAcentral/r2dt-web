@@ -6,23 +6,23 @@ export const widgetStyles = `
   overflow: auto;
   box-sizing: border-box;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
-  font-size: 1rem;
+  font-size: 16px;
 }
 
 .r2dt-mt-1 {
-  margin-top: 0.25rem !important;
+  margin-top: 0.25em !important;
 }
 
 .r2dt-mt-2 {
-  margin-top: 0.5rem !important;
+  margin-top: 0.5em !important;
 }
 
 .r2dt-mr-2 {
-  margin-right: 0.5rem !important;
+  margin-right: 0.5em !important;
 }
 
 .r2dt-mb-2 {
-  margin-bottom: 0.5rem !important;
+  margin-bottom: 0.5em !important;
 }
 
 .r2dt-d-none {
@@ -63,7 +63,7 @@ export const widgetStyles = `
   border-radius: 4px;
   resize: vertical;
   box-sizing: border-box;
-  font-size: 0.9rem;
+  font-size: 0.9em;
 }
 
 .r2dt-search-input:focus {
@@ -74,8 +74,8 @@ export const widgetStyles = `
 .r2dt-advanced-link {
   position: absolute;
   right: 10px;
-  bottom: 5px;
-  font-size: 0.95rem;
+  bottom: 10px;
+  font-size: 0.95em;
   color: #337ab7;
   text-decoration: none;
   cursor: pointer;
@@ -115,13 +115,13 @@ export const widgetStyles = `
   padding: 8px 16px;
   border: none;
   border-radius: 4px;
-  font-size: 1rem;
+  font-size: 1em;
   cursor: pointer;
   transition: background-color 0.2s;
 }
 
 .r2dt-search-btn {
-  background-color: #0d6efd;
+  background-color: #337ab7;
   color: white;
 }
 
@@ -131,7 +131,7 @@ export const widgetStyles = `
 }
 
 .r2dt-search-btn:hover {
-  background-color: #025ce2;
+  background-color: #286090;
 }
 
 .r2dt-clear-btn:hover {
@@ -147,8 +147,8 @@ export const widgetStyles = `
 
 .r2dt-spinner {
   display: inline-block;
-  width: 1rem;
-  height: 1rem;
+  width: 1em;
+  height: 1em;
   border: 2px solid rgba(255, 255, 255, 0.3);
   border-top-color: white;
   border-radius: 50%;
@@ -158,8 +158,8 @@ export const widgetStyles = `
 }
 
 .r2dt-spinner-secondary {
-  width: 0.8rem;
-  height: 0.8rem;
+  width: 0.8em;
+  height: 0.8em;
   border: 2px solid rgba(108, 117, 125, 0.3);
   border-top-color: #6c757d;
 }
@@ -179,7 +179,7 @@ export const widgetStyles = `
   word-wrap: break-word;
   background-color: #fff;
   border: none;
-  border-radius: 0.25rem;
+  border-radius: 0.25em;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
 }
 
@@ -189,7 +189,7 @@ export const widgetStyles = `
   margin-bottom: 0;
   background-color: #f5f5f5;
   border: none;
-  border-radius: 0.25rem 0.25rem 0 0;
+  border-radius: 0.25em 0.25em 0 0;
 }
 
 .r2dt-card-body {
@@ -202,8 +202,8 @@ export const widgetStyles = `
 .r2dt-folding-select {
   width: 100%;
   box-sizing: border-box;
-  padding: 0.5rem;
-  font-size: 1rem;
+  padding: 0.5em;
+  font-size: 1em;
   border-radius: 4px;
   border: 1px solid #ced4da;
   background-color: #fff;
@@ -233,7 +233,7 @@ export const widgetStyles = `
 }
 
 .r2dt-autocomplete-item {
-  padding: 0.5rem;
+  padding: 0.5em;
   cursor: pointer;
 }
 
@@ -290,8 +290,8 @@ export const widgetStyles = `
   cursor: pointer;
   background-color: transparent;
   border: 1px solid transparent;
-  padding: 0.375rem 0.75rem;
-  font-size: 1rem;
+  padding: 0.375em 0.75em;
+  font-size: 1em;
   line-height: 1.5;
   transition: color 0.15s ease-in-out,
               background-color 0.15s ease-in-out,
@@ -316,7 +316,7 @@ export const widgetStyles = `
 
 .r2dt-btn:focus {
   outline: 0;
-  box-shadow: 0 0 0 0.2rem rgba(130,138,145,.5);
+  box-shadow: 0 0 0 0.2em rgba(130,138,145,.5);
 }
 
 .r2dt-svg-icon {
@@ -336,7 +336,7 @@ export const widgetStyles = `
   display: none;
   background-color: #fff;
   border: 1px solid #ccc;
-  font-size: 1.125rem;
+  font-size: 1.125em;
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 4px;
@@ -370,16 +370,16 @@ export const widgetStyles = `
   left: 0;
   z-index: 1000;
   display: none;
-  min-width: 10rem;
-  padding: 0.5rem 0;
-  margin: 0.125rem 0 0;
-  font-size: 1rem;
+  min-width: 10em;
+  padding: 0.5em 0;
+  margin: 0.125em 0 0;
+  font-size: 1em;
   color: #212529;
   text-align: left;
   background-color: #fff;
   border: 1px solid rgba(0,0,0,0.15);
-  border-radius: 0.25rem;
-  box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+  border-radius: 0.25em;
+  box-shadow: 0 0.5em 1em rgba(0,0,0,.175);
 }
 
 .r2dt-dropdown-menu.r2dt-show {
@@ -389,9 +389,9 @@ export const widgetStyles = `
 .r2dt-dropdown-item {
   display: block;
   width: 100%;
-  padding: 0.25rem 1.5rem;
+  padding: 0.25em 1.5em;
   clear: both;
-  font-size: 0.95rem;
+  font-size: 0.95em;
   color: #212529;
   text-align: inherit;
   white-space: nowrap;
@@ -431,7 +431,7 @@ export const widgetStyles = `
 .r2dt-zoom-controls button {
   background-color: #fff;
   border: 1px solid #ccc;
-  font-size: 1.125rem;
+  font-size: 1.125em;
   padding: 4px 8px;
   cursor: pointer;
   border-radius: 4px;
@@ -478,15 +478,15 @@ export const widgetStyles = `
   position: absolute;
   z-index: 100;
   background-color: #ffffff;
-  border-radius: 0.25rem;
+  border-radius: 0.25em;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   width: 100%;
   max-width: 400px;
-  border: none;
+  border-left: 1px solid #dee2e6;
 }
 
 .r2dt-legend-header {
-  font-size: 1rem;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -512,7 +512,7 @@ export const widgetStyles = `
   padding: 12px 10px;
   color: #212529;
   border: none;
-  border-radius: 0.25rem 0.25rem 0 0;
+  border-radius: 0.25em 0.25em 0 0;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
@@ -581,7 +581,7 @@ export const widgetStyles = `
 /* dot bracket notation */
 .r2dt-dot-bracket-notation {
   padding: 2px;
-  margin-bottom: 1rem;
+  margin-bottom: 1em;
 }
 
 .r2dt-dot-bracket-notation .r2dt-card-body {
@@ -593,7 +593,7 @@ export const widgetStyles = `
 /* prevent button text from wrapping at 815px */
 @media (max-width: 815px) {
   .r2dt-btn {
-    padding: 0.375rem;
+    padding: 0.375em;
   }
 }
 
@@ -606,10 +606,10 @@ export const widgetStyles = `
   background-color: #fff;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236c757d'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.084l3.71-3.853a.75.75 0 111.08 1.04l-4.24 4.4a.75.75 0 01-1.08 0l-4.24-4.4a.75.75 0 01.02-1.06z' clip-rule='evenodd'/%3E%3C/svg%3E");
   background-repeat: no-repeat;
-  background-position: right 0.75rem center;
-  background-size: 1rem;
+  background-position: right 0.75em center;
+  background-size: 1em;
 
-  padding-right: 2rem;
+  padding-right: 2em;
 }
 
 /* mobile behavior */
@@ -641,8 +641,8 @@ export const widgetStyles = `
     flex-direction: column;
     border: 1px solid rgba(0,0,0,0.15);
     background-color: rgba(255, 255, 255, 0.9);
-    border-radius: 0.25rem;
-    box-shadow: 0 0.5rem 1rem rgba(0,0,0,.175);
+    border-radius: 0.25em;
+    box-shadow: 0 0.5em 1em rgba(0,0,0,.175);
     min-width: 240px;
   }
 
