@@ -199,11 +199,18 @@ class R2DTWidget extends HTMLElement {
                 // Use R2DT job ID to fetch data
                 ebiResponse = await actions.fetchStatus(sequence);
             } else {
-                // Submit new sequence. First check if the sequence contains dot-bracket notation
+                // Check if the sequence starts with a fasta header. Add ">description" if not
+                const checkFastaHeader = /^>/;
+                const fastaHeader = checkFastaHeader.test(sequence);
+                if (!fastaHeader) {
+                    sequence = '>description\n' + sequence;
+                }
+
+                // Check if the sequence contains dot-bracket notation
                 const checkDotBracket = /[.()]/;
                 const sequenceWithDotBracket = checkDotBracket.test(sequence);
 
-                // Then fetch the selected template and folding option in the advanced search
+                // Fetch the selected template and folding option in the advanced search
                 const selectedTemplateMode = this.shadowRoot.querySelector('input[name="template-mode"]:checked')?.value;
                 const constrainedFoldingEnabled = this.shadowRoot.querySelector('#r2dt-folding-checkbox')?.checked || false;
                 let template = '';
