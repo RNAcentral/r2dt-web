@@ -37,8 +37,19 @@ class R2DTWidget extends HTMLElement {
 
         // Get attributes
         this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
-        const urs = this.getAttribute('urs');
-        const url = this.getAttribute('url');
+        const searchAttr = this.getAttribute('search');
+        let urs = null;
+        let url = null;
+
+        if (searchAttr) {
+            try {
+                const searchObj = JSON.parse(searchAttr);
+                urs = searchObj.urs || null;
+                url = searchObj.url || null;
+            } catch (e) {
+                console.error("Invalid JSON in `search` attribute:", e);
+            }
+        }
 
         // Get query parameters
         const params = new URLSearchParams(window.location.search);

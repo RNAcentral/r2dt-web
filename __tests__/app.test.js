@@ -74,7 +74,7 @@ describe('R2DTWidget', () => {
 
     test('should not render search interface if url parameter is provided', () => {
         widget = document.createElement('r2dt-web');
-        widget.setAttribute('url', 'https://example.com');
+        widget.setAttribute('search', '{"url": "https://example.com"}');
         container.appendChild(widget);
 
         return Promise.resolve().then(() => {
@@ -92,7 +92,7 @@ describe('R2DTWidget', () => {
         });
 
         widget = document.createElement('r2dt-web');
-        widget.setAttribute('url', 'https://example.com/test');
+        widget.setAttribute('search', '{"url": "https://example.com/test"}');
         container.appendChild(widget);
 
         await Promise.resolve();
@@ -114,7 +114,7 @@ describe('R2DTWidget', () => {
         });
 
         widget = document.createElement('r2dt-web');
-        widget.setAttribute('urs', 'URS0000001');
+        widget.setAttribute('search', '{"urs": "URS0000001"}');
         container.appendChild(widget);
 
         await Promise.resolve();
@@ -131,7 +131,7 @@ describe('R2DTWidget', () => {
         global.fetch = jest.fn().mockResolvedValue({ ok: false, status: 500 });
 
         widget = document.createElement('r2dt-web');
-        widget.setAttribute('urs', 'URS_FAIL');
+        widget.setAttribute('search', '{"urs": "URS_FAIL"}');
         container.appendChild(widget);
 
         await Promise.resolve();
@@ -147,7 +147,7 @@ describe('R2DTWidget', () => {
         jest.spyOn(actions, 'fetchSvgFromUrl').mockResolvedValue("NO_SVG");
 
         widget = document.createElement('r2dt-web');
-        widget.setAttribute('url', 'https://bad.example.com');
+        widget.setAttribute('search', '{"url": "https://bad.example.com"}');
         container.appendChild(widget);
 
         await Promise.resolve();
