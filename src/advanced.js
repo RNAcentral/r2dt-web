@@ -78,7 +78,12 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         matches.forEach(t => {
             const item = document.createElement('div');
             item.className = 'r2dt-autocomplete-item';
-            item.textContent = t.label;
+
+            // Highlight the matched part
+            const regex = new RegExp(`(${value})`, 'i');
+            const highlighted = t.label.replace(regex, '<mark>$1</mark>');
+            item.innerHTML = highlighted;
+
             item.addEventListener('click', () => {
                 autocompleteInput.value = t.label;
                 autocompleteList.classList.add('r2dt-hidden');
