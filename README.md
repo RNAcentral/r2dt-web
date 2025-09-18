@@ -81,11 +81,13 @@ This component accepts a number of attributes. You pass them as html attributes 
 
 1. `npm install`
 
-2. `npm start` to start a server on http://localhost:9000/
+2. `npm run update-templates` to use the latest models from the R2DT repository
 
-3. `npm run build` to generate a new distribution
+3. `npm start` to start a server on http://localhost:9000/
 
-4. `npm test` to run unit tests
+4. `npm run build` to generate a new distribution
+
+5. `npm test` to run unit tests
 
 ### Notes
 
