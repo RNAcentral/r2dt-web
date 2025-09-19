@@ -95,7 +95,7 @@ export const clearError = (shadowRoot) => {
 export const r2dtSearch = (examples = []) => `
     <div class="r2dt-search-container">
         <div class="r2dt-search-insertion-point">
-            <textarea class="r2dt-search-input" placeholder="You can view the secondary structure by typing:&#10;- An RNA/DNA sequence in FASTA format (include secondary structure in dot-bracket notation, if available)&#10;- A URL that returns an SVG produced by R2DT&#10;- The job ID"></textarea>
+            <textarea class="r2dt-search-input" placeholder="Enter RNA/DNA sequence with optional FASTA header. Include secondary structure in dot-bracket notation, if available"></textarea>
             <span class="r2dt-advanced-link">Show advanced</span>
         </div>
         <div class="r2dt-search-footer">
