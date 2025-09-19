@@ -25,7 +25,7 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
                         ${templates.map(t => `<option value="${t.model_id}">${t.label}</option>`).join('')}
                     </select>
 
-                    <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." list="r2dt-template-datalist" />
+                    <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." />
                     <div id="r2dt-autocomplete-list" class="r2dt-autocomplete-list r2dt-hidden"></div>
                 </div>
             </div>
@@ -64,12 +64,12 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         const value = autocompleteInput.value.toLowerCase().trim();
         autocompleteList.innerHTML = '';
 
-        if (!value) {
+        if (!value || value.length < 2) {
             autocompleteList.classList.add('r2dt-hidden');
             return;
         }
 
-        const matches = templates.filter(t => t.label.toLowerCase().includes(value)).slice(0, 10);
+        const matches = templates.filter(t => t.label.toLowerCase().includes(value)).slice(0, 200);
         if (!matches.length) {
             autocompleteList.classList.add('r2dt-hidden');
             return;
