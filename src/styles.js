@@ -481,8 +481,16 @@ export const widgetStyles = `
   border-radius: 0.25em;
   box-shadow: 0 1px 3px rgba(0,0,0,0.2);
   width: 100%;
-  max-width: 400px;
+  max-width: 150px;
   border-left: 1px solid #dee2e6;
+}
+
+.r2dt-legend-container.r2dt-legend-minimized {
+  max-width: 150px;
+}
+
+.r2dt-legend-container.r2dt-legend-expanded {
+  max-width: 400px;
 }
 
 .r2dt-legend-header {
@@ -524,7 +532,7 @@ export const widgetStyles = `
 }
 
 .r2dt-arrow-icon.r2dt-rotated {
-  transform: rotate(-180deg); /* Rotate up when content is hidden */
+  transform: rotate(90deg);
 }
 
 .r2dt-legend-content {
