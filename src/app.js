@@ -451,13 +451,24 @@ class R2DTWidget extends HTMLElement {
         const legendToggleBtn = legendContainer.querySelector('.r2dt-legend-toggle-btn');
         const legendContent = legendContainer.querySelector('.r2dt-legend-content');
         const arrowIcon = legendContainer.querySelector('.r2dt-arrow-icon');
+        const legendHeader = legendToggleBtn.querySelector('.r2dt-legend-header');
 
-        if (legendToggleBtn && legendContent && arrowIcon) {
+        if (legendToggleBtn && legendContent && arrowIcon && legendHeader) {
             legendToggleBtn.addEventListener('click', () => {
-                const isExpanded = legendToggleBtn.getAttribute('aria-expanded') === 'true';
-                legendToggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-                legendContent.classList.toggle('r2dt-hidden', isExpanded);
+                const legendExpanded = legendToggleBtn.getAttribute('aria-expanded') === 'true';
+                const isExpanded = !legendExpanded;
+                legendToggleBtn.setAttribute('aria-expanded', String(isExpanded));
+                legendContent.classList.toggle('r2dt-hidden', !isExpanded);
                 arrowIcon.classList.toggle('r2dt-rotated', isExpanded);
+                legendHeader.textContent = isExpanded ? 'Hide legend' : 'Show legend';
+
+                if (isExpanded) {
+                    legendContainer.classList.remove('r2dt-legend-minimized');
+                    legendContainer.classList.add('r2dt-legend-expanded');
+                } else {
+                    legendContainer.classList.remove('r2dt-legend-expanded');
+                    legendContainer.classList.add('r2dt-legend-minimized');
+                }
             });
         }
 
