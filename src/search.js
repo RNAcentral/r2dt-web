@@ -26,6 +26,13 @@ export const validateFasta = (text) => {
         };
     }
 
+    if (sequence.length < 4 || sequence.length > 8000) {
+        return {
+            valid: false,
+            error: 'Please check your sequence, it cannot be shorter than 4 or longer than 8000 nucleotides',
+        };
+    }
+
     const dotBracketIndex = sequenceIndex + 1;
     if (lines[dotBracketIndex]) {
         const dotBracket = lines[dotBracketIndex];

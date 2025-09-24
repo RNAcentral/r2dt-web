@@ -42,6 +42,13 @@ describe('validateFasta', () => {
         expect(result.error).toContain('Invalid nucleotide sequence');
     });
 
+    test('should reject sequence shorter than 4 nucleotides', () => {
+        const fasta = '>short\nACG';
+        const result = validateFasta(fasta);
+        expect(result.valid).toBe(false);
+        expect(result.error).toContain('Please check your sequence, it cannot be shorter than 4 or longer than 8000 nucleotides');
+    });
+
     test('should reject invalid dot-bracket notation size', () => {
         const fasta = '>invalid\nACGT\n.().()';
         const result = validateFasta(fasta);
