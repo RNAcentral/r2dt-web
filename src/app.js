@@ -14,7 +14,7 @@ import {
 import { widgetStyles } from './styles.js';
 import { setupAdvancedSearch } from './advanced.js';
 import { templates } from './templates.js';
-import { alertContainer, showMessage, hideMessage, removeJobIdFromUrl } from './utils.js';
+import { alertContainer, showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from './utils.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -268,6 +268,10 @@ class R2DTWidget extends HTMLElement {
             } else if (ebiResponse === 'NO_SVG') {
                 renderError(this.shadowRoot, 'The provided URL does not return an SVG.');
                 return;
+            } else if (ebiResponse.svg === 'NO_MATCH') {
+                updateUrl(ebiResponse.jobId);
+                renderError(this.shadowRoot, 'The sequence did not match any of the templates.');
+                return;
             }
 
             // Update state
@@ -276,12 +280,7 @@ class R2DTWidget extends HTMLElement {
             this.source = ebiResponse.tsv.source;
             this.template = ebiResponse.tsv.template;
 
-            if (this.jobId) {
-                // Update URL
-                const url = new URL(window.location);
-                url.searchParams.set('jobid', this.jobId);
-                window.history.pushState({ jobid: this.jobId }, '', url);
-            }
+            if (this.jobId) { updateUrl(this.jobId) }
 
             // Render SVG
             this.renderSvg(ebiResponse.svg);
