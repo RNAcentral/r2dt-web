@@ -475,6 +475,18 @@ export const widgetStyles = `
   max-width: 100%;
 }
 
+.r2dt-legend-left {
+  align-self: flex-start;
+}
+
+.r2dt-legend-right {
+  align-self: flex-end;
+}
+
+.r2dt-legend-center {
+  align-self: center;
+}
+
 .r2dt-list-unstyled {
   padding-left: 0;
   list-style: none;

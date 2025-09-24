@@ -35,7 +35,7 @@ class R2DTWidget extends HTMLElement {
         this.shadowRoot.appendChild(style);
 
         // Get attributes
-        this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
+        this.legendPosition = this.getAttribute('legend') || 'left';
         const searchAttr = this.getAttribute('search');
         let urs = null;
         let url = null;
@@ -442,6 +442,15 @@ class R2DTWidget extends HTMLElement {
         // Legend
         const legendWrapper = document.createElement('div');
         legendWrapper.classList.add('r2dt-legend');
+
+        if (this.legendPosition === 'right') {
+            legendWrapper.classList.add('r2dt-legend-right');
+        } else if (this.legendPosition === 'center') {
+            legendWrapper.classList.add('r2dt-legend-center');
+        } else {
+            legendWrapper.classList.add('r2dt-legend-left');
+        }
+
         legendWrapper.innerHTML = r2dtLegend(this.template, this.source);
         outerWrapper.appendChild(legendWrapper);
 
