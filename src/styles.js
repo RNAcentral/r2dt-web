@@ -523,18 +523,6 @@ export const widgetStyles = `
   margin-right: 8px;
 }
 
-/* dot bracket notation */
-.r2dt-dot-bracket-notation {
-  padding: 2px;
-  margin-bottom: 1em;
-}
-
-.r2dt-dot-bracket-notation .r2dt-card-body {
-  max-height: 150px;
-  overflow-y: auto;
-  letter-spacing: 1px;
-}
-
 /* prevent button text from wrapping at 815px */
 @media (max-width: 815px) {
   .r2dt-btn {
