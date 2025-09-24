@@ -38,8 +38,7 @@ describe('r2dtLegend', () => {
 
     test('always includes legend structure', () => {
         const html = r2dtLegend('TemplateX', 'rfam');
-        expect(html).toContain('class="r2dt-legend-toggle-btn"');
-        expect(html).toContain('class="r2dt-legend-content"');
+        expect(html).toContain('class="r2dt-card"');
         expect(html).toContain('r2dt-traveler-key');
     });
 });
