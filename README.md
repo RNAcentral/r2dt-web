@@ -71,11 +71,11 @@ directly or through an import with Webpack:
 This component accepts a number of attributes. You pass them as html attributes and their values are strings 
 (this is a requirement of Web Components):
 
-| parameter | description                                                           |
-|-----------|-----------------------------------------------------------------------|
-| search    | JSON object with `url` or `urs` attributes                            |
-| examples  | Array of example sequences with `description` and `sequence`          |
-| legend    | Legend position. Can be topRight, topLeft, bottomRight and bottomLeft |
+| parameter | description                                                            |
+|-----------|------------------------------------------------------------------------|
+| search    | JSON object with `url` or `urs` attributes                             |
+| examples  | Array of example sequences with `description` and `sequence`           |
+| legend    | Legend position (left by default). Can be `left`, `right` and `center` |
 
 ### Local development
 
