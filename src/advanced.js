@@ -3,6 +3,7 @@
 */
 
 import { templates } from './templates.js';
+import { disableAdvanced } from './utils.js';
 
 export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
     const advancedContainer = document.createElement('div');
@@ -141,4 +142,15 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         const isHidden = advancedContainer.classList.toggle('r2dt-hidden');
         toggleLink.textContent = isHidden ? 'Show advanced' : 'Hide advanced';
     });
+
+    // Disable advanced options when dot-bracket is present
+    const searchTextarea = shadowRoot.querySelector('.r2dt-search-input');
+    if (searchTextarea) {
+        const onTextareaInput = () => {
+            const hasDotBracket = /[.()]/.test(searchTextarea.value || '');
+            disableAdvanced(shadowRoot, hasDotBracket);
+        };
+        onTextareaInput();
+        searchTextarea.addEventListener('input', onTextareaInput);
+    }
 };
