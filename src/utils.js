@@ -29,3 +29,10 @@ export function removeJobIdFromUrl() {
     url.searchParams.delete('jobid');
     window.history.pushState({}, '', url.toString());
 }
+
+// Add job ID to URL
+export function updateUrl(jobId) {
+    const url = new URL(window.location);
+    url.searchParams.set('jobid', jobId);
+    window.history.pushState({ jobid: jobId }, '', url.toString());
+}
