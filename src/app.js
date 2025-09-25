@@ -14,7 +14,7 @@ import {
 import { widgetStyles } from './styles.js';
 import { setupAdvancedSearch } from './advanced.js';
 import { templates } from './templates.js';
-import { alertContainer, showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from './utils.js';
+import { alertContainer, disableAdvanced, showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from './utils.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -148,6 +148,7 @@ class R2DTWidget extends HTMLElement {
                     removeJobIdFromUrl();
                     const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
                     if (currentSvg) currentSvg.remove();
+                    disableAdvanced(this.shadowRoot, false);
 
                     const templateSelect = this.shadowRoot.querySelector('#r2dt-template-select');
                     const templateAutocomplete = this.shadowRoot.querySelector('#r2dt-template-autocomplete');

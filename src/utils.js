@@ -36,3 +36,25 @@ export function updateUrl(jobId) {
     url.searchParams.set('jobid', jobId);
     window.history.pushState({ jobid: jobId }, '', url.toString());
 }
+
+// Disable advanced options
+export function disableAdvanced(shadowRoot, disabled) {
+    const radios = shadowRoot.querySelectorAll('input[name="template-mode"]');
+    const select = shadowRoot.querySelector('#r2dt-template-select');
+    const autocomplete = shadowRoot.querySelector('#r2dt-template-autocomplete');
+    const foldingCheckbox = shadowRoot.querySelector('#r2dt-folding-checkbox');
+    const foldingSelect = shadowRoot.querySelector('#r2dt-folding-select');
+
+    radios.forEach(r => r.disabled = disabled);
+    if (select) select.disabled = disabled;
+    if (autocomplete) autocomplete.disabled = disabled;
+    if (foldingCheckbox) {
+        foldingCheckbox.disabled = disabled;
+        if (disabled) {
+            foldingCheckbox.checked = false;
+            foldingSelect?.classList.add('r2dt-hidden');
+        } else {
+            foldingSelect?.classList.toggle('r2dt-hidden', !foldingCheckbox.checked);
+        }
+    }
+}
