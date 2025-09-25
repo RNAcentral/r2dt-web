@@ -43,6 +43,11 @@ export async function fetchStatus(jobId) {
                 getSvg(jobId),
                 getTsv(jobId),
             ]);
+
+            if (svgData === 'NO_MATCH') {
+                return { jobId: jobId, svg: 'NO_MATCH' };
+            }
+
             return {
                 dotBracketNotation: fastaData.dotBracketNotation,
                 fastaHeader: fastaData.fastaHeader,
@@ -72,12 +77,12 @@ export async function getSvg(jobId) {
                 'Accept': 'text/plain',
             },
         });
+        if (response.status === 400) { return 'NO_MATCH' }
         if (!response.ok) throw new Error(`Error ${response.status}`);
         const data = await response.text();
         return data;
     } catch (error) {
         console.error(error);
-        throw error;
     }
 }
 
@@ -98,7 +103,6 @@ export async function getFasta(jobId) {
         return { fastaHeader: fastaHeader, sequence: sequence, dotBracketNotation: dotBracketNotation };
     } catch (error) {
         console.error(error);
-        throw error;
     }
 }
 
@@ -118,7 +122,6 @@ export async function getTsv(jobId) {
         return { template: template, source: source };
     } catch (error) {
         console.error(error);
-        throw error;
     }
 }
 

@@ -468,26 +468,29 @@ export const widgetStyles = `
 }
 
 /* legend */
+.r2dt-legend {
+  padding: 2px;
+  margin-bottom: 1em;
+  width: fit-content;
+  max-width: 100%;
+}
+
+.r2dt-legend-left {
+  align-self: flex-start;
+}
+
+.r2dt-legend-right {
+  align-self: flex-end;
+}
+
+.r2dt-legend-center {
+  align-self: center;
+}
+
 .r2dt-list-unstyled {
   padding-left: 0;
   list-style: none;
   margin-bottom: 0;
-}
-
-.r2dt-legend-container {
-  position: absolute;
-  z-index: 100;
-  background-color: #ffffff;
-  border-radius: 0.25em;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
-  width: 100%;
-  max-width: 400px;
-  border-left: 1px solid #dee2e6;
-}
-
-.r2dt-legend-header {
-  font-size: 16px;
-  font-weight: bold;
 }
 
 .r2dt-source-template-text {
@@ -505,54 +508,8 @@ export const widgetStyles = `
   text-decoration: underline;
 }
 
-.r2dt-legend-toggle-btn {
-  width: 100%;
-  text-align: left;
-  background-color: #f5f5f5;
-  padding: 12px 10px;
-  color: #212529;
-  border: none;
-  border-radius: 0.25em 0.25em 0 0;
-  cursor: pointer;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.r2dt-arrow-icon {
-  transition: transform 0.2s ease-in-out;
-}
-
-.r2dt-arrow-icon.r2dt-rotated {
-  transform: rotate(-180deg); /* Rotate up when content is hidden */
-}
-
-.r2dt-legend-content {
-  padding: 12px 10px;
-  border-top: 1px solid #dee2e6;
-}
-
 .r2dt-hidden {
   display: none !important;
-}
-
-.r2dt-legend-topRight {
-  top: 2px;
-  right: 2px;
-}
-
-.r2dt-legend-topLeft {
-  top: 60px;
-  left: 50px;
-}
-
-.r2dt-legend-bottomRight {
-  bottom: 10px;
-  right: 2px;
-}
-
-.r2dt-legend-bottomLeft {
-  bottom: 10px;
 }
 
 .r2dt-traveler-magenta {
@@ -576,18 +533,6 @@ export const widgetStyles = `
   width: 20px;
   float: left;
   margin-right: 8px;
-}
-
-/* dot bracket notation */
-.r2dt-dot-bracket-notation {
-  padding: 2px;
-  margin-bottom: 1em;
-}
-
-.r2dt-dot-bracket-notation .r2dt-card-body {
-  max-height: 150px;
-  overflow-y: auto;
-  letter-spacing: 1px;
 }
 
 /* prevent button text from wrapping at 815px */
@@ -668,14 +613,6 @@ export const widgetStyles = `
 
   .r2dt-zoom-controls {
     top: 40px;
-  }
-
-  .r2dt-legend-topLeft {
-    top: 1px;
-  }
-
-  .r2dt-legend-topRight {
-    top: 1px;
   }
 }
 `;

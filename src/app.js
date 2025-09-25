@@ -2,7 +2,6 @@ import svgPanZoom from 'svg-pan-zoom';
 import * as actions from './actions.js';
 import { createButtonPanel } from './buttons.js';
 import { r2dtLegend } from './legend.js';
-import { r2dtDotBracket } from './dotBracket.js';
 import routes from './routes';
 import {
     clearError,
@@ -15,7 +14,7 @@ import {
 import { widgetStyles } from './styles.js';
 import { setupAdvancedSearch } from './advanced.js';
 import { templates } from './templates.js';
-import { alertContainer, showMessage, hideMessage, removeJobIdFromUrl } from './utils.js';
+import { alertContainer, disableAdvanced, showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from './utils.js';
 
 class R2DTWidget extends HTMLElement {
     constructor() {
@@ -36,9 +35,20 @@ class R2DTWidget extends HTMLElement {
         this.shadowRoot.appendChild(style);
 
         // Get attributes
-        this.legendPosition = this.getAttribute('legend') || 'bottomLeft';
-        const urs = this.getAttribute('urs');
-        const url = this.getAttribute('url');
+        this.legendPosition = this.getAttribute('legend') || 'left';
+        const searchAttr = this.getAttribute('search');
+        let urs = null;
+        let url = null;
+
+        if (searchAttr) {
+            try {
+                const searchObj = JSON.parse(searchAttr);
+                urs = searchObj.urs || null;
+                url = searchObj.url || null;
+            } catch (e) {
+                console.error("Invalid JSON in `search` attribute:", e);
+            }
+        }
 
         // Get query parameters
         const params = new URLSearchParams(window.location.search);
@@ -138,6 +148,7 @@ class R2DTWidget extends HTMLElement {
                     removeJobIdFromUrl();
                     const currentSvg = this.shadowRoot.querySelector('.r2dt-outer-scroll-wrapper');
                     if (currentSvg) currentSvg.remove();
+                    disableAdvanced(this.shadowRoot, false);
 
                     const templateSelect = this.shadowRoot.querySelector('#r2dt-template-select');
                     const templateAutocomplete = this.shadowRoot.querySelector('#r2dt-template-autocomplete');
@@ -199,11 +210,18 @@ class R2DTWidget extends HTMLElement {
                 // Use R2DT job ID to fetch data
                 ebiResponse = await actions.fetchStatus(sequence);
             } else {
-                // Submit new sequence. First check if the sequence contains dot-bracket notation
+                // Check if the sequence starts with a fasta header. Add ">description" if not
+                const checkFastaHeader = /^>/;
+                const fastaHeader = checkFastaHeader.test(sequence);
+                if (!fastaHeader) {
+                    sequence = '>description\n' + sequence;
+                }
+
+                // Check if the sequence contains dot-bracket notation
                 const checkDotBracket = /[.()]/;
                 const sequenceWithDotBracket = checkDotBracket.test(sequence);
 
-                // Then fetch the selected template and folding option in the advanced search
+                // Fetch the selected template and folding option in the advanced search
                 const selectedTemplateMode = this.shadowRoot.querySelector('input[name="template-mode"]:checked')?.value;
                 const constrainedFoldingEnabled = this.shadowRoot.querySelector('#r2dt-folding-checkbox')?.checked || false;
                 let template = '';
@@ -251,6 +269,10 @@ class R2DTWidget extends HTMLElement {
             } else if (ebiResponse === 'NO_SVG') {
                 renderError(this.shadowRoot, 'The provided URL does not return an SVG.');
                 return;
+            } else if (ebiResponse.svg === 'NO_MATCH') {
+                updateUrl(ebiResponse.jobId);
+                renderError(this.shadowRoot, 'The sequence did not match any of the templates.');
+                return;
             }
 
             // Update state
@@ -259,12 +281,7 @@ class R2DTWidget extends HTMLElement {
             this.source = ebiResponse.tsv.source;
             this.template = ebiResponse.tsv.template;
 
-            if (this.jobId) {
-                // Update URL
-                const url = new URL(window.location);
-                url.searchParams.set('jobid', this.jobId);
-                window.history.pushState({ jobid: this.jobId }, '', url);
-            }
+            if (this.jobId) { updateUrl(this.jobId) }
 
             // Render SVG
             this.renderSvg(ebiResponse.svg);
@@ -417,43 +434,25 @@ class R2DTWidget extends HTMLElement {
         svgWrapper.appendChild(svg);
         container.appendChild(svgWrapper);
 
-        // Legend
-        const legendContainer = document.createElement('div');
-        legendContainer.classList.add('r2dt-legend-container');
-        legendContainer.classList.add(`r2dt-legend-${this.legendPosition}`);
-        legendContainer.innerHTML = r2dtLegend(this.template, this.source);
-
-        if (this.legendPosition.startsWith('top')) {
-            container.insertBefore(legendContainer, container.firstChild);
-        } else {
-            container.appendChild(legendContainer);
-        }
-
-        // Add toggle functionality to the legend
-        const legendToggleBtn = legendContainer.querySelector('.r2dt-legend-toggle-btn');
-        const legendContent = legendContainer.querySelector('.r2dt-legend-content');
-        const arrowIcon = legendContainer.querySelector('.r2dt-arrow-icon');
-
-        if (legendToggleBtn && legendContent && arrowIcon) {
-            legendToggleBtn.addEventListener('click', () => {
-                const isExpanded = legendToggleBtn.getAttribute('aria-expanded') === 'true';
-                legendToggleBtn.setAttribute('aria-expanded', String(!isExpanded));
-                legendContent.classList.toggle('r2dt-hidden', isExpanded);
-                arrowIcon.classList.toggle('r2dt-rotated', isExpanded);
-            });
-        }
-
-        // Dot-bracket notation
+        // Outer wrapper
         const outerWrapper = document.createElement('div');
         outerWrapper.classList.add('r2dt-outer-scroll-wrapper');
         outerWrapper.appendChild(container);
 
-        if (this.dotBracketNotation) {
-            const notationWrapper = document.createElement('div');
-            notationWrapper.classList.add('r2dt-dot-bracket-notation');
-            notationWrapper.innerHTML = r2dtDotBracket(this.dotBracketNotation);
-            outerWrapper.appendChild(notationWrapper);
+        // Legend
+        const legendWrapper = document.createElement('div');
+        legendWrapper.classList.add('r2dt-legend');
+
+        if (this.legendPosition === 'right') {
+            legendWrapper.classList.add('r2dt-legend-right');
+        } else if (this.legendPosition === 'center') {
+            legendWrapper.classList.add('r2dt-legend-center');
+        } else {
+            legendWrapper.classList.add('r2dt-legend-left');
         }
+
+        legendWrapper.innerHTML = r2dtLegend(this.template, this.source);
+        outerWrapper.appendChild(legendWrapper);
 
         this.shadowRoot.appendChild(outerWrapper);
         this.zoomInBtn = zoomInBtn;
