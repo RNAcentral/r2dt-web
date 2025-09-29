@@ -1,18 +1,14 @@
 {
   "name": "@rnacentral/r2dt-web",
-  "version": "1.0.3",
+  "version": "2.0.0",
   "description": "Visualise RNA secondary structure using standard layouts.",
   "scripts": {
-    "clean": "rm -rf dist/*",
-    "build:prod": "node_modules/.bin/webpack --mode production",
-    "build": "npm run clean && npm run build:prod",
-    "profile:build": "node_modules/.bin/webpack --mode production --profile --json > webpack-stats.json",
-    "serve": "node_modules/.bin/webpack-dev-server --mode development --progress --color --history-api-fallback",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/RNAcentral/r2dt-web.git"
+    "start": "webpack serve --mode development --open",
+    "update-templates": "node scripts/update-templates.js",
+    "build": "npm run update-templates && webpack --mode production",
+    "build:dev": "npm run update-templates && webpack --mode development",
+    "test": "jest --coverage",
+    "test:watch": "jest --watch"
   },
   "keywords": [
     "RNA",
@@ -21,12 +17,8 @@
   ],
   "contributors": [
     {
-      "name": "Anton I. Petrov",
-      "email": "apetrov@ebi.ac.uk"
-    },
-    {
       "name": "Carlos E. Ribas",
-      "email": "cribas@ebi.ac.uk"
+      "email": "caduribas@gmail.com"
     }
   ],
   "license": "Apache-2.0",
@@ -34,36 +26,26 @@
     "url": "https://github.com/RNAcentral/r2dt-web/issues"
   },
   "homepage": "https://github.com/RNAcentral/r2dt-web#readme",
-  "dependencies": {
-    "dotenv-webpack": "^7.1.0",
-    "react": "^17.0.2",
-    "react-bootstrap-typeahead": "^5.2.2",
-    "react-dom": "^17.0.2",
-    "react-ga4": "^2.0.0",
-    "react-icons": "^4.12.0",
-    "react-redux": "^7.2.8",
-    "react-svg-pan-zoom": "^3.11.0",
-    "react-svgmt": "^1.2.0",
-    "redux": "^4.1.2",
-    "redux-devtools-extension": "^2.13.9",
-    "redux-thunk": "^2.4.1",
-    "save-svg-as-png": "^1.4.17"
-  },
   "devDependencies": {
-    "@babel/core": "^7.18.5",
-    "@babel/preset-env": "^7.18.2",
-    "@babel/preset-react": "^7.17.12",
-    "babel-loader": "^8.2.5",
-    "css-loader": "^6.7.1",
-    "file-loader": "^6.2.0",
-    "html-webpack-plugin": "^5.5.0",
-    "navigator": "~1.0.1",
-    "sass": "^1.63.6",
-    "sass-loader": "^12.6.0",
-    "style-loader": "^3.3.1",
-    "url-loader": "^4.1.1",
-    "webpack": "^5.95.0",
-    "webpack-cli": "^4.10.0",
-    "webpack-dev-server": "^4.9.2"
+    "@babel/core": "^7.24.7",
+    "@babel/preset-env": "^7.24.7",
+    "@testing-library/dom": "^9.3.1",
+    "@testing-library/jest-dom": "^6.6.1",
+    "@testing-library/user-event": "^14.6.1",
+    "babel-jest": "^29.7.0",
+    "babel-loader": "^9.1.3",
+    "copy-webpack-plugin": "^13.0.0",
+    "dotenv": "^16.4.5",
+    "html-webpack-plugin": "^5.6.0",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jest-fetch-mock": "^3.0.3",
+    "webpack": "^5.92.1",
+    "webpack-cli": "^5.1.4",
+    "webpack-dev-server": "^4.15.1"
+  },
+  "dependencies": {
+    "save-svg-as-png": "^1.4.17",
+    "svg-pan-zoom": "^3.6.2"
   }
 }
