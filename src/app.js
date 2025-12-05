@@ -397,7 +397,7 @@ class R2DTWidget extends HTMLElement {
                     url: routes.rnaCanvas(this.jobId),
                 },
                 {
-                    label: 'Edit in XRNA-React',
+                    label: 'Edit in Exornata',
                     url: routes.xRNA(this.jobId),
                 },
                 {
