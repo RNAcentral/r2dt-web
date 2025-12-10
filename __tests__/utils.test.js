@@ -1,4 +1,4 @@
-import { showMessage, hideMessage, removeJobIdFromUrl } from '../src/utils';
+import { showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from '../src/utils';
 
 describe('Utils', () => {
     describe('showMessage', () => {
@@ -42,6 +42,22 @@ describe('Utils', () => {
                 {},
                 '',
                 'http://example.com/'
+            );
+        });
+    });
+
+    describe('updateUrl', () => {
+        beforeEach(() => {
+            jest.spyOn(window.history, 'pushState').mockImplementation(() => {});
+            window.history.pushState.mockClear();
+        });
+
+        test('should update URL with job ID', () => {
+            updateUrl('job123');
+            expect(window.history.pushState).toHaveBeenCalledWith(
+                { jobid: 'job123' },
+                '',
+                'http://example.com/?jobid=job123'
             );
         });
     });

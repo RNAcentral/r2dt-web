@@ -3,6 +3,7 @@
 */
 
 import { templates } from './templates.js';
+import { disableAdvanced } from './utils.js';
 
 export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
     const advancedContainer = document.createElement('div');
@@ -25,7 +26,7 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
                         ${templates.map(t => `<option value="${t.model_id}">${t.label}</option>`).join('')}
                     </select>
 
-                    <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." list="r2dt-template-datalist" />
+                    <input type="text" id="r2dt-template-autocomplete" class="r2dt-template-autocomplete r2dt-hidden" placeholder="Start typing..." />
                     <div id="r2dt-autocomplete-list" class="r2dt-autocomplete-list r2dt-hidden"></div>
                 </div>
             </div>
@@ -64,12 +65,12 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         const value = autocompleteInput.value.toLowerCase().trim();
         autocompleteList.innerHTML = '';
 
-        if (!value) {
+        if (!value || value.length < 2) {
             autocompleteList.classList.add('r2dt-hidden');
             return;
         }
 
-        const matches = templates.filter(t => t.label.toLowerCase().includes(value)).slice(0, 10);
+        const matches = templates.filter(t => t.label.toLowerCase().includes(value)).slice(0, 200);
         if (!matches.length) {
             autocompleteList.classList.add('r2dt-hidden');
             return;
@@ -78,7 +79,12 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         matches.forEach(t => {
             const item = document.createElement('div');
             item.className = 'r2dt-autocomplete-item';
-            item.textContent = t.label;
+
+            // Highlight the matched part
+            const regex = new RegExp(`(${value})`, 'i');
+            const highlighted = t.label.replace(regex, '<mark>$1</mark>');
+            item.innerHTML = highlighted;
+
             item.addEventListener('click', () => {
                 autocompleteInput.value = t.label;
                 autocompleteList.classList.add('r2dt-hidden');
@@ -136,4 +142,15 @@ export const setupAdvancedSearch = (shadowRoot, insertionPoint) => {
         const isHidden = advancedContainer.classList.toggle('r2dt-hidden');
         toggleLink.textContent = isHidden ? 'Show advanced' : 'Hide advanced';
     });
+
+    // Disable advanced options when dot-bracket is present
+    const searchTextarea = shadowRoot.querySelector('.r2dt-search-input');
+    if (searchTextarea) {
+        const onTextareaInput = () => {
+            const hasDotBracket = /[.()]/.test(searchTextarea.value || '');
+            disableAdvanced(shadowRoot, hasDotBracket);
+        };
+        onTextareaInput();
+        searchTextarea.addEventListener('input', onTextareaInput);
+    }
 };

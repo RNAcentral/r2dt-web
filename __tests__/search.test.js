@@ -15,18 +15,24 @@ describe('validateFasta', () => {
         expect(result.error).toBeUndefined();
     });
 
+    test('should accept the sequence without header', () => {
+        const sequence = 'ACGUACGUACGU';
+        const result = validateFasta(sequence);
+        expect(result.valid).toBe(true);
+        expect(result.error).toBeUndefined();
+    });
+
+    test('should accept valid dot-bracket structure', () => {
+        const fasta = '>seq\nACGU\n.().';
+        const result = validateFasta(fasta);
+        expect(result.valid).toBe(true);
+    });
+
     test('should reject empty sequence', () => {
         const fasta = '>empty\n';
         const result = validateFasta(fasta);
         expect(result.valid).toBe(false);
-        expect(result.error).toContain('FASTA format requires a header and at least one sequence line');
-    });
-
-    test('should reject missing FASTA header', () => {
-        const fasta = 'ACGTACGT\n';
-        const result = validateFasta(fasta);
-        expect(result.valid).toBe(false);
-        expect(result.error).toContain('FASTA header must start with ">"');
+        expect(result.error).toContain('FASTA format requires a sequence after the header');
     });
 
     test('should reject invalid characters in sequence', () => {
@@ -34,6 +40,13 @@ describe('validateFasta', () => {
         const result = validateFasta(fasta);
         expect(result.valid).toBe(false);
         expect(result.error).toContain('Invalid nucleotide sequence');
+    });
+
+    test('should reject sequence shorter than 4 nucleotides', () => {
+        const fasta = '>short\nACG';
+        const result = validateFasta(fasta);
+        expect(result.valid).toBe(false);
+        expect(result.error).toContain('Please check your sequence, it cannot be shorter than 4 or longer than 8000 nucleotides');
     });
 
     test('should reject invalid dot-bracket notation size', () => {

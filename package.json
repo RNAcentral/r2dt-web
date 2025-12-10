@@ -4,8 +4,9 @@
   "description": "Visualise RNA secondary structure using standard layouts.",
   "scripts": {
     "start": "webpack serve --mode development --open",
-    "build": "webpack --mode production",
-    "build:dev": "webpack --mode development",
+    "update-templates": "node scripts/update-templates.js",
+    "build": "npm run update-templates && webpack --mode production",
+    "build:dev": "npm run update-templates && webpack --mode development",
     "test": "jest --coverage",
     "test:watch": "jest --watch"
   },

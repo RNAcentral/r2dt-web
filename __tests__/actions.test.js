@@ -26,6 +26,18 @@ describe('actions.js', () => {
         expect(result).toBe('NOT_FOUND');
     });
 
+    test('fetchStatus returns FAILURE', async () => {
+        fetch.mockResolvedValueOnce({ ok: true, text: () => Promise.resolve('FAILURE') });
+        const result = await fetchStatus('job123');
+        expect(result).toBe('FAILURE');
+    });
+
+    test('fetchStatus returns ERROR', async () => {
+        fetch.mockResolvedValueOnce({ ok: true, text: () => Promise.resolve('ERROR') });
+        const result = await fetchStatus('job123');
+        expect(result).toBe('ERROR');
+    });
+
     test('fetchStatus returns error on bad response', async () => {
         fetch.mockResolvedValueOnce({ ok: false, status: 500 });
         await expect(fetchStatus('job123')).rejects.toThrow('Error 500');
@@ -49,9 +61,10 @@ describe('actions.js', () => {
         expect(res).toEqual({ template: 'template', source: 'source' });
     });
 
-    test('getSvg throws on error response', async () => {
-        fetch.mockResolvedValueOnce({ ok: false, status: 500 });
-        await expect(getSvg('job123')).rejects.toThrow('Error 500');
+    test('getSvg returns NO_MATCH', async () => {
+        fetch.mockResolvedValueOnce({ ok: true, status: 400 });
+        const result = await getSvg('job123');
+        expect(result).toBe('NO_MATCH');
     });
 
     test('getSvg returns empty string when text is missing', async () => {

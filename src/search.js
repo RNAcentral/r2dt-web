@@ -4,34 +4,45 @@
 
 export const validateFasta = (text) => {
     const lines = text.trim().split('\n');
+    let sequenceIndex = 0;
+    let sequence = '';
 
-    if (!lines[0].startsWith('>')) {
-        return {
-            valid: false,
-            error: 'FASTA header must start with ">"',
-        };
+    if (lines[0].startsWith('>')) {
+        if (lines.length < 2) {
+            return {
+                valid: false,
+                error: 'FASTA format requires a sequence after the header',
+            };
+        }
+        sequenceIndex = 1;
     }
 
-    if (lines.length < 2) {
-        return {
-            valid: false,
-            error: 'FASTA format requires a header and at least one sequence line',
-        };
-    }
+    sequence = lines[sequenceIndex].toUpperCase();
 
-    if (!/^[ACGTUWSMKRYBDHVN]+$/.test(lines[1].toUpperCase())) {
+    if (!/^[ACGTUWSMKRYBDHVN]+$/.test(sequence)) {
         return {
             valid: false,
             error: 'Invalid nucleotide sequence. Only ACGTUWSMKRYBDHVN are allowed (case-insensitive)',
         };
     }
 
-    const isDotBracket = /[.()]/;
-    if (lines[2] && isDotBracket.test(lines[2]) && lines[2].length !== lines[1].length) {
+    if (sequence.length < 4 || sequence.length > 8000) {
         return {
             valid: false,
-            error: 'The secondary structure in dot-bracket notation must be the same length as the fasta sequence',
+            error: 'Please check your sequence, it cannot be shorter than 4 or longer than 8000 nucleotides',
         };
+    }
+
+    const dotBracketIndex = sequenceIndex + 1;
+    if (lines[dotBracketIndex]) {
+        const dotBracket = lines[dotBracketIndex];
+        const isDotBracket = /[.()]/;
+        if (isDotBracket.test(dotBracket) && dotBracket.length !== sequence.length) {
+            return {
+                valid: false,
+                error: 'The secondary structure in dot-bracket notation must be the same length as the fasta sequence',
+            };
+        }
     }
 
     return { valid: true };
@@ -91,7 +102,7 @@ export const clearError = (shadowRoot) => {
 export const r2dtSearch = (examples = []) => `
     <div class="r2dt-search-container">
         <div class="r2dt-search-insertion-point">
-            <textarea class="r2dt-search-input" placeholder="You can view the secondary structure by typing:&#10;- An RNA/DNA sequence in FASTA format (include secondary structure in dot-bracket notation, if available)&#10;- A URL that returns an SVG produced by R2DT&#10;- The job ID"></textarea>
+            <textarea class="r2dt-search-input" placeholder="Enter RNA/DNA sequence with optional FASTA header. Include secondary structure in dot-bracket notation, if available"></textarea>
             <span class="r2dt-advanced-link">Show advanced</span>
         </div>
         <div class="r2dt-search-footer">
