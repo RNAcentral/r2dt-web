@@ -11,7 +11,7 @@ describe('routes.js', () => {
         expect(routes.fetchFasta('123')).toBe('https://www.ebi.ac.uk/Tools/services/rest/r2dt/result/123/fasta');
         expect(routes.rnaCanvas('123')).toBe('https://rnacanvas.app?rna_2d_schema_url=https://www.ebi.ac.uk/Tools/services/rest/r2dt/result/123/json');
         expect(routes.canvasCode('123')).toBe('https://code.rnacanvas.app/?schema=https://www.ebi.ac.uk/Tools/services/rest/r2dt/result/123/json');
-        expect(routes.xRNA('123')).toBe('https://ldwlab.github.io/XRNA-React/?source_url=https://www.ebi.ac.uk/Tools/services/rest/r2dt/result/123/json');
+        expect(routes.xRNA('123')).toBe('https://exornata.chemistry.gatech.edu/?source_url=https://www.ebi.ac.uk/Tools/services/rest/r2dt/result/123/json');
     });
 
     test('uses dev URLs when BRANCH=dev', () => {
