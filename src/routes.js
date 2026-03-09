@@ -25,7 +25,7 @@ const routes = {
     // External services
     rnaCanvas: (jobId) => `${rnaCanvasServer}?rna_2d_schema_url=${server}/result/${jobId}/json`,
     canvasCode: (jobId) => `https://code.rnacanvas.app/?schema=${server}/result/${jobId}/json`,
-    xRNA: (jobId) => `https://ldwlab.github.io/XRNA-React/?source_url=${server}/result/${jobId}/json`,
+    xRNA: (jobId) => `https://exornata.chemistry.gatech.edu/?source_url=${server}/result/${jobId}/json`,
 };
 
 export default routes;
