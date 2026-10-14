@@ -1,3 +1,7 @@
+/**
+ * @jest-environment jsdom
+ * @jest-environment-options {"url": "http://example.com/?jobid=123"}
+ */
 import { showMessage, hideMessage, removeJobIdFromUrl, updateUrl } from '../src/utils';
 
 describe('Utils', () => {
@@ -28,11 +32,8 @@ describe('Utils', () => {
 
     describe('removeJobIdFromUrl', () => {
         beforeEach(() => {
-            // Mock window.location
-            delete window.location;
-            window.location = new URL('http://example.com/?jobid=123');
-
-            // Mock history API
+            // Mock history API (window.location origin comes from the
+            // @jest-environment-options docblock above)
             window.history.pushState = jest.fn();
         });
 
