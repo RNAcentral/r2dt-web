@@ -42,7 +42,7 @@
     "jest-fetch-mock": "^3.0.3",
     "webpack": "^5.92.1",
     "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^6.0.0"
+    "webpack-dev-server": "^6.1.0"
   },
   "dependencies": {
     "save-svg-as-png": "^1.4.17",
